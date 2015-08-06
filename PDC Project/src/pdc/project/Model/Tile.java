@@ -9,11 +9,19 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public class Tile {
+public abstract class Tile {
     //Abstract class
+    
+    public Tile(){
+        
+    }
     //Visited - boolean
+    private boolean isVisited(int[] position){
+        return false;
+    }
     //Type - Enumeration
     
     //Method - getTileType()
+    
     
 }

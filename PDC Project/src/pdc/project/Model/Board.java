@@ -11,7 +11,12 @@ package pdc.project.Model;
  */
 public class Board {
     //Double sided array of tiles
+    private Tile[][] board = new Tile[20][4];   //Not sure if this is right? -b
     //Player position
+    private int[] position;
     
     //Method - boolean isReachable()
+    public boolean isReachable(int[] position){
+        return true;
+    }
 }
