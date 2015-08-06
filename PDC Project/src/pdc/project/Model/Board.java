@@ -10,5 +10,8 @@ package pdc.project.Model;
  * @author MPKohl
  */
 public class Board {
+    //Double sided array of tiles
+    //Player position
     
+    //Method - boolean isReachable()
 }

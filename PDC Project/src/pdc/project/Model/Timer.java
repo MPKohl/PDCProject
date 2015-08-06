@@ -9,10 +9,11 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public class Weapon {
-    //Name
-    //Type
-    //Damage low
-    //Damage high
-    //Special attribute
+public class Timer {
+ //get current time.
+ //start timer
+ //end timer
+ //stop timer
+ //method to check if something is completed within a time-frame.
+ //
 }

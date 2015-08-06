@@ -10,5 +10,10 @@ package pdc.project.Model;
  * @author MPKohl
  */
 public class Tile {
+    //Abstract class
+    //Visited - boolean
+    //Type - Enumeration
+    
+    //Method - getTileType()
     
 }

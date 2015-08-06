@@ -9,10 +9,6 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public class Weapon {
-    //Name
-    //Type
-    //Damage low
-    //Damage high
-    //Special attribute
+public class SaveGame {
+
 }

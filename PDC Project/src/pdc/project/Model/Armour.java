@@ -11,4 +11,10 @@ package pdc.project.Model;
  */
 public class Armour {
     
+    //Name
+    //Type
+    //Damage reduction
+    //Special attribute
+    
+    
 }

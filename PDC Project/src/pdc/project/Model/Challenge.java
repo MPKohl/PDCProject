@@ -10,5 +10,5 @@ package pdc.project.Model;
  * @author MPKohl
  */
 public class Challenge {
-    
+    //Timer
 }

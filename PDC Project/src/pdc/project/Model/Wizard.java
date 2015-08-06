@@ -10,5 +10,7 @@ package pdc.project.Model;
  * @author MPKohl
  */
 public class Wizard {
-    
+    //Spell list
+    //Three chosen spells
+    //Reduced health
 }

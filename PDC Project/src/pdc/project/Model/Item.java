@@ -10,5 +10,11 @@ package pdc.project.Model;
  * @author MPKohl
  */
 public class Item {
+    //Abstract class
+    //Name
+    //Value
+    //Type
     
+    //Abstract method getItemType();
+    //Method to randomize the name with prefix and suffix
 }
