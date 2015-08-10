@@ -9,10 +9,8 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public class Weapon {
-    //Name
-    //Type
-    //Damage low
-    //Damage high
+public class Weapon extends Item {
+    private int dmgLow;
+    private int dmgHigh;
     //Special attribute
 }

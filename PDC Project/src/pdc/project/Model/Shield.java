@@ -9,9 +9,6 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public class Armour extends Item{
+public class Shield extends Item{
     private int dmgReduction;
-    //Special attribute
-    
-    
 }

@@ -5,10 +5,16 @@
  */
 package pdc.project.Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author MPKohl
  */
 public class SaveGame {
-
+    String playerName;
+    Board board;
+    ArrayList<Item> inventory;
+    ArrayList<Item> equipped;
+    Timer timer;    
 }

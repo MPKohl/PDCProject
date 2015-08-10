@@ -9,9 +9,4 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public class Armour extends Item{
-    private int dmgReduction;
-    //Special attribute
-    
-    
-}
+public enum ItemType {PLATEARMOUR, LEATHERARMOUR, CLOTHARMOUR, ONEHANDEDWEAPON, TWOHANDEDWEAPON, SHIELD, STAFF, BOW}

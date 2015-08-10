@@ -9,12 +9,17 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public class Item {
-    //Abstract class
-    //Name
-    //Value
-    //Type
+public abstract class Item {
+    private String name;
+    private int pointValue;
+    private ItemType itemType;
     
-    //Abstract method getItemType();
-    //Method to randomize the name with prefix and suffix
+    public Enum getItemType(){
+        return itemType;
+    }
+    
+    public void setName(){
+        //Method to randomize the name with prefix and suffix
+    }
+    
 }

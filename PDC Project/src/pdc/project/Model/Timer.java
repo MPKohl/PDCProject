@@ -10,10 +10,16 @@ package pdc.project.Model;
  * @author MPKohl
  */
 public class Timer {
- //get current time.
- //start timer
- //end timer
- //stop timer
- //method to check if something is completed within a time-frame.
- //
+    
+    public void getCurrentTime(){}
+    
+    public void startTimer(){}
+    
+    public void endTimer(){}
+    
+    public void pauseTimer(){}
+    
+    public boolean isWithinTimeframe(){
+        return true; //method to check if something is completed within a time-frame.
+    }
 }
