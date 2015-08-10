@@ -9,6 +9,6 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public class Blocked {
+public class Blocked extends Tile{
     
 }

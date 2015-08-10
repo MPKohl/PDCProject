@@ -19,6 +19,11 @@ public abstract class Tile {
     private boolean isVisited(int[] position){
         return false;
     }
+    
+    //Method - boolean isReachable()
+    public boolean isReachable(){
+        return true;
+    }
     //Type - Enumeration
     
     //Method - getTileType()
