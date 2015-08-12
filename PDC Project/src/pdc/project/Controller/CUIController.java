@@ -20,10 +20,6 @@ import pdc.project.Model.Wizard;
  * @author MPKohl
  */
 public class CUIController {
-    private static boolean moveUp;
-    private static boolean moveDown;
-    private static boolean moveLeft;
-    private static boolean moveRight;
     private static Scanner scan = new Scanner(System.in);
     private static Board board;
     //method that takes an array of tiles
@@ -36,21 +32,18 @@ public class CUIController {
      * Tile[2] = Tile to the right of current position.
      * Tile[3] = Tile to the left of current position. 
      */
-    public void move(Tile[] options){
-        if(!(options[0] instanceof Blocked)){
-            moveUp=true;
+    public static void move(){
+        Tile[] reachableTiles = board.reachableTiles();
+        if(!(reachableTiles[0] instanceof Blocked)){
             System.out.println("1. Move Up");
         }
-        if(!(options[1] instanceof Blocked)){
-            moveDown=true;
+        if(!(reachableTiles[1] instanceof Blocked)){
             System.out.println("2. Move Down");
         }
-        if(!(options[2] instanceof Blocked)){
-            moveRight=true;
+        if(!(reachableTiles[2] instanceof Blocked)){  
             System.out.println("3. Move Right");
         }
-        if(!(options[3] instanceof Blocked)){
-            moveLeft=true;
+        if(!(reachableTiles[3] instanceof Blocked)){
             System.out.println("4. Move Left");
         }
         try{
@@ -74,8 +67,24 @@ public class CUIController {
         }
         
     }
+    public static boolean checkIfSave(){
+        boolean x = true;
+         while(x){
+            System.out.println("Would you like to load a previously saved game? (Y/N)");
+            String ans = scan.nextLine();
+            if (ans.equalsIgnoreCase("Y")){
+                //load game method
+                return true;
+            } else if(ans.equalsIgnoreCase("N")){
+                return false;
+            }
+            System.out.println("I did not recognise that command");
+        }
+         return false;
+    }
     public static Player playerDetails(){
         int classType = 0;
+        //board.changePosition(0,0);
         System.out.println("What is your name adventurer?");
         String playerName = scan.nextLine();
         System.out.println("What class would you like to be?");
@@ -101,7 +110,7 @@ public class CUIController {
                     + "please try again.");
         }
             
-      return null;  
+      return null;
     }
     //method that takes a random challenge
             //show options for that challenge
