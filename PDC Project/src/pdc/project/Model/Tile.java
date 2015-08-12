@@ -11,6 +11,7 @@ package pdc.project.Model;
  */
 public abstract class Tile {
     //Abstract class
+    private TileType type;
     
     public Tile(){
         
@@ -22,11 +23,23 @@ public abstract class Tile {
     
     //Method - boolean isReachable()
     public boolean isReachable(){
-        return true;
+        if (getType() != TileType.BLOCKED)
+            return true;
+        else
+            return false;
     }
-    //Type - Enumeration
-    
-    //Method - getTileType()
-    
-    
+
+    /**
+     * @return the type
+     */
+    public TileType getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(TileType type) {
+        this.type = type;
+    }
 }

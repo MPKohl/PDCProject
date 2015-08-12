@@ -9,8 +9,4 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public class Blocked extends Tile{
-    public Blocked(){
-        setType(TileType.BLOCKED);
-    }
-}
+public enum TileType {BLOCKED, CHALLENGE, ENEMY, BOSS}
