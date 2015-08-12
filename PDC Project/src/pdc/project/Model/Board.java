@@ -11,10 +11,22 @@ package pdc.project.Model;
  */
 public class Board {
     //Double sided array of tiles
-    private Tile[][] board = new Tile[5][20];   //Not sure if this is right? -b
+    private Tile[][] board = new Tile[5][20];
     //Player position
     private int[] position = new int[2];
     
+    
+    
+    public void changePosition(int changeInX, int changeInY){
+        position[0] = changeInX;
+        position[1] = changeInY;
+    }
+    public int[] getPosition(){
+        return position;
+    }
+    public void setPosition(int[] position){
+        this.position = position;
+    }
     /**
      * Checks whether a specific Tile is reachable. If true, return the Tile. 
      * If false, return a Blocked Tile.
