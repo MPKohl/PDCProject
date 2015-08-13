@@ -57,19 +57,28 @@ public class CUIController {
         try{
         int ans = scan.nextInt();
         int[] position = board.getPosition();
+        boolean x = true;
+        while(x){
             if (ans ==1 && moveUp){
                board.changePosition(position[0], position[1]+1);
+               x=false;
             }
-            if (ans ==2 && moveDown){
+            else if (ans ==2 && moveDown){
                board.changePosition(position[0], position[0]-1);
+               x=false;
             }
-            if (ans ==3 && moveRight){
+            else if (ans ==3 && moveRight){
                board.changePosition(position[0]+1, position[1]);
+               x=false;
             }
-            if (ans ==4 && moveLeft){
+            else if (ans ==4 && moveLeft){
                board.changePosition(position[0]-1, position[1]);
+               x=false;
+            } else{
+                System.out.println("I did not recogonise that command");
             }
-            System.out.println("x: " + position[0] + " y: " + position[1]);
+        }
+            System.out.println("Current player position\n x: " + position[0] + "\n y: " + position[1]);
         } catch(Exception e){
             
         }
