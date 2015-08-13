@@ -22,6 +22,10 @@ import pdc.project.Model.Wizard;
 public class CUIController {
     private static Scanner scan = new Scanner(System.in);
     private static Board board;
+    private static boolean moveUp = false;
+    private static boolean moveDown =  false;
+    private static boolean moveRight = false;
+    private static boolean moveLeft = false;
     //method that takes an array of tiles
             //depending on the tiles give options to the user (i.e. move up, move left, etc.)
             //don't show options the user can't take
@@ -36,29 +40,33 @@ public class CUIController {
         Tile[] reachableTiles = board.reachableTiles();
         if(!(reachableTiles[0] instanceof Blocked)){
             System.out.println("1. Move Up");
+            moveUp=true;
         }
         if(!(reachableTiles[1] instanceof Blocked)){
             System.out.println("2. Move Down");
+            moveDown=true;
         }
         if(!(reachableTiles[2] instanceof Blocked)){  
             System.out.println("3. Move Right");
+            moveRight=true;
         }
         if(!(reachableTiles[3] instanceof Blocked)){
             System.out.println("4. Move Left");
+            moveLeft=true;
         }
         try{
         int ans = scan.nextInt();
         int[] position = board.getPosition();
-            if (ans ==1){
+            if (ans ==1 && moveUp){
                board.changePosition(position[0], position[1]+1);
             }
-            if (ans ==2){
+            if (ans ==2 && moveDown){
                board.changePosition(position[0], position[0]-1);
             }
-            if (ans ==3){
+            if (ans ==3 && moveRight){
                board.changePosition(position[0]+1, position[1]);
             }
-            if (ans ==4){
+            if (ans ==4 && moveLeft){
                board.changePosition(position[0]-1, position[1]);
             }
             System.out.println("x: " + position[0] + " y: " + position[1]);
