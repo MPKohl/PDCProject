@@ -9,9 +9,8 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public class Armour extends Item{
+public class Shield extends Item{
     private int dmgReduction;
-    //Special attribute
 
     /**
      * @return the dmgReduction
@@ -26,6 +25,4 @@ public class Armour extends Item{
     public void setDmgReduction(int dmgReduction) {
         this.dmgReduction = dmgReduction;
     }
-    
-    
 }

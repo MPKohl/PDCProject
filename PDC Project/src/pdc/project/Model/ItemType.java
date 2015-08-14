@@ -9,6 +9,4 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public class Challenge {
-    //Timer
-}
+public enum ItemType {PLATEARMOUR, LEATHERARMOUR, CLOTHARMOUR, ONEHANDEDWEAPON, TWOHANDEDWEAPON, SHIELD, STAFF, BOW}

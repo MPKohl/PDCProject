@@ -10,5 +10,6 @@ package pdc.project.Model;
  * @author MPKohl
  */
 public class Warrior {
-    
+    //High health
+    //One guaranteed crit
 }

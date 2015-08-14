@@ -10,5 +10,7 @@ package pdc.project.Model;
  * @author MPKohl
  */
 public class Archer {
-    
+    //Extra attack at beginning of combat
+    //Higher crit damage
+    //Low health
 }
