@@ -29,4 +29,33 @@ public abstract class Tile {
     //Method - getTileType()
     
     
+    public Tile(){
+        
+    }
+    //Visited - boolean
+    private boolean isVisited(int[] position){
+        return false;
+    }
+    
+    //Method - boolean isReachable()
+    public boolean isReachable(){
+        if (getType() != TileType.BLOCKED)
+            return true;
+        else
+            return false;
+    }
+
+    /**
+     * @return the type
+     */
+    public TileType getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(TileType type) {
+        this.type = type;
+    }
 }

@@ -16,20 +16,24 @@ public abstract class Item {
     private int pointValue;
     private ItemType itemType;
     
+    private int random(int a){
+        Random random = new Random();
+        return random.nextInt(a);
+    }
+    
     /**
      * Generates a random prefix for a one handed weapon. 
-     * Can be: Shortsword, Axe, Mace, Longsword and Club.
+     * Can be: Short sword, Axe, Mace, Long sword and Club.
      * @return String Prefix for one handed weapons.
      */
     private String randomOneHandedWeaponPrefix(){
-        Random random = new Random();
-        int randomNumber = random.nextInt(5);
+        int randomNumber = random(5);
         String prefix = "";
         switch (randomNumber){
-            case 0: prefix = "Shortsword"; break;
+            case 0: prefix = "Short sword"; break;
             case 1: prefix = "Axe"; break;
             case 2: prefix = "Mace"; break;
-            case 3: prefix = "Longsword"; break;
+            case 3: prefix = "Long sword"; break;
             case 4: prefix = "Club"; break;
         }
         return prefix;
@@ -41,8 +45,7 @@ public abstract class Item {
      * @return String Prefix for two handed weapons.
      */
     private String randomTwoHandedWeaponPrefix(){
-        Random random = new Random();
-        int randomNumber = random.nextInt(5);
+        int randomNumber = random(5);
         String prefix = "";
         switch (randomNumber){
             case 0: prefix = "Two handed sword"; break;
@@ -60,8 +63,7 @@ public abstract class Item {
      * @return String Prefix for shields.
      */
     private String randomShieldPrefix(){
-        Random random = new Random();
-        int randomNumber = random.nextInt(3);
+        int randomNumber = random(3);
         String prefix = "";
         switch (randomNumber){
             case 0: prefix = "Buckler"; break;
@@ -77,8 +79,7 @@ public abstract class Item {
      * @return String Prefix for bows.
      */
     private String randomBowPrefix(){
-        Random random = new Random();
-        int randomNumber = random.nextInt(3);
+        int randomNumber = random(3);
         String prefix = "";
         switch (randomNumber){
             case 0: prefix = "Longbow"; break;
@@ -117,8 +118,7 @@ public abstract class Item {
             default: prefix = "UNKOWN ITEM"; break;
         }
         
-        Random random = new Random();
-        suffix = suffixes[random.nextInt(8)];
+        suffix = suffixes[random(8)];
         
         name = prefix + " " + suffix;
     }

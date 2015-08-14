@@ -9,6 +9,11 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public class Challenge {
+public class Challenge extends Tile {
+    
+    public Challenge(){
+        setType(TileType.CHALLENGE);
+    }
+    
     //Timer
 }
