@@ -17,7 +17,7 @@ public abstract class Player {
     private int exp;
     private Item[] inventory;
     private int score;
-    private HashMap equipped = new HashMap();
+    private HashMap<ItemSlot, Item> equipped = new HashMap<ItemSlot, Item>();
     private double hitChance;
     private double critChance;
     private double dodgeChance;
