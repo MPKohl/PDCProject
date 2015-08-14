@@ -3,22 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pdc.project;
+package pdc.project.Controller;
 
-import pdc.project.View.CUI;
+import pdc.project.View.GameBoardGUI;
 
 /**
  *
  * @author MPKohl
  */
-public class PDCProject {
+public class Main {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        CUI.startGame();
+        GameBoardGUI GUI1 = new GameBoardGUI();
+        GUI1.show();
+        
     }
     
 }

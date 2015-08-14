@@ -11,7 +11,23 @@ package pdc.project.Model;
  */
 public abstract class Tile {
     //Abstract class
-    private TileType type;
+    
+    public Tile(){
+        
+    }
+    //Visited - boolean
+    private boolean isVisited(int[] position){
+        return false;
+    }
+    
+    //Method - boolean isReachable()
+    public boolean isReachable(){
+        return true;
+    }
+    //Type - Enumeration
+    
+    //Method - getTileType()
+    
     
     public Tile(){
         

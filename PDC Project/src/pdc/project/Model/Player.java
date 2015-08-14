@@ -39,7 +39,6 @@ public abstract class Player {
     
     //Methods.
     public abstract String findClass();   //illegal to call getClass.
-    
     //getters and setters
     public String getName() {
         return name;

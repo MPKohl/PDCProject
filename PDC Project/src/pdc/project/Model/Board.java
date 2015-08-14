@@ -15,6 +15,18 @@ public class Board {
     //Player position
     private int[] position = new int[2];
     
+    
+    
+    public void changePosition(int changeInX, int changeInY){
+        position[0] = changeInX;
+        position[1] = changeInY;
+    }
+    public int[] getPosition(){
+        return position;
+    }
+    public void setPosition(int[] position){
+        this.position = position;
+    }
     /**
      * Checks whether a specific Tile is reachable. If true, return the Tile. 
      * If false, return a Blocked Tile.
