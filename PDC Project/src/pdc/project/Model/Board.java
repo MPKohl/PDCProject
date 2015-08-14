@@ -15,7 +15,17 @@ public class Board {
     //Player position
     private int[] position = new int[2];
     
-    
+    public Board(){
+        position[0] = 2;
+        position[1] = 19;
+        
+        for (int i = 0 ; i < 5 ; i++){
+            for (int j = 0 ; j < 20 ; j++){
+                Challenge tile = new Challenge();
+                board[i][j] = tile;
+            }
+        }
+    }
     
     public void changePosition(int changeInX, int changeInY){
         position[0] = changeInX;
