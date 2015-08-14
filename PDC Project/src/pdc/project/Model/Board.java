@@ -79,21 +79,21 @@ public class Board {
         Tile downTile = board[x][y+1]; //Tile one below
         reachableTiles[1] = checkTile(downTile);
         } catch (ArrayIndexOutOfBoundsException e) {
-            reachableTiles[0] = new Blocked();
+            reachableTiles[1] = new Blocked();
         }
         
         try {
         Tile rightTile = board[x+1][y]; //Tile to the right of player
         reachableTiles[2] = checkTile(rightTile);
         } catch (ArrayIndexOutOfBoundsException e) {
-            reachableTiles[0] = new Blocked();
+            reachableTiles[2] = new Blocked();
         }
 
         try {
         Tile leftTile = board[x-1][y]; //Tile to the left of player
         reachableTiles[3] = checkTile(leftTile);
         } catch (ArrayIndexOutOfBoundsException e) {
-            reachableTiles[0] = new Blocked();
+            reachableTiles[3] = new Blocked();
         }
 
         return reachableTiles;
