@@ -68,18 +68,34 @@ public class Board {
         int x = position[0]; //Player x coordinate
         int y = position[1]; //Player y coordinate
         
+        try {
         Tile upTile = board[x][y-1]; //Tile one above player
         reachableTiles[0] = checkTile(upTile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            reachableTiles[0] = new Blocked();
+        }
         
+        try {
         Tile downTile = board[x][y+1]; //Tile one below
         reachableTiles[1] = checkTile(downTile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            reachableTiles[0] = new Blocked();
+        }
         
+        try {
         Tile rightTile = board[x+1][y]; //Tile to the right of player
         reachableTiles[2] = checkTile(rightTile);
-        
+        } catch (ArrayIndexOutOfBoundsException e) {
+            reachableTiles[0] = new Blocked();
+        }
+
+        try {
         Tile leftTile = board[x-1][y]; //Tile to the left of player
         reachableTiles[3] = checkTile(leftTile);
-        
+        } catch (ArrayIndexOutOfBoundsException e) {
+            reachableTiles[0] = new Blocked();
+        }
+
         return reachableTiles;
     }
 }
