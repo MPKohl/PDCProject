@@ -5,6 +5,7 @@
  */
 package pdc.project.Controller;
 
+import pdc.project.Model.Board;
 import pdc.project.View.GameBoardGUI;
 
 /**

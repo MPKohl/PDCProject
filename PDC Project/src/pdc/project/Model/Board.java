@@ -98,4 +98,23 @@ public class Board {
 
         return reachableTiles;
     }
+    
+    public void printBoard(){
+        System.out.println("+-------------------+");
+        for (int i = 0 ; i < 20 ; i++){
+            for (int j = 0 ; j < 5 ; j++){
+                if (position[0] == j && position[1] == i)
+                    System.out.print("| P ");
+                else if (board[j][i].isVisited)
+                    System.out.print("| O ");
+                else if (board[j][i].type == TileType.BLOCKED)
+                    System.out.print("| X ");
+                else
+                    System.out.print("|   ");
+            }
+            System.out.print("|");
+            System.out.println("");
+            System.out.println("+-------------------+");
+        }
+    }
 }

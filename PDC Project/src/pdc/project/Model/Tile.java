@@ -12,13 +12,14 @@ package pdc.project.Model;
 public abstract class Tile {
     
     TileType type;
+    boolean isVisited = false;
     
     public Tile(){
         
     }
     //Visited - boolean
-    private boolean isVisited(int[] position){
-        return false;
+    private boolean isVisited(){
+        return isVisited;
     }
     
     //Method - boolean isReachable()
