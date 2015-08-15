@@ -19,17 +19,17 @@ public class Board {
         position[0] = 2;
         position[1] = 19;
         
-        for (int i = 0 ; i < 5 ; i++){
-            for (int j = 0 ; j < 20 ; j++){
+        for (int i = 0 ; i < board.length ; i++){
+            for (int j = 0 ; j < board[0].length ; j++){
                 Challenge tile = new Challenge();
                 board[i][j] = tile;
             }
         }
     }
     
-    public void changePosition(int changeInX, int changeInY){
-        position[0] = changeInX;
-        position[1] = changeInY;
+    public void changePosition(int newX, int newY){
+        position[0] = newX;
+        position[1] = newY;
     }
     public int[] getPosition(){
         return position;
@@ -99,10 +99,17 @@ public class Board {
         return reachableTiles;
     }
     
+    /**
+     * Prints the board to the console.
+     * Blank fields are challenges or enemies.
+     * Crosses are unreachable/blocked tiles.
+     * P is the player location.
+     * O are visited tiles.
+     */
     public void printBoard(){
-        System.out.println("+-------------------+");
-        for (int i = 0 ; i < 20 ; i++){
-            for (int j = 0 ; j < 5 ; j++){
+        printLine();
+        for (int i = 0 ; i < board[0].length ; i++){
+            for (int j = 0 ; j < board.length ; j++){
                 if (position[0] == j && position[1] == i)
                     System.out.print("| P ");
                 else if (board[j][i].isVisited)
@@ -114,7 +121,18 @@ public class Board {
             }
             System.out.print("|");
             System.out.println("");
-            System.out.println("+-------------------+");
+            printLine();
         }
+    }
+    
+    /**
+     * Prints the lines between the board arrays.
+     */
+    private void printLine(){
+        System.out.print("+");
+        for (int i = 0 ; i < board.length * 4 - 1 ; i++)
+            System.out.print("-");
+        System.out.print("+");
+        System.out.println("");
     }
 }

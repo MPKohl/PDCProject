@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdc.project.Model;
 
 /**
- *
- * @author MPKohl
+ * Super class for all tiles.
  */
 public abstract class Tile {
     
@@ -20,6 +14,10 @@ public abstract class Tile {
     //Visited - boolean
     private boolean isVisited(){
         return isVisited;
+    }
+    
+    public void visit(){
+        isVisited = true;
     }
     
     //Method - boolean isReachable()

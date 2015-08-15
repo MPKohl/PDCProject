@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdc.project.Model;
 
 import java.util.ArrayList;
 
 /**
- *
- * @author MPKohl
+ * Class for challenge tiles. Extends Tile. 
+ * All challenges consist of a question, a correct answer and some 
+ * wrong answers.
  */
 public class Challenge extends Tile {
     

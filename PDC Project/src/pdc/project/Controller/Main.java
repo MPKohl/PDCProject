@@ -18,6 +18,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Board board = new Board();
+        board.printBoard();
         GameBoardGUI GUI1 = new GameBoardGUI();
         GUI1.show();
         
