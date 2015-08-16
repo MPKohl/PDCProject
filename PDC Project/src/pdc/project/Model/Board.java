@@ -11,17 +11,18 @@ package pdc.project.Model;
  */
 public class Board {
     //Double sided array of tiles
-    private Tile[][] board = new Tile[5][20];   //Not sure if this is right? -b
+    private Tile[][] board = new Tile[3][4];   //Not sure if this is right? -b
     //Player position
     private int[] position = new int[2];
     
     public Board(){
-        position[0] = 2;
-        position[1] = 19;
+        position[0] = 1;
+        position[1] = 3;
+        ChallengeFactory challengeFactory = new ChallengeFactory();
         
         for (int i = 0 ; i < board.length ; i++){
             for (int j = 0 ; j < board[0].length ; j++){
-                Challenge tile = new Challenge();
+                Challenge tile = challengeFactory.getRandomChallenge();
                 board[i][j] = tile;
             }
         }
