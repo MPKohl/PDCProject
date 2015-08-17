@@ -39,9 +39,13 @@ public class GameTimer extends Thread {
     public void pauseTimer(){
         //cannot see need to pause since endTimer is basically a pause.
     }
+    public void printCurrentTime(int[] curTime) {
+        System.out.println(curTime[0] + " : " + curTime[1] + " : " + curTime[2] + " : " + curTime[3]);
+    }
+    //above method to be added to print class later on.
     
     public boolean isWithinTimeframe(){
-        //
+        //Will need to be talked about how it will work if its acutally needed.
         return true; //method to check if something is completed within a time-frame.
     }
 }

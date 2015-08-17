@@ -6,6 +6,7 @@
 package pdc.project.Controller;
 
 import pdc.project.Model.Board;
+import pdc.project.Model.GameTimer;
 import pdc.project.View.GameBoardGUI;
 
 /**
@@ -18,11 +19,21 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Board board = new Board();
-        board.printBoard();
-        GameBoardGUI GUI1 = new GameBoardGUI();
-        GUI1.show();
-        
+        GameTimer gameTimer = new GameTimer();
+        gameTimer.startThread();
+        try {
+        Thread.sleep(10000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        int[] curTime = gameTimer.getCurrentTime();
+        gameTimer.printCurrentTime(curTime);
     }
     
+       // Board board = new Board();
+       //board.printBoard();
+       // GameBoardGUI GUI1 = new GameBoardGUI();
+        //GUI1.show();
+        
 }
+    
