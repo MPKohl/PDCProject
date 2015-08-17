@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import pdc.project.Model.*;
 import java.util.Scanner;
 import pdc.project.Model.Player;
+import pdc.project.View.CUI;
 
 /**
  * 
@@ -69,7 +70,14 @@ public class CUIController {
                     System.out.println("I did not recogonise that command");
                 }
             } catch(Exception e){
-                System.out.println("I did not recogonise that command");
+                String quitCheck = scan.nextLine();
+                if(quitCheck.equalsIgnoreCase("quit")){
+                    System.out.println("Thanks for playing!");
+                    System.exit(0); // -- can be changed later but for now --
+                    //quitGame
+                } else {
+                    System.out.println("I did not recogonise that command");
+                }
                 scan.next();
             }
             System.out.println("Current player position\n x: " + position[0] + "\n y: " + position[1]);
