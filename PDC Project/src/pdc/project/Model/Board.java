@@ -96,7 +96,6 @@ public class Board {
         } catch (ArrayIndexOutOfBoundsException e) {
             reachableTiles[3] = new Blocked();
         }
-
         return reachableTiles;
     }
     

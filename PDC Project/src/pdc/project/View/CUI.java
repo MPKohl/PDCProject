@@ -8,12 +8,12 @@ import pdc.project.Model.Player;
  * 
  */
 public class CUI {
-    public static void startGame(){
-        System.out.println("Totally awesome RPG");
-        CUIController.checkIfSave();
-        Player player = CUIController.playerDetails();
-        System.out.println("Welcome " + player.getName() + " the "+ player.findClass()
-        + " to ...");
-        CUIController.move();
+    public static void startGame(CUIController cuiController, Board board){
+        boolean x = true;
+        while(x){
+            CUIController.move(board.reachableTiles(), board);
+            board.printBoard();
+        }
     }
+        
 }

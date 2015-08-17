@@ -5,9 +5,9 @@
  */
 package pdc.project.Controller;
 
-import pdc.project.Model.Board;
-import pdc.project.Model.GameTimer;
-import pdc.project.View.GameBoardGUI;
+
+import pdc.project.Model.*;
+import pdc.project.View.*;
 
 /**
  *
@@ -28,6 +28,15 @@ public class Main {
         }
         int[] curTime = gameTimer.getCurrentTime();
         gameTimer.printCurrentTime(curTime);
+        
+        
+        
+        
+        Board board = new Board();
+        CUIController cuiController = new CUIController();
+        Player player = cuiController.playerDetails();
+        board.printBoard();
+        CUI.startGame(cuiController, board);
     }
     
        // Board board = new Board();
@@ -36,4 +45,3 @@ public class Main {
         //GUI1.show();
         
 }
-    
