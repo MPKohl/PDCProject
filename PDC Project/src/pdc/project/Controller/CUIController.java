@@ -56,7 +56,7 @@ public class CUIController {
                    x=false;
                 }
                 else if (ans ==2 && moveDown){
-                   board.changePosition(position[0], position[0]+1);
+                   board.changePosition(position[0], position[1]+1);
                    x=false;
                 }
                 else if (ans ==3 && moveRight){

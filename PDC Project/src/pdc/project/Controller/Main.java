@@ -37,11 +37,9 @@ public class Main {
         Player player = cuiController.playerDetails();
         board.printBoard();
         CUI.startGame(cuiController, board);
-    }
-    
-       // Board board = new Board();
-       //board.printBoard();
-       // GameBoardGUI GUI1 = new GameBoardGUI();
-        //GUI1.show();
         
+        
+        GameBoardGUI GUI1 = new GameBoardGUI();
+        GUI1.show();
+    }      
 }
