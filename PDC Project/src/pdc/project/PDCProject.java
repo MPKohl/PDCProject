@@ -5,6 +5,8 @@
  */
 package pdc.project;
 
+import pdc.project.View.CUI;
+
 /**
  *
  * @author MPKohl
@@ -16,6 +18,7 @@ public class PDCProject {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        CUI.startGame();
     }
     
 }

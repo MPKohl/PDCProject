@@ -5,11 +5,13 @@
  */
 package pdc.project.Model;
 
+import java.util.Random;
+
 /**
  *
  * @author MPKohl
  */
-public class Enemy {
+public class Enemy extends Tile{
     //Name
     private String enemyName;
     //Health
@@ -26,11 +28,47 @@ public class Enemy {
     private int chanceToDodge;
     //Difficulty - Enumeration
     //Experience yield
-    private int expYeild;
+    private int expYield;
     //Item yield
-    private Item itemYeild;
+    private Item itemYield;
     
-    //Method that randomizes a name
+    public Enemy(){
+        setType(TileType.ENEMY);
+        randomizeName();
+    }
+    
+    public void randomizeName(){
+        Random random = new Random();
+                
+        String[] prefixes = new String[8];
+        String[] suffixes = new String[8];
+        
+        String prefix;
+        String suffix;
+        
+        prefixes[0] = "Orc";
+        prefixes[1] = "Ogre";
+        prefixes[2] = "Goblin";
+        prefixes[3] = "Brother";
+        prefixes[4] = "Giant Space Hamster";
+        prefixes[5] = "Dragonling";
+        prefixes[6] = "Huge Salamander";
+        prefixes[7] = "Minotaur";
+        
+        suffixes[0] = "of the Swamp";
+        suffixes[1] = "of Destruction";
+        suffixes[2] = "of the Deep";
+        suffixes[3] = "from Another Mother";
+        suffixes[4] = "from the 32nd Dimension";
+        suffixes[5] = "that just got off the Tardis";
+        suffixes[6] = "that loves My Little Pony";
+        suffixes[7] = "that has a Horrible Imagination";
+        
+        prefix = prefixes[random.nextInt(8)];
+        suffix = suffixes[random.nextInt(8)];
+        
+        enemyName = prefix + " " + suffix;
+    }
 
     /**
      * @return the enemyName
@@ -131,30 +169,30 @@ public class Enemy {
     }
 
     /**
-     * @return the expYeild
+     * @return the expYield
      */
-    public int getExpYeild() {
-        return expYeild;
+    public int getExpYield() {
+        return expYield;
     }
 
     /**
-     * @param expYeild the expYeild to set
+     * @param expYield the expYeild to set
      */
-    public void setExpYeild(int expYeild) {
-        this.expYeild = expYeild;
+    public void setExpYield(int expYield) {
+        this.expYield = expYield;
     }
 
     /**
-     * @return the itemYeild
+     * @return the itemYield
      */
-    public Item getItemYeild() {
-        return itemYeild;
+    public Item getItemYield() {
+        return itemYield;
     }
 
     /**
-     * @param itemYeild the itemYeild to set
+     * @param itemYield the itemYield to set
      */
-    public void setItemYeild(Item itemYeild) {
-        this.itemYeild = itemYeild;
+    public void setItemYield(Item itemYield) {
+        this.itemYield = itemYield;
     }
 }

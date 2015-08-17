@@ -12,6 +12,7 @@ import java.util.HashMap;
  * @author MPKohl
  */
 public class Warrior extends Player {
+<<<<<<< HEAD
     private boolean freeCrit = false;
     public Warrior(String name, int health, int exp, Item[] inventory,
             int score, HashMap equipped, double hitChance, double critChance, 
@@ -25,6 +26,24 @@ public class Warrior extends Player {
         return "Warrior";
     }
       
+=======
+    public Warrior(String name, int health, int exp, Item[] inventory,
+            int score, HashMap equipped, double hitChance, double critChance, 
+            double dodgeChance){
+        super(name,health,exp,inventory,
+            score,equipped,hitChance,critChance, 
+            dodgeChance);
+    }
+
+    /**
+     *
+     * @return the class
+     */
+    @Override
+    public String findClass(){
+    return ("Warrior");
+    }
+>>>>>>> origin/master
     //High health
     //One guaranteed crit
 }
