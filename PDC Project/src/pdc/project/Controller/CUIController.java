@@ -51,11 +51,11 @@ public class CUIController {
             int ans = scan.nextInt();
 
                 if (ans ==1 && moveUp){
-                   board.changePosition(position[0], position[1]+1);
+                   board.changePosition(position[0], position[1]-1);
                    x=false;
                 }
                 else if (ans ==2 && moveDown){
-                   board.changePosition(position[0], position[0]-1);
+                   board.changePosition(position[0], position[0]+1);
                    x=false;
                 }
                 else if (ans ==3 && moveRight){
@@ -111,7 +111,7 @@ public class CUIController {
         }
             Player player = createPlayer(playerName, classType);
             System.out.println("Welcome " + player.getName() + " the "+ player.findClass()
-        + " to ...");
+        + " to the best RPG ever");
             return player;
 
         

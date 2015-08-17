@@ -210,7 +210,7 @@ public class ChallengeFactory {
         
         //Returns the random challenge
         return challengeToReturn;
-    }    
+    }
     
     /**
      * @return the new challenges
@@ -239,7 +239,5 @@ public class ChallengeFactory {
     public void setDoneChallenges(ArrayList<Challenge> doneChallenges) {
         this.doneChallenges = doneChallenges;
     }
-    
-    
-    
+
 }
