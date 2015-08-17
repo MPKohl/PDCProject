@@ -1,23 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdc.project.Controller;
 
 import java.util.InputMismatchException;
-import pdc.project.Model.Blocked;
-import pdc.project.Model.Tile;
+import pdc.project.Model.*;
 import java.util.Scanner;
-import pdc.project.Model.Archer;
-import pdc.project.Model.Board;
-import pdc.project.Model.Player;
-import pdc.project.Model.Warrior;
-import pdc.project.Model.Wizard;
 
 /**
- *
- * @author MPKohl
+ * 
  */
 public class CUIController {
     private static Scanner scan = new Scanner(System.in);

@@ -1,17 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdc.project.Model;
 
 /**
- *
- * @author MPKohl
+ * Class for all weapons. Extends Item.
  */
 public class Weapon extends Item {
     private int dmgLow;
     private int dmgHigh;
+    private boolean twoHanded;
     //Special attribute
 
     /**
@@ -40,5 +35,19 @@ public class Weapon extends Item {
      */
     public void setDmgHigh(int dmgHigh) {
         this.dmgHigh = dmgHigh;
+    }
+
+    /**
+     * @return the twoHanded
+     */
+    public boolean isTwoHanded() {
+        return twoHanded;
+    }
+
+    /**
+     * @param twoHanded the twoHanded to set
+     */
+    public void setTwoHanded(boolean twoHanded) {
+        this.twoHanded = twoHanded;
     }
 }
