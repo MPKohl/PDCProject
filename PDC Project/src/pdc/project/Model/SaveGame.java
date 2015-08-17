@@ -10,5 +10,5 @@ public class SaveGame {
     Board board;
     ArrayList<Item> inventory;
     ArrayList<Item> equipped;
-    Timer timer;    
+    GameTimer timer;    
 }
