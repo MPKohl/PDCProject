@@ -22,7 +22,7 @@ public class Main {
         GameTimer gameTimer = new GameTimer();
         gameTimer.startThread();
         try {
-        Thread.sleep(10000);
+        Thread.sleep(0);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }

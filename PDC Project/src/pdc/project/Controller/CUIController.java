@@ -12,10 +12,6 @@ import pdc.project.View.CUI;
 public class CUIController {
     private static Scanner scan = new Scanner(System.in);
     private static Board board;
-    private static boolean moveUp = false;
-    private static boolean moveDown =  false;
-    private static boolean moveRight = false;
-    private static boolean moveLeft = false;
     //method that takes an array of tiles
             //depending on the tiles give options to the user (i.e. move up, move left, etc.)
             //don't show options the user can't take
@@ -31,6 +27,10 @@ public class CUIController {
     public static void move(Tile[] reachableTiles, Board board){
         boolean x = true;
             while(x){
+            boolean moveUp = false;
+            boolean moveDown =  false;
+            boolean moveRight = false;
+            boolean moveLeft = false;
             if(!(reachableTiles[0] instanceof Blocked)){
                 System.out.println("1. Move Up");
                 moveUp=true;
@@ -67,7 +67,7 @@ public class CUIController {
                    board.changePosition(position[0]-1, position[1]);
                    x=false;
                 } else {
-                    System.out.println("I did not recogonise that command");
+                    System.out.println("You cannot move in that direction.");
                 }
             } catch(Exception e){
                 String quitCheck = scan.nextLine();
