@@ -27,10 +27,10 @@ public class CUIController {
     public static void move(Tile[] reachableTiles, Board board){
         boolean x = true;
             while(x){
-            boolean moveUp = false;
-            boolean moveDown =  false;
-            boolean moveRight = false;
-            boolean moveLeft = false;
+            boolean moveUp    =    false;
+            boolean moveDown  =    false;
+            boolean moveRight =    false;
+            boolean moveLeft  =    false;
             if(!(reachableTiles[0] instanceof Blocked)){
                 System.out.println("1. Move Up");
                 moveUp=true;
@@ -48,41 +48,35 @@ public class CUIController {
                 moveLeft=true;
             }
             int[] position = board.getPosition();
-            try{
-            int ans = scan.nextInt();
+            String ans = scan.nextLine();
+            if (ans.equals("1") && moveUp){
+                board.changePosition(position[0], position[1]-1);
+                x=false;
+            }else if (ans.equals("2")&& moveDown){
+                board.changePosition(position[0], position[1]+1);
+                x=false;
+            }else if (ans.equals("3") && moveRight){
+                board.changePosition(position[0]+1, position[1]);
+                x=false;
+            }else if (ans.equals("4")&& moveLeft){
+                board.changePosition(position[0]-1, position[1]);
+                x=false;
+            }else if(ans.equalsIgnoreCase("quit")){
+                System.out.println("Thanks for playing!");
+                System.exit(0); // -- can be changed later but for now --
+                //quitGame
+            } else if (ans.equalsIgnoreCase("i")){
+                System.out.println("Show inventory");
+            }else{
+                System.out.println("You cannot move in that direction");
+                }
 
-                if (ans ==1 && moveUp){
-                   board.changePosition(position[0], position[1]-1);
-                   x=false;
-                }
-                else if (ans ==2 && moveDown){
-                   board.changePosition(position[0], position[1]+1);
-                   x=false;
-                }
-                else if (ans ==3 && moveRight){
-                   board.changePosition(position[0]+1, position[1]);
-                   x=false;
-                }
-                else if (ans ==4 && moveLeft){
-                   board.changePosition(position[0]-1, position[1]);
-                   x=false;
-                } else {
-                    System.out.println("You cannot move in that direction.");
-                }
-            } catch(Exception e){
-                String quitCheck = scan.nextLine();
-                if(quitCheck.equalsIgnoreCase("quit")){
-                    System.out.println("Thanks for playing!");
-                    System.exit(0); // -- can be changed later but for now --
-                    //quitGame
-                } else {
-                    System.out.println("I did not recogonise that command");
-                }
-                scan.next();
+            //System.out.println("Current player position\n x: " + position[0] + "\n y: " + position[1]);
             }
-            System.out.println("Current player position\n x: " + position[0] + "\n y: " + position[1]);
-        }
     }
+            
+        
+    
     public static boolean checkIfSave(){
         boolean x = true;
          while(x){
@@ -113,7 +107,9 @@ public class CUIController {
             try{
                 classType = scan.nextInt();
                 x = false;
+                scan.nextLine();
             } catch(InputMismatchException e){
+                System.err.println("I did not recognise that command");
                 scan.next();
             }
         }
@@ -143,7 +139,7 @@ public class CUIController {
             }
         return null;
     }
-        
+
 
         
         
