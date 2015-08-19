@@ -197,7 +197,7 @@ public class ChallengeFactory {
       
         question = new Question("A box without hinges, key, or lid, Yet golden treasure inside is hid.");
         correctAnswer = new CorrectAnswer("Egg.");
-        wrongAnswers = new WrongAnswer[2];
+        wrongAnswers = new WrongAnswer[3];
         wrongAnswers[0] = new WrongAnswer("Jukebox.");
         wrongAnswers[1] = new WrongAnswer("Skull");
         wrongAnswers[2] = new WrongAnswer("Toilet.");
@@ -208,7 +208,7 @@ public class ChallengeFactory {
         
         question = new Question("What animal walks in the morning on four feet, in the afternoon on two feet, and in the evening on three feet?");
         correctAnswer = new CorrectAnswer("Aging human being.");
-        wrongAnswers = new WrongAnswer[2];
+        wrongAnswers = new WrongAnswer[3];
         wrongAnswers[0] = new WrongAnswer("IKEA Import.");
         wrongAnswers[1] = new WrongAnswer("Car");
         wrongAnswers[2] = new WrongAnswer("Tailed Frog.");
@@ -221,7 +221,7 @@ public class ChallengeFactory {
                                 "Each wife had seven sacks, each sack had seven cats, each cat had seven kits.\n" +
                                 "Kits, cats, sacks, and wives, how many were going to St. Ives?");
         correctAnswer = new CorrectAnswer("1... Just the narrator.");
-        wrongAnswers = new WrongAnswer[2];
+        wrongAnswers = new WrongAnswer[3];
         wrongAnswers[0] = new WrongAnswer("2... Just the narrator and the man.");
         wrongAnswers[1] = new WrongAnswer("2402 ...(7 x 7 x 7 x 7) + 1");
         wrongAnswers[2] = new WrongAnswer("2801 ... (7^0) + (7^1) + (7^2) +(7^3)");
