@@ -15,6 +15,7 @@ public abstract class Player {
     private double hitChance;
     private double critChance;
     private double dodgeChance;
+    private int lvl;
     //Construcotrs.
     public Player() {}
     public Player(String name, int health, int exp, Item[] inventory,
@@ -87,6 +88,13 @@ public abstract class Player {
     }
     public void setDodgeChance(double dodgeChance) {
         this.dodgeChance = dodgeChance;
+    }
+    
+    
+    public void isLvlUp(){
+         if (this.exp == 100){
+             this.lvl = lvl + 1;
+         }
     }
  
 }
