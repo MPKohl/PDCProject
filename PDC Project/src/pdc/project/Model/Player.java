@@ -94,6 +94,7 @@ public abstract class Player {
     public void isLvlUp(){
          if (this.exp == 100){
              this.lvl = lvl + 1;
+             exp = 0;
          }
     }
  
