@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdc.project.Model;
 
 /**
@@ -11,24 +6,93 @@ package pdc.project.Model;
  */
 public class Board {
     //Double sided array of tiles
-    private Tile[][] board = new Tile[3][4];   //Not sure if this is right? -b
+    private Tile[][] board = new Tile[5][12];
     //Player position
     private int[] position = new int[2];
     
     public Board(){
-        position[0] = 1;
-        position[1] = 3;
+        position[0] = 2;
+        position[1] = 11;
         ChallengeFactory challengeFactory = new ChallengeFactory();
         
-        for (int i = 0 ; i < board.length ; i++){
-            for (int j = 0 ; j < board[0].length ; j++){
-                Challenge tile = challengeFactory.getRandomChallenge();
-                board[i][j] = tile;
-            }
-        }
+        board[0][11] = new EmptyTile();
+        board[1][11] = new Blocked();
+        board[2][11] = new EmptyTile();
+        board[3][11] = new Blocked();
+        board[4][11] = new EmptyTile();
+        
+        board[0][10] = new Blocked();
+        board[1][10] = new Enemy();
+        board[2][10] = new EmptyTile();
+        board[3][10] = challengeFactory.getRandomChallenge();
+        board[4][10] = new Blocked();
+        
+        board[0][9] = challengeFactory.getRandomChallenge();
+        board[1][9] = new EmptyTile();
+        board[2][9] = new Blocked();
+        board[3][9] = new Blocked();
+        board[4][9] = challengeFactory.getRandomChallenge();
+        
+        board[0][8] = new Blocked();
+        board[1][8] = new Enemy();
+        board[2][8] = new EmptyTile();
+        board[3][8] = new Blocked();
+        board[4][8] = new EmptyTile();
+        
+        board[0][7] = challengeFactory.getRandomChallenge();
+        board[1][7] = new EmptyTile();
+        board[2][7] = new EmptyTile();
+        board[3][7] = new Enemy();
+        board[4][7] = new EmptyTile();
+        
+        board[0][6] = new Blocked();
+        board[1][6] = new Blocked();
+        board[2][6] = new Blocked();
+        board[3][6] = new Blocked();
+        board[4][6] = new EmptyTile();
+        
+        board[0][5] = challengeFactory.getRandomChallenge();
+        board[1][5] = new Blocked();
+        board[2][5] = new EmptyTile();
+        board[3][5] = new Enemy();
+        board[4][5] = new EmptyTile();
+        
+        board[0][4] = new EmptyTile();
+        board[1][4] = new Blocked();
+        board[2][4] = new Enemy();
+        board[3][4] = new Blocked();
+        board[4][4] = challengeFactory.getRandomChallenge();
+        
+        board[0][3] = new EmptyTile();
+        board[1][3] = new Enemy();
+        board[2][3] = new EmptyTile();
+        board[3][3] = new EmptyTile();
+        board[4][3] = new Blocked();
+        
+        board[0][2] = challengeFactory.getRandomChallenge();
+        board[1][2] = new Blocked();
+        board[2][2] = challengeFactory.getRandomChallenge();
+        board[3][2] = new EmptyTile();
+        board[4][2] = challengeFactory.getRandomChallenge();
+        
+        board[0][1] = new Blocked();
+        board[1][1] = new Blocked();
+        board[2][1] = new Blocked();
+        board[3][1] = new Enemy();
+        board[4][1] = new Blocked();
+        
+        board[0][0] = new Blocked();
+        board[1][0] = new Boss();
+        board[2][0] = new EmptyTile();
+        board[3][0] = new EmptyTile();
+        board[4][0] = challengeFactory.getRandomChallenge();
+        
+        
+        
     }
     
     public void changePosition(int newX, int newY){
+        board[position[0]][position[1]].visit();
         position[0] = newX;
         position[1] = newY;
     }
@@ -116,6 +180,8 @@ public class Board {
                     System.out.print("| O ");
                 else if (board[j][i].type == TileType.BLOCKED)
                     System.out.print("| X ");
+                else if (board[j][i].type == TileType.CHALLENGE)
+                    System.out.print("| C ");
                 else
                     System.out.print("|   ");
             }

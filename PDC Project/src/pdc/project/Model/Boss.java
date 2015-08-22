@@ -9,4 +9,8 @@ package pdc.project.Model;
  *
  * @author MPKohl
  */
-public enum TileType {BLOCKED, EMPTY, CHALLENGE, ENEMY, BOSS}
+public class Boss extends Enemy {
+    public Boss() {
+        setType(TileType.BOSS);
+    }
+}
