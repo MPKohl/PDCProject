@@ -97,5 +97,12 @@ public abstract class Player {
              exp = 0;
          }
     }
+    
+    public void reward(int exp, int score, Item item){
+        this.exp = this.exp + exp;
+        this.score = this.score + score;
+        this.health = 100;
+        //add item to inventory
+    }
  
 }
