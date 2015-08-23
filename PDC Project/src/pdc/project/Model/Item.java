@@ -9,6 +9,7 @@ public abstract class Item {
     private String name;
     private int pointValue;
     private ItemType itemType;
+    private ItemSlot itemSlot;
     
     private int random(int a){
         Random random = new Random();
@@ -157,6 +158,20 @@ public abstract class Item {
      */
     public void setItemType(ItemType itemType) {
         this.itemType = itemType;
+    }
+
+    /**
+     * @return the itemSlot
+     */
+    public ItemSlot getItemSlot() {
+        return itemSlot;
+    }
+
+    /**
+     * @param itemSlot the itemSlot to set
+     */
+    public void setItemSlot(ItemSlot itemSlot) {
+        this.itemSlot = itemSlot;
     }
     
 }

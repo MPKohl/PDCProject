@@ -1,5 +1,6 @@
 package pdc.project.Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -7,7 +8,7 @@ import java.util.HashMap;
  */
 public class Wizard extends Player {
     public String[] spells;    //Actually probably need a 'spell' class.
-    public Wizard(String name, int health, int exp, Item[] inventory,
+    public Wizard(String name, int health, int exp, ArrayList<Item> inventory,
             int score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance) {
             

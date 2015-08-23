@@ -1,10 +1,11 @@
 package pdc.project.Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Warrior extends Player {
     private boolean freeCrit = false;
-    public Warrior(String name, int health, int exp, Item[] inventory,
+    public Warrior(String name, int health, int exp, ArrayList<Item> inventory,
             int score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance) {
             

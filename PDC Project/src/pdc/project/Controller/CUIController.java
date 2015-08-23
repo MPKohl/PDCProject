@@ -66,8 +66,10 @@ public class CUIController {
                 System.exit(0); // -- can be changed later but for now --
                 //quitGame
             } else if (ans.equalsIgnoreCase("i")){
-                System.out.println("Show inventory");
-            }else{
+                DataHolderSingleton.getInstance().getPlayer().showInventory();
+            } else if (ans.equalsIgnoreCase("e")){
+                DataHolderSingleton.getInstance().getPlayer().showEquippedItems();
+            } else{
                 System.out.println("You cannot move in that direction");
                 }
 
