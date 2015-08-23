@@ -4,13 +4,11 @@ import java.util.InputMismatchException;
 import pdc.project.Model.*;
 import java.util.Scanner;
 import pdc.project.Model.Player;
-import pdc.project.View.CUI;
-
 /**
  * 
  */
 public class CUIController {
-    private static Scanner scan = new Scanner(System.in);
+    private static final Scanner scan = new Scanner(System.in);
     private static Board board;
     //method that takes an array of tiles
             //depending on the tiles give options to the user (i.e. move up, move left, etc.)
@@ -118,9 +116,7 @@ public class CUIController {
             Player player = createPlayer(playerName, classType);
             System.out.println("Welcome " + player.getName() + " the "+ player.findClass()
         + " to the best RPG ever");
-            return player;
-
-        
+            return player;    
     }
     
     public Player createPlayer(String playerName, int classType){
@@ -141,10 +137,6 @@ public class CUIController {
             }
         return null;
     }
-
-
-        
-        
     
     //method that takes a random challenge
             //show options for that challenge
