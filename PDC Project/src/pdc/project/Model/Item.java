@@ -12,7 +12,6 @@ public abstract class Item {
     private ItemSlot itemSlot;
     private int dmgReduction = 0;
     private int dmg = 0;
-    private boolean twoHandedWeapon = false;
     
     public Item(ItemType type) {
         setItemType(type);
@@ -237,19 +236,4 @@ public abstract class Item {
     public void setDmg(int dmg) {
         this.dmg = dmg;
     }
-
-    /**
-     * @return the twoHandedWeapon
-     */
-    public boolean isTwoHandedWeapon() {
-        return twoHandedWeapon;
-    }
-
-    /**
-     * @param twoHandedWeapon the twoHandedWeapon to set
-     */
-    public void setTwoHandedWeapon(boolean twoHandedWeapon) {
-        this.twoHandedWeapon = twoHandedWeapon;
-    }
-    
 }

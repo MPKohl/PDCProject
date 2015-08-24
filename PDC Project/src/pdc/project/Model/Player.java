@@ -2,7 +2,6 @@ package pdc.project.Model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 /**
  * Super class for the player.
@@ -41,31 +40,39 @@ public abstract class Player {
     
     public void showInventory(){
         int i = 1;
-        if (inventory.size() == 0){
+        if (inventory.isEmpty()){
             System.out.println("Inventory is empty.");
         }
         try {
             for (Item item : inventory) {
-                System.out.println(i + ". " + item.getName());
+                System.out.print(i + ". " + item.getName());
+                if (item.getItemType() == ItemType.CLOTHARMOUR || item.getItemType() == ItemType.LEATHERARMOUR || item.getItemType() == ItemType.PLATEARMOUR || item.getItemType() == ItemType.SHIELD)
+                    System.out.println(" - Damage reduction: " + item.getDmgReduction() + "%");
+                else if (item.getItemType() == ItemType.BOW || item.getItemType() == ItemType.ONEHANDEDWEAPON || item.getItemType() == ItemType.TWOHANDEDWEAPON)
+                    System.out.println(" - Damage increase: " + item.getDmg() + "%");
                 i++;
             }
         } catch (NullPointerException e) {
-            System.out.println("No items in inventory");
+            System.out.println("Inventory is empty.");
         }
     }
     
     public void showEquippedItems(){
         int i = 1;
-        if (equipped.size() == 0){
+        if (equipped.isEmpty()){
             System.out.println("No items equipped.");
         }
         try {
             for (Item item : equipped.values()) {
-                System.out.println(i + ". " + item.getName());
+                System.out.print(i + ". " + item.getName());
+                if (item.getItemType() == ItemType.CLOTHARMOUR || item.getItemType() == ItemType.LEATHERARMOUR || item.getItemType() == ItemType.PLATEARMOUR || item.getItemType() == ItemType.SHIELD)
+                    System.out.println(" - Damage reduction: " + item.getDmgReduction() + "%");
+                else if (item.getItemType() == ItemType.BOW || item.getItemType() == ItemType.ONEHANDEDWEAPON || item.getItemType() == ItemType.TWOHANDEDWEAPON)
+                    System.out.println(" - Damage increase: " + item.getDmg() + "%");
                 i++;
             }
         } catch (NullPointerException e) {
-            System.out.println("No items equipped");
+            System.out.println("No items equipped.");
         }
     }
     
@@ -85,6 +92,7 @@ public abstract class Player {
                 equipped.remove(ItemSlot.MAINHAND);
             }
         }
+        
         //Remove weapon from mainhand if it is 2 handed when equipping a shield
         else if (itemToEquipType == ItemType.SHIELD){
             if (equipped.containsKey(ItemSlot.MAINHAND)){
