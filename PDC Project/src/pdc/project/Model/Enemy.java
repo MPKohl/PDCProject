@@ -70,7 +70,7 @@ public class Enemy extends Tile{
         }
         if (yLoc >= hard) {
             setDifficulty("hard"); //can fight no more than 1 monster with no heal.
-        }             
+        }
     }
     public void randEasy() {
         

@@ -228,7 +228,7 @@ public abstract class Player {
     }
     
     public void getCurrentStats(){
-        System.out.println("Health: " + this.getHealth() + " Level: " + this.getLvl() +  " exp: " + this.getExp() + " Score: " + this.getScore());
+        System.out.println("\nHealth: " + this.getHealth() + " Level: " + this.getLvl() +  " exp: " + this.getExp() + " Score: " + this.getScore());
     }
 
     /**

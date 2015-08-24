@@ -29,7 +29,7 @@ public class Main {
             Thread.currentThread().interrupt();
         }
         int[] curTime = gameTimer.getCurrentTime();
-        gameTimer.printCurrentTime(curTime);
+        //gameTimer.printCurrentTime(curTime);
         
         
         
