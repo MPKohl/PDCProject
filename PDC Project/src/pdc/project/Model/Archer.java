@@ -4,15 +4,15 @@ import java.util.HashMap;
 
 
 public class Archer extends Player {
-    public boolean extraAttack = false; //will be used to determine if extra attack is granted.
-        public Archer(String name, int health, int exp, Item[] inventory,
+        public Archer(int damage,String name, int health, int exp, Item[] inventory,
             int score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance) {
-            
-        super(name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance);
-        critChance = 20;
-        extraAttack = true;
-        health = 80;
+        super(damage,name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance);
+        critChance = 10;
+        damage = 15;
+        hitChance = 75;
+        dodgeChance = 28;
+        health = 100;
     } 
     public String findClass() {
         return "Archer";
