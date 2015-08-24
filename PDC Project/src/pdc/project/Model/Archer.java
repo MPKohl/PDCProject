@@ -11,8 +11,8 @@ public class Archer extends Player {
         super(damage,name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance);
         critChance = 10;
         damage = 15;
-        hitChance = 75;
-        dodgeChance = 28;
+        hitChance = 80;
+        dodgeChance = 30;
         health = 100;
     } 
         

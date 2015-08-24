@@ -13,7 +13,7 @@ public class Warrior extends Player {
         damage = 20;
         exp = 0;
         hitChance = 90;
-        critChance = 17;
+        critChance = 20;
         dodgeChance = 10;    
     }
     

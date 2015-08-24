@@ -11,7 +11,7 @@ public class CUI {
     public static void startGame(CUIController cuiController, Board board, Player player){
         boolean x = true;
         while(x){
-            CUIController.move(board.reachableTiles(), board);
+            CUIController.move(board.reachableTiles(), board, player);
             player.getCurrentStats();
             board.printBoard();
             

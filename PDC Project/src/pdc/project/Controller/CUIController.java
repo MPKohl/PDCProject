@@ -1,5 +1,6 @@
 package pdc.project.Controller;
 
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,6 +14,9 @@ import pdc.project.Model.Player;
  * 
  */
 public class CUIController {
+
+    Player player;
+    
     private static final Scanner scan = new Scanner(System.in);
     private static DataHolderSingleton data = DataHolderSingleton.getInstance();
     //method that takes an array of tiles
@@ -26,8 +30,9 @@ public class CUIController {
      * Tile[3] = Tile to the left of current position. 
      * @param reachableTiles Takes the current reachable tiles.
      * @param board the game board.
+     * @param player
      */
-    public static void move(Tile[] reachableTiles, Board board){
+    public static void move(Tile[] reachableTiles, Board board, Player player){
         boolean x = true;
         while(x){
         Scanner moveScan = new Scanner(System.in);
@@ -36,19 +41,19 @@ public class CUIController {
         boolean moveRight =    false;
         boolean moveLeft  =    false;
         if(!(reachableTiles[0] instanceof Blocked)){
-            System.out.println("1. Move Up.");
+            System.out.println("1. Move Up");
             moveUp=true;
         }
         if(!(reachableTiles[1] instanceof Blocked)){
-            System.out.println("2. Move Down.");
+            System.out.println("2. Move Down");
             moveDown=true;
         }
         if(!(reachableTiles[2] instanceof Blocked)){  
-            System.out.println("3. Move Right.");
+            System.out.println("3. Move Right");
             moveRight=true;
         }
         if(!(reachableTiles[3] instanceof Blocked)){
-            System.out.println("4. Move Left.");
+            System.out.println("4. Move Left");
             moveLeft=true;
         }
         int[] position = board.getPosition();
@@ -56,19 +61,19 @@ public class CUIController {
         if (ans.equals("1") && moveUp){
             board.changePosition(position[0], position[1]-1);
             x=false;
-            checkTile(board);
+            checkTile(board, player);
         }else if (ans.equals("2")&& moveDown){
             board.changePosition(position[0], position[1]+1);
             x=false;
-            checkTile(board);
+            checkTile(board, player);
         }else if (ans.equals("3") && moveRight){
             board.changePosition(position[0]+1, position[1]);
             x=false;
-            checkTile(board);
+            checkTile(board, player);
         }else if (ans.equals("4")&& moveLeft){
             board.changePosition(position[0]-1, position[1]);
             x=false;
-            checkTile(board);
+            checkTile(board, player);
         }else if(ans.equalsIgnoreCase("quit")){
             System.out.println("Thanks for playing!");
             scan.close();
@@ -85,9 +90,9 @@ public class CUIController {
             System.out.println("Type 'i' to open the inventory.");
             System.out.println("Type 'e' to show current equipped items.");
             System.out.println("Type 'quit' to quit the game.");
-            System.out.println("Type 'equip' to equip an item from your inventory.\n");
+            System.out.println("Type 'equip' to equip an item from your inventory.");
         } else {
-            System.err.println("Please choose one of the given options.");
+            System.out.println("You cannot move in that direction");
             }
         //System.out.println("Current player position\n x: " + position[0] + "\n y: " + position[1]);
         }
@@ -116,13 +121,13 @@ public class CUIController {
         data.getBoard().printBoard();
     }
     
-    private static void checkTile(Board board){
+    private static void checkTile(Board board, Player player){
         int x = board.getPosition()[0];
         int y = board.getPosition()[1];
         
         if (board.getBoard()[x][y] instanceof Challenge){
             Challenge ch = (Challenge) board.getBoard()[x][y];
-            System.out.println("\nA wizard appears before you in a flash of smoke and poses you the following riddle:");
+            System.out.println("A wizard appears before you and says the following:");
             System.out.println(ch.getQuestion().getText());
             ArrayList<TextOutput> answers = new ArrayList<>();
             answers.add(ch.getCorrectAnswer());
@@ -141,22 +146,22 @@ public class CUIController {
                 int userAnswer = scan.nextInt();
                 if (answers.get(userAnswer-1) instanceof CorrectAnswer){
                     data.getPlayer().challengeReward();
-                    System.out.println("\nThe wizard seems pleased with your answer and raises his arms over you before fading away.");
-                    System.out.println("You suddenly feel rejuvenated.\n");
+                    System.out.println("The wizard seems pleased with your answer and says Thanks Brah.");
+                    System.out.println("You suddenly feel a lot better. Hot damn.");
                 }
                 else {
-                    System.out.println("\nThe wizard shakes his head and dissapears with a *BANG*!\n");
+                    System.out.println("The wizard gives you the finger and says byesies.");
                 }
             } 
             catch (InputMismatchException e){
-                System.err.println("\nInput was not valid, the wizard shakes his head and walks away.");
+                System.err.println(e + "Input was not valid, the wizard is unsatisfied");
                 scan.next();
             }
             catch (IndexOutOfBoundsException e){
-                System.err.println("\nInput was not valid, the wizard shakes his head and walks away.");
+                System.err.println(e + "Input was not valid, the wizard is unsatisfied");
             }
             catch (Exception e) {
-                System.err.println("\nInput could not be read, the wizard shakes his head and walks away.");
+                System.err.println(e + "Input could not be read, please try again");
             }
             finally {
                 board.getBoard()[x][y] = new EmptyTile();
@@ -167,13 +172,18 @@ public class CUIController {
                 }
             }
         }
+        else if(board.getBoard()[x][y] instanceof Enemy){
+            Enemy enemy = (Enemy) board.getBoard()[x][y];
+
+            Combat.combatStart(enemy, player);
+        }
     }
         
     
     public static boolean checkIfSave(){
         boolean x = true;
          while(x){
-            System.out.println("\nWould you like to load a previously saved game? (Y/N)");
+            System.out.println("Would you like to load a previously saved game? (Y/N)");
             String ans = scan.nextLine();
             if (ans.equalsIgnoreCase("Y")){
                 //load game method
@@ -181,20 +191,19 @@ public class CUIController {
             } else if(ans.equalsIgnoreCase("N")){
                 return false;
             }
-            System.err.println("Please choose either Y or N.");
+            System.out.println("I did not recognise that command");
         }
          return false;
     }
     public Player playerDetails(){
-        System.out.println("THE AMAZING ADVENTURE");
-        System.out.println("---------------------");
+        System.out.println("Totally awesome RPG");
         CUIController.checkIfSave();
         int classType = 0;
-        System.out.println("\nWhat is your name adventurer?");
+        System.out.println("What is your name adventurer?");
         String playerName = scan.nextLine();
         boolean x = true;
         while(x){
-            System.out.println("\nWhat class would you like to be?");
+            System.out.println("What class would you like to be?");
             System.out.println(" 1. Warrior"
                     + "\n 2. Archer"
                     + "\n 3. Wizard");
@@ -204,35 +213,41 @@ public class CUIController {
                     x = false;
                     scan.nextLine();
                 } else {
-                    System.err.println("Please choose either 1, 2 or 3.");
+                    System.out.println("I did not recognise that command");
                 }
             } catch(InputMismatchException e){
-                System.err.println("Please choose either 1, 2 or 3.");
+                System.err.println("I did not recognise that command");
                 scan.next();
             }
         }
-            Player player = createPlayer(playerName, classType);
-            System.out.println("\nWelcome " + player.getName() + " the "+ player.findClass()
-        + " to your grand adventure!");
-            System.out.println("Type 'help' at any time to see commands.\n");
+            Player thePlayer = createPlayer(playerName, classType);
+            System.out.println("Welcome " + player.getName() + " the "+ player.findClass()
+        + " to the best RPG ever");
+            System.out.println("Type 'help' at any time to see commands");
             return player;    
     }
     
+    
     public Player createPlayer(String playerName, int classType){
             if (classType == 1){
-                    return new Warrior(0,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
+                    player = new Warrior(30,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0);
+                    return player;
                 }
             if (classType == 2){
-                    return new Archer(0,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
+                    player = new Archer(20,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 80.0, 10.0, 30.0);
+                    return player;
                 }
             if (classType == 3){
-                    return new Wizard(0,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
+                     player = new Wizard(30,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0);
+                    return player;
                 }
-            System.err.println("Sorry I did not recognise that command "
+            System.out.println("Sorry I did not recognise that command "
                         + "please try again.");
 
         return null;
     }
+    
+
     
     //method that takes a random challenge
             //show options for that challenge
