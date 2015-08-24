@@ -35,13 +35,13 @@ public abstract class Player {
         this.critChance = critChance;
         this.dodgeChance = dodgeChance;  
         this.lvl = 1;
-        inventory.add(new Item(ItemType.CLOTHARMOUR));
-        inventory.add(new Item(ItemType.LEATHERARMOUR));
-        inventory.add(new Item(ItemType.PLATEARMOUR));
-        inventory.add(new Item(ItemType.BOW));
-        inventory.add(new Item(ItemType.ONEHANDEDWEAPON));
-        inventory.add(new Item(ItemType.SHIELD));
-        inventory.add(new Item(ItemType.TWOHANDEDWEAPON));
+//        inventory.add(new Item(ItemType.CLOTHARMOUR));
+//        inventory.add(new Item(ItemType.LEATHERARMOUR));
+//        inventory.add(new Item(ItemType.PLATEARMOUR));
+//        inventory.add(new Item(ItemType.BOW));
+//        inventory.add(new Item(ItemType.ONEHANDEDWEAPON));
+//        inventory.add(new Item(ItemType.SHIELD));
+//        inventory.add(new Item(ItemType.TWOHANDEDWEAPON));
     }        
     
     //Methods
