@@ -78,8 +78,7 @@ public class CUIController {
             System.out.println("Thanks for playing!");
             scan.close();
             moveScan.close();
-            System.exit(0); // -- can be changed later but for now --
-            //quitGame
+            System.exit(0);
         } else if (ans.equalsIgnoreCase("i")){
             data.getPlayer().showInventory();
         } else if (ans.equalsIgnoreCase("e")){
@@ -127,7 +126,7 @@ public class CUIController {
         
         if (board.getBoard()[x][y] instanceof Challenge){
             Challenge ch = (Challenge) board.getBoard()[x][y];
-            System.out.println("\\nA wizard appears before you in a flash of smoke and poses you the following riddle:");
+            System.out.println("\nA wizard appears before you in a flash of smoke and poses you the following riddle:");
             System.out.println(ch.getQuestion().getText());
             ArrayList<TextOutput> answers = new ArrayList<>();
             answers.add(ch.getCorrectAnswer());
@@ -178,6 +177,7 @@ public class CUIController {
             Combat.combatStart(enemy, player);
             
             board.getBoard()[x][y] = new EmptyTile();
+            
         }
     }
         
