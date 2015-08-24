@@ -10,6 +10,43 @@ public abstract class Item {
     private int pointValue;
     private ItemType itemType;
     private ItemSlot itemSlot;
+    private int dmgReduction = 0;
+    private int dmg = 0;
+    private boolean twoHandedWeapon = false;
+    
+    public Item(ItemType type) {
+        setItemType(type);
+        switch (type){
+            case CLOTHARMOUR: 
+                setDmgReduction(random(10) + 1);
+                setItemSlot(ItemSlot.CHEST);
+                break;
+            case LEATHERARMOUR:
+                setDmgReduction(random(10) + 10);
+                setItemSlot(ItemSlot.CHEST);
+                break;
+            case PLATEARMOUR:
+                setDmgReduction(random(10) + 20);
+                setItemSlot(ItemSlot.CHEST);
+                break;
+            case ONEHANDEDWEAPON:
+                setDmg(random(10)+1);
+                setItemSlot(ItemSlot.MAINHAND);
+                break;
+            case TWOHANDEDWEAPON:
+                setDmg(random(15)+5);
+                setItemSlot(ItemSlot.MAINHAND);
+                break;
+            case SHIELD:
+                setDmgReduction(random(10) + 1);
+                setItemSlot(ItemSlot.OFFHAND);
+                break;
+            case BOW:
+                setDmg(random(12)+4);
+                setItemSlot(ItemSlot.MAINHAND);
+                break;
+        }
+    }
     
     private int random(int a){
         Random random = new Random();
@@ -108,7 +145,6 @@ public abstract class Item {
             case ONEHANDEDWEAPON: prefix = randomOneHandedWeaponPrefix(); break;
             case TWOHANDEDWEAPON: prefix = randomTwoHandedWeaponPrefix(); break;
             case SHIELD: prefix = randomShieldPrefix(); break;
-            case STAFF: prefix = "Staff"; break;
             case BOW: prefix = randomBowPrefix(); break;
             default: prefix = "UNKOWN ITEM"; break;
         }
@@ -172,6 +208,48 @@ public abstract class Item {
      */
     public void setItemSlot(ItemSlot itemSlot) {
         this.itemSlot = itemSlot;
+    }
+
+    /**
+     * @return the dmgReduction
+     */
+    public int getDmgReduction() {
+        return dmgReduction;
+    }
+
+    /**
+     * @param dmgReduction the dmgReduction to set
+     */
+    public void setDmgReduction(int dmgReduction) {
+        this.dmgReduction = dmgReduction;
+    }
+
+    /**
+     * @return the dmg
+     */
+    public int getDmg() {
+        return dmg;
+    }
+
+    /**
+     * @param dmg the dmg to set
+     */
+    public void setDmg(int dmg) {
+        this.dmg = dmg;
+    }
+
+    /**
+     * @return the twoHandedWeapon
+     */
+    public boolean isTwoHandedWeapon() {
+        return twoHandedWeapon;
+    }
+
+    /**
+     * @param twoHandedWeapon the twoHandedWeapon to set
+     */
+    public void setTwoHandedWeapon(boolean twoHandedWeapon) {
+        this.twoHandedWeapon = twoHandedWeapon;
     }
     
 }
