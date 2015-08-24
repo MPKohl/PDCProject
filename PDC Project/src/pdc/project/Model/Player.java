@@ -201,11 +201,22 @@ public abstract class Player {
              exp = 0;
          }
     }
+    public void giveExp(int exp){
+        this.exp += exp;
+        if (this.exp >= 100){
+            int remExp = this.exp - 100;
+        }
+    }
     
     public void enemyReward(){
+        //random for wizard
+        //random for warrior
+        //random for archer
+        //roll 
         Random r = new Random();
         Item item = null;
         exp += 15;
+        //check lvlup give xp
         score += 20;
         int firstRoll = r.nextInt(7);
         switch (firstRoll){
@@ -218,13 +229,12 @@ public abstract class Player {
             case 6: item = new Item(ItemType.TWOHANDEDWEAPON); break;
         }
         inventory.add(item);
-        
-        //add item to inventory
     }
         
     public void challengeReward() {
         health = 100;
         exp +=  15;
+        //islvlup
         score += 20;
     }
     
