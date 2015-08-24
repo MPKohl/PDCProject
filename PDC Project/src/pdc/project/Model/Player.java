@@ -21,7 +21,7 @@ public abstract class Player {
     private int lvl;
     //Construcotrs.
     public Player() {}
-    public Player(int damage, String name, int health, int exp, Item[] inventory,
+    public Player(int damage, String name, int health, int exp, ArrayList inventory,
             int score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance) {
         this.damage = damage;
