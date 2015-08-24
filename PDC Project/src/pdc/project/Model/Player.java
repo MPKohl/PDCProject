@@ -130,7 +130,12 @@ public abstract class Player {
     public void setDodgeChance(double dodgeChance) {
         this.dodgeChance = dodgeChance;
     }
-    
+    public int getLvl() {
+        return lvl;
+    }
+    public void setLvl(int lvl){
+        this.lvl = lvl;
+    }
     
     public void isLvlUp(){
          if (this.exp == 100){
@@ -163,6 +168,10 @@ public abstract class Player {
         health = 100;
         exp +=  15;
         score += 20;
+    }
+    
+    public void getCurrentStats(){
+        System.out.println("Health: " + this.getHealth() + " Level: " + this.getLvl() +  " exp: " + this.getExp() + " Score: " + this.getScore());
     }
  
 }

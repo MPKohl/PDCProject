@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import pdc.project.Model.*;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pdc.project.Model.Player;
 /**
  * 
@@ -26,11 +28,9 @@ public class CUIController {
      * @param board the game board.
      */
     public static void move(Tile[] reachableTiles, Board board){
-        
-        
         boolean x = true;
         while(x){
-            Scanner moveScan = new Scanner(System.in);
+        Scanner moveScan = new Scanner(System.in);
         boolean moveUp    =    false;
         boolean moveDown  =    false;
         boolean moveRight =    false;
@@ -128,6 +128,11 @@ public class CUIController {
             }
             finally {
                 board.getBoard()[x][y] = new EmptyTile();
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
             }
         }
     }
