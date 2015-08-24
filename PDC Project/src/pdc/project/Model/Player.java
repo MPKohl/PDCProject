@@ -75,8 +75,29 @@ public abstract class Player {
         ItemType itemToEquipType = itemToEquip.getItemType();
         inventory.remove(invSlot-1);
         
+        //Remove both mainhand and offhand if twohandedweapon or bow is equipped
+        if (itemToEquipType == ItemType.BOW || itemToEquipType == ItemType.TWOHANDEDWEAPON){
+            if (equipped.containsKey(ItemSlot.OFFHAND)){
+                inventory.add(equipped.get(ItemSlot.OFFHAND));
+                equipped.remove(ItemSlot.OFFHAND);
+            }
+            if (equipped.containsKey(ItemSlot.MAINHAND)){
+                inventory.add(equipped.get(ItemSlot.MAINHAND));
+                equipped.remove(ItemSlot.MAINHAND);
+            }
+        }
+        //Remove weapon from mainhand if it is 2 handed when equipping a shield
+        else if (itemToEquipType == ItemType.SHIELD){
+            if (equipped.containsKey(ItemSlot.MAINHAND)){
+                if (equipped.get(ItemSlot.MAINHAND).getItemType() == ItemType.TWOHANDEDWEAPON){
+                    inventory.add(equipped.get(ItemSlot.MAINHAND));
+                    equipped.remove(ItemSlot.MAINHAND);
+                }
+            }
+        }
+        
         //If an item is already equipped in that slot, remove it and put it in inventory
-        if (equipped.containsKey(itemToEquipType)){
+        else if (equipped.containsKey(itemToEquipType)){
             inventory.add(equipped.get(itemToEquipType));
             equipped.remove(itemToEquipType);
         }
