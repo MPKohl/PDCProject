@@ -88,6 +88,7 @@ public abstract class Player {
     public void equipItem(int invSlot){
         Item itemToEquip = getInventory().get(invSlot-1);
         ItemType itemToEquipType = itemToEquip.getItemType();
+        ItemSlot itemToEquipSlot = itemToEquip.getItemSlot();
         getInventory().remove(invSlot-1);
         
         //Remove both mainhand and offhand if twohandedweapon or bow is equipped
@@ -113,12 +114,12 @@ public abstract class Player {
         }
         
         //If an item is already equipped in that slot, remove it and put it in inventory
-        else if (equipped.containsKey(itemToEquipType)){
-            getInventory().add(equipped.get(itemToEquipType));
-            equipped.remove(itemToEquipType);
+        else if (equipped.containsKey(itemToEquipSlot)){
+            getInventory().add(equipped.get(itemToEquipSlot));
+            equipped.remove(itemToEquipSlot);
         }
         
-        equipped.put(itemToEquip.getItemSlot(), itemToEquip);
+        equipped.put(itemToEquipSlot, itemToEquip);
     }
     
     //getters and setters

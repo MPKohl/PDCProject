@@ -101,6 +101,7 @@ public class CUIController {
             try {
                 int input = scan.nextInt();
                 data.getPlayer().equipItem(input);
+                System.out.println("Item equipped!");
             } catch (InputMismatchException e){
                 System.err.println("Wrong input.");
             } catch (NullPointerException e){
@@ -109,7 +110,7 @@ public class CUIController {
                 System.err.println("Wrong input.");
             }
         }
-        
+        data.getBoard().printBoard();
     }
     
     private static void checkTile(Board board){
