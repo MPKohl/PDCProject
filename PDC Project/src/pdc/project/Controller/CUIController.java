@@ -154,16 +154,20 @@ public class CUIController {
         int classType = 0;
         System.out.println("What is your name adventurer?");
         String playerName = scan.nextLine();
-        System.out.println("What class would you like to be?");
         boolean x = true;
         while(x){
+            System.out.println("What class would you like to be?");
             System.out.println(" 1. Warrior"
                     + "\n 2. Archer"
                     + "\n 3. Wizard");
             try{
                 classType = scan.nextInt();
-                x = false;
-                scan.nextLine();
+                if (classType == 1 || classType == 2 || classType == 3){
+                    x = false;
+                    scan.nextLine();
+                } else {
+                    System.out.println("I did not recognise that command");
+                }
             } catch(InputMismatchException e){
                 System.err.println("I did not recognise that command");
                 scan.next();
@@ -176,8 +180,6 @@ public class CUIController {
     }
     
     public Player createPlayer(String playerName, int classType){
-        boolean x = true;
-        while(x){
             if (classType == 1){
                     return new Warrior(playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
                 }
@@ -190,7 +192,6 @@ public class CUIController {
             System.out.println("Sorry I did not recognise that command "
                         + "please try again.");
 
-            }
         return null;
     }
     
