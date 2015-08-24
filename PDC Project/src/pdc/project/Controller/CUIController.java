@@ -79,7 +79,11 @@ public class CUIController {
             data.getPlayer().showInventory();
         } else if (ans.equalsIgnoreCase("e")){
             data.getPlayer().showEquippedItems();
-        } else{
+        } else if (ans.equalsIgnoreCase("help")){
+            System.out.println("Type 'i' to open the inventory.");
+            System.out.println("Type 'e' to show current equipped items.");
+            System.out.println("Type 'quit' to quit the game.");
+        } else {
             System.out.println("You cannot move in that direction");
             }
         //System.out.println("Current player position\n x: " + position[0] + "\n y: " + position[1]);
@@ -181,6 +185,7 @@ public class CUIController {
             Player player = createPlayer(playerName, classType);
             System.out.println("Welcome " + player.getName() + " the "+ player.findClass()
         + " to the best RPG ever");
+            System.out.println("Type 'help' at any time to see commands");
             return player;    
     }
     
