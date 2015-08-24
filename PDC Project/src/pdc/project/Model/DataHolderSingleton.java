@@ -38,7 +38,7 @@ public class DataHolderSingleton {
       return getDataHolder();
    }
    
-   protected void setBoard(Board board ) {
+   public void setBoard(Board board ) {
       this.board = board;
    }
 

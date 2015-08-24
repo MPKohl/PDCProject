@@ -1,5 +1,8 @@
 package pdc.project.Controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import pdc.project.Model.*;
 import java.util.Scanner;
@@ -9,7 +12,7 @@ import pdc.project.Model.Player;
  */
 public class CUIController {
     private static final Scanner scan = new Scanner(System.in);
-    private static Board board;
+    private static DataHolderSingleton data = DataHolderSingleton.getInstance();
     //method that takes an array of tiles
             //depending on the tiles give options to the user (i.e. move up, move left, etc.)
             //don't show options the user can't take
@@ -23,58 +26,111 @@ public class CUIController {
      * @param board the game board.
      */
     public static void move(Tile[] reachableTiles, Board board){
+        
+        
         boolean x = true;
-            while(x){
-            boolean moveUp    =    false;
-            boolean moveDown  =    false;
-            boolean moveRight =    false;
-            boolean moveLeft  =    false;
-            if(!(reachableTiles[0] instanceof Blocked)){
-                System.out.println("1. Move Up");
-                moveUp=true;
+        while(x){
+            Scanner moveScan = new Scanner(System.in);
+        boolean moveUp    =    false;
+        boolean moveDown  =    false;
+        boolean moveRight =    false;
+        boolean moveLeft  =    false;
+        if(!(reachableTiles[0] instanceof Blocked)){
+            System.out.println("1. Move Up");
+            moveUp=true;
+        }
+        if(!(reachableTiles[1] instanceof Blocked)){
+            System.out.println("2. Move Down");
+            moveDown=true;
+        }
+        if(!(reachableTiles[2] instanceof Blocked)){  
+            System.out.println("3. Move Right");
+            moveRight=true;
+        }
+        if(!(reachableTiles[3] instanceof Blocked)){
+            System.out.println("4. Move Left");
+            moveLeft=true;
+        }
+        int[] position = board.getPosition();
+        String ans = moveScan.nextLine();
+        if (ans.equals("1") && moveUp){
+            board.changePosition(position[0], position[1]-1);
+            x=false;
+            checkTile(board);
+        }else if (ans.equals("2")&& moveDown){
+            board.changePosition(position[0], position[1]+1);
+            x=false;
+            checkTile(board);
+        }else if (ans.equals("3") && moveRight){
+            board.changePosition(position[0]+1, position[1]);
+            x=false;
+            checkTile(board);
+        }else if (ans.equals("4")&& moveLeft){
+            board.changePosition(position[0]-1, position[1]);
+            x=false;
+            checkTile(board);
+        }else if(ans.equalsIgnoreCase("quit")){
+            System.out.println("Thanks for playing!");
+            scan.close();
+            moveScan.close();
+            System.exit(0); // -- can be changed later but for now --
+            //quitGame
+        } else if (ans.equalsIgnoreCase("i")){
+            data.getPlayer().showInventory();
+        } else if (ans.equalsIgnoreCase("e")){
+            data.getPlayer().showEquippedItems();
+        } else{
+            System.out.println("You cannot move in that direction");
             }
-            if(!(reachableTiles[1] instanceof Blocked)){
-                System.out.println("2. Move Down");
-                moveDown=true;
-            }
-            if(!(reachableTiles[2] instanceof Blocked)){  
-                System.out.println("3. Move Right");
-                moveRight=true;
-            }
-            if(!(reachableTiles[3] instanceof Blocked)){
-                System.out.println("4. Move Left");
-                moveLeft=true;
-            }
-            int[] position = board.getPosition();
-            String ans = scan.nextLine();
-            if (ans.equals("1") && moveUp){
-                board.changePosition(position[0], position[1]-1);
-                x=false;
-            }else if (ans.equals("2")&& moveDown){
-                board.changePosition(position[0], position[1]+1);
-                x=false;
-            }else if (ans.equals("3") && moveRight){
-                board.changePosition(position[0]+1, position[1]);
-                x=false;
-            }else if (ans.equals("4")&& moveLeft){
-                board.changePosition(position[0]-1, position[1]);
-                x=false;
-            }else if(ans.equalsIgnoreCase("quit")){
-                System.out.println("Thanks for playing!");
-                System.exit(0); // -- can be changed later but for now --
-                //quitGame
-            } else if (ans.equalsIgnoreCase("i")){
-                DataHolderSingleton.getInstance().getPlayer().showInventory();
-            } else if (ans.equalsIgnoreCase("e")){
-                DataHolderSingleton.getInstance().getPlayer().showEquippedItems();
-            } else{
-                System.out.println("You cannot move in that direction");
-                }
-
-            //System.out.println("Current player position\n x: " + position[0] + "\n y: " + position[1]);
-            }
+        //System.out.println("Current player position\n x: " + position[0] + "\n y: " + position[1]);
+        }
     }
+
+    
+    private static void checkTile(Board board){
+        int x = board.getPosition()[0];
+        int y = board.getPosition()[1];
+        
+        if (board.getBoard()[x][y] instanceof Challenge){
+            Challenge ch = (Challenge) board.getBoard()[x][y];
+            System.out.println("A wizard appears before you and says the following:");
+            System.out.println(ch.getQuestion().getText());
+            ArrayList<TextOutput> answers = new ArrayList<>();
+            answers.add(ch.getCorrectAnswer());
+            for (TextOutput t : ch.getWrongAnswers())
+                answers.add(t);
             
+            Collections.shuffle(answers);
+            
+            int optionNr = 1;
+            for (TextOutput a : answers){
+                System.out.println(optionNr + ". " + a.getText());
+                optionNr++;
+            }
+             
+            try {
+                int userAnswer = scan.nextInt();
+                if (answers.get(userAnswer-1) instanceof CorrectAnswer){
+                    data.getPlayer().challengeReward();
+                    System.out.println("The wizard seems pleased with your answer and says Thanks Brah.");
+                    System.out.println("You suddenly feel a lot better. Hot damn.");
+                }
+                else {
+                    System.out.println("The wizard gives you the finger and says byesies.");
+                }
+            } 
+            catch (InputMismatchException e){
+                System.err.println(e + "Input was not valid, the wizard is unsatisfied");
+                scan.next();
+            }
+            catch (Exception e) {
+                System.err.println(e + "Input could not be read, please try again");
+            }
+            finally {
+                board.getBoard()[x][y] = new EmptyTile();
+            }
+        }
+    }
         
     
     public static boolean checkIfSave(){
@@ -123,13 +179,13 @@ public class CUIController {
         boolean x = true;
         while(x){
             if (classType == 1){
-                    return new Warrior(playerName, 100, 0, null, 0, null, 3.5, 2.5, 1.5);
+                    return new Warrior(playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
                 }
             if (classType == 2){
-                    return new Archer(playerName, 100, 0, null, 0, null, 3.5, 2.5, 1.5);
+                    return new Archer(playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
                 }
             if (classType == 3){
-                    return new Wizard(playerName, 100, 0, null, 0, null, 3.5, 2.5, 1.5);
+                    return new Wizard(playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
                 }
             System.out.println("Sorry I did not recognise that command "
                         + "please try again.");

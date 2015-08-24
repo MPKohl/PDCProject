@@ -2,6 +2,7 @@ package pdc.project.Model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Super class for the player.
@@ -20,7 +21,7 @@ public abstract class Player {
     //Construcotrs.
     public Player() {}
     public Player(String name, int health, int exp, ArrayList<Item> inventory,
-            int score, HashMap equipped, double hitChance, double critChance, 
+            int score, HashMap<ItemSlot, Item> equipped, double hitChance, double critChance, 
             double dodgeChance) {
         this.name = name;
         this.health = health;
@@ -38,6 +39,9 @@ public abstract class Player {
     
     public void showInventory(){
         int i = 1;
+        if (inventory.size() == 0){
+            System.out.println("Inventory is empty.");
+        }
         try {
             for (Item item : inventory) {
                 System.out.println(i + ". " + item.getName());
@@ -50,6 +54,9 @@ public abstract class Player {
     
     public void showEquippedItems(){
         int i = 1;
+        if (equipped.size() == 0){
+            System.out.println("No items equipped.");
+        }
         try {
             for (Item item : equipped.values()) {
                 System.out.println(i + ". " + item.getName());
@@ -131,12 +138,31 @@ public abstract class Player {
              exp = 0;
          }
     }
-    
-    public void reward(int exp, int score, Item item){
-        this.exp = this.exp + exp;
-        this.score = this.score + score;
-        this.health = 100;
+    /*
+    public void EnemyReward(){
+        Random r = new Random();
+        exp += 15;
+        score += 20;
+        int firstRoll = r.nextInt(8);
+        switch (firstRoll)
+            case 0: 
+                Armour armour = new Armour();
+                
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+        inventory.add();
+        
         //add item to inventory
+    }*/
+    public void challengeReward() {
+        health = 100;
+        exp +=  15;
+        score += 20;
     }
  
 }

@@ -86,13 +86,10 @@ public class Board {
         board[2][0] = new EmptyTile();
         board[3][0] = new EmptyTile();
         board[4][0] = challengeFactory.getRandomChallenge();
-        
-        
-        
     }
     
     public void changePosition(int newX, int newY){
-        board[position[0]][position[1]].visit();
+        getBoard()[position[0]][position[1]].visit();
         position[0] = newX;
         position[1] = newY;
     }
@@ -134,28 +131,28 @@ public class Board {
         int y = position[1]; //Player y coordinate
         
         try {
-        Tile upTile = board[x][y-1]; //Tile one above player
+        Tile upTile = getBoard()[x][y-1]; //Tile one above player
         reachableTiles[0] = checkTile(upTile);
         } catch (ArrayIndexOutOfBoundsException e) {
             reachableTiles[0] = new Blocked();
         }
         
         try {
-        Tile downTile = board[x][y+1]; //Tile one below
+        Tile downTile = getBoard()[x][y+1]; //Tile one below
         reachableTiles[1] = checkTile(downTile);
         } catch (ArrayIndexOutOfBoundsException e) {
             reachableTiles[1] = new Blocked();
         }
         
         try {
-        Tile rightTile = board[x+1][y]; //Tile to the right of player
+        Tile rightTile = getBoard()[x+1][y]; //Tile to the right of player
         reachableTiles[2] = checkTile(rightTile);
         } catch (ArrayIndexOutOfBoundsException e) {
             reachableTiles[2] = new Blocked();
         }
 
         try {
-        Tile leftTile = board[x-1][y]; //Tile to the left of player
+        Tile leftTile = getBoard()[x-1][y]; //Tile to the left of player
         reachableTiles[3] = checkTile(leftTile);
         } catch (ArrayIndexOutOfBoundsException e) {
             reachableTiles[3] = new Blocked();
@@ -172,15 +169,15 @@ public class Board {
      */
     public void printBoard(){
         printLine();
-        for (int i = 0 ; i < board[0].length ; i++){
-            for (int j = 0 ; j < board.length ; j++){
+        for (int i = 0 ; i < getBoard()[0].length ; i++){
+            for (int j = 0 ; j < getBoard().length ; j++){
                 if (position[0] == j && position[1] == i)
                     System.out.print("| P ");
-                else if (board[j][i].isVisited)
+                else if (getBoard()[j][i].isVisited)
                     System.out.print("| O ");
-                else if (board[j][i].type == TileType.BLOCKED)
+                else if (getBoard()[j][i].type == TileType.BLOCKED)
                     System.out.print("| X ");
-                else if (board[j][i].type == TileType.CHALLENGE)
+                else if (getBoard()[j][i].type == TileType.CHALLENGE)
                     System.out.print("| C ");
                 else
                     System.out.print("|   ");
@@ -196,9 +193,23 @@ public class Board {
      */
     private void printLine(){
         System.out.print("+");
-        for (int i = 0 ; i < board.length * 4 - 1 ; i++)
+        for (int i = 0 ; i < getBoard().length * 4 - 1 ; i++)
             System.out.print("-");
         System.out.print("+");
         System.out.println("");
+    }
+
+    /**
+     * @return the board
+     */
+    public Tile[][] getBoard() {
+        return board;
+    }
+
+    /**
+     * @param board the board to set
+     */
+    public void setBoard(Tile[][] board) {
+        this.board = board;
     }
 }

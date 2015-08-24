@@ -15,10 +15,12 @@ import pdc.project.View.*;
  */
 public class Main {
 
+   
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        DataHolderSingleton data = DataHolderSingleton.getInstance();
         GameTimer gameTimer = new GameTimer();
         gameTimer.startThread();
         try {
@@ -32,11 +34,11 @@ public class Main {
         
         
         
-        Board board = new Board();
+        data.setBoard(new Board());
         CUIController cuiController = new CUIController();
-        Player player = cuiController.playerDetails();
-        board.printBoard();
-        CUI.startGame(cuiController, board);
+        data.setPlayer(cuiController.playerDetails());
+        data.getBoard().printBoard();
+        CUI.startGame(cuiController, data.getBoard());
         
         
         GameBoardGUI GUI1 = new GameBoardGUI();
