@@ -7,13 +7,16 @@ import java.util.HashMap;
  */
 public class Wizard extends Player {
     public String[] spells;    //Actually probably need a 'spell' class.
-    public Wizard(String name, int health, int exp, Item[] inventory,
+    public Wizard(int damage, String name, int health, int exp, Item[] inventory,
             int score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance) {
-            
-        super(name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance);
-        health = 80;
-        setSpells(); // to be changed later.
+        super(damage,name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance);
+        health = 100;
+        damage = 0;
+        dodgeChance = 5;
+        critChance = 20;
+        hitChance = 85;
+        setSpells(); 
     }
     public String findClass() {
         return "Wizard";

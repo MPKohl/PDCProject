@@ -22,7 +22,7 @@ public class Board {
         board[4][11] = new EmptyTile();
         
         board[0][10] = new Blocked();
-        board[1][10] = new Enemy();
+        board[1][10] = new Enemy(1,10);
         board[2][10] = new EmptyTile();
         board[3][10] = challengeFactory.getRandomChallenge();
         board[4][10] = new Blocked();
@@ -34,7 +34,7 @@ public class Board {
         board[4][9] = challengeFactory.getRandomChallenge();
         
         board[0][8] = new Blocked();
-        board[1][8] = new Enemy();
+        board[1][8] = new Enemy(1,8);
         board[2][8] = new EmptyTile();
         board[3][8] = new Blocked();
         board[4][8] = new EmptyTile();
@@ -42,7 +42,7 @@ public class Board {
         board[0][7] = challengeFactory.getRandomChallenge();
         board[1][7] = new EmptyTile();
         board[2][7] = new EmptyTile();
-        board[3][7] = new Enemy();
+        board[3][7] = new Enemy(3,7);
         board[4][7] = new EmptyTile();
         
         board[0][6] = new Blocked();
@@ -54,17 +54,17 @@ public class Board {
         board[0][5] = challengeFactory.getRandomChallenge();
         board[1][5] = new Blocked();
         board[2][5] = new EmptyTile();
-        board[3][5] = new Enemy();
+        board[3][5] = new Enemy(3,5);
         board[4][5] = new EmptyTile();
         
         board[0][4] = new EmptyTile();
         board[1][4] = new Blocked();
-        board[2][4] = new Enemy();
+        board[2][4] = new Enemy(2,4);
         board[3][4] = new Blocked();
         board[4][4] = challengeFactory.getRandomChallenge();
         
         board[0][3] = new EmptyTile();
-        board[1][3] = new Enemy();
+        board[1][3] = new Enemy(1,3);
         board[2][3] = new EmptyTile();
         board[3][3] = new EmptyTile();
         board[4][3] = new Blocked();
@@ -78,7 +78,7 @@ public class Board {
         board[0][1] = new Blocked();
         board[1][1] = new Blocked();
         board[2][1] = new Blocked();
-        board[3][1] = new Enemy();
+        board[3][1] = new Enemy(3,1);
         board[4][1] = new Blocked();
         
         board[0][0] = new Blocked();
@@ -92,7 +92,7 @@ public class Board {
     }
     
     public void changePosition(int newX, int newY){
-        board[position[0]][position[1]].visit();
+        getBoard()[position[0]][position[1]].visit();
         position[0] = newX;
         position[1] = newY;
     }
@@ -102,6 +102,7 @@ public class Board {
     public void setPosition(int[] position){
         this.position = position;
     }
+    
     /**
      * Checks whether a specific Tile is reachable. If true, return the Tile. 
      * If false, return a Blocked Tile.
@@ -134,28 +135,28 @@ public class Board {
         int y = position[1]; //Player y coordinate
         
         try {
-        Tile upTile = board[x][y-1]; //Tile one above player
+        Tile upTile = getBoard()[x][y-1]; //Tile one above player
         reachableTiles[0] = checkTile(upTile);
         } catch (ArrayIndexOutOfBoundsException e) {
             reachableTiles[0] = new Blocked();
         }
         
         try {
-        Tile downTile = board[x][y+1]; //Tile one below
+        Tile downTile = getBoard()[x][y+1]; //Tile one below
         reachableTiles[1] = checkTile(downTile);
         } catch (ArrayIndexOutOfBoundsException e) {
             reachableTiles[1] = new Blocked();
         }
         
         try {
-        Tile rightTile = board[x+1][y]; //Tile to the right of player
+        Tile rightTile = getBoard()[x+1][y]; //Tile to the right of player
         reachableTiles[2] = checkTile(rightTile);
         } catch (ArrayIndexOutOfBoundsException e) {
             reachableTiles[2] = new Blocked();
         }
 
         try {
-        Tile leftTile = board[x-1][y]; //Tile to the left of player
+        Tile leftTile = getBoard()[x-1][y]; //Tile to the left of player
         reachableTiles[3] = checkTile(leftTile);
         } catch (ArrayIndexOutOfBoundsException e) {
             reachableTiles[3] = new Blocked();
@@ -172,15 +173,15 @@ public class Board {
      */
     public void printBoard(){
         printLine();
-        for (int i = 0 ; i < board[0].length ; i++){
-            for (int j = 0 ; j < board.length ; j++){
+        for (int i = 0 ; i < getBoard()[0].length ; i++){
+            for (int j = 0 ; j < getBoard().length ; j++){
                 if (position[0] == j && position[1] == i)
                     System.out.print("| P ");
-                else if (board[j][i].isVisited)
+                else if (getBoard()[j][i].isVisited)
                     System.out.print("| O ");
-                else if (board[j][i].type == TileType.BLOCKED)
+                else if (getBoard()[j][i].type == TileType.BLOCKED)
                     System.out.print("| X ");
-                else if (board[j][i].type == TileType.CHALLENGE)
+                else if (getBoard()[j][i].type == TileType.CHALLENGE)
                     System.out.print("| C ");
                 else
                     System.out.print("|   ");
@@ -196,9 +197,23 @@ public class Board {
      */
     private void printLine(){
         System.out.print("+");
-        for (int i = 0 ; i < board.length * 4 - 1 ; i++)
+        for (int i = 0 ; i < getBoard().length * 4 - 1 ; i++)
             System.out.print("-");
         System.out.print("+");
         System.out.println("");
+    }
+
+    /**
+     * @return the board
+     */
+    public Tile[][] getBoard() {
+        return board;
+    }
+
+    /**
+     * @param board the board to set
+     */
+    public void setBoard(Tile[][] board) {
+        this.board = board;
     }
 }

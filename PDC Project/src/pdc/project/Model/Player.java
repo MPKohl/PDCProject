@@ -7,6 +7,7 @@ import java.util.HashMap;
  */
 public abstract class Player {
     private String name = "";
+    private int damage;
     private int health;
     private int exp;
     private Item[] inventory;
@@ -17,9 +18,10 @@ public abstract class Player {
     private double dodgeChance;
     //Construcotrs.
     public Player() {}
-    public Player(String name, int health, int exp, Item[] inventory,
+    public Player(int damage, String name, int health, int exp, Item[] inventory,
             int score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance) {
+        this.damage = damage;
         this.name = name;
         this.health = health;
         this.exp = exp;
