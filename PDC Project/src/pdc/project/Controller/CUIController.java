@@ -101,7 +101,6 @@ public class CUIController {
             try {
                 int input = scan.nextInt();
                 data.getPlayer().equipItem(input);
-                System.out.println("Item equipped!");
                 scan.nextLine();
             } catch (InputMismatchException e){
                 System.err.println("Wrong input.");

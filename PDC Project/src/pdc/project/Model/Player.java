@@ -35,17 +35,19 @@ public abstract class Player {
         this.critChance = critChance;
         this.dodgeChance = dodgeChance;  
         this.lvl = 1;
-//        inventory.add(new Item(ItemType.CLOTHARMOUR));
-//        inventory.add(new Item(ItemType.LEATHERARMOUR));
-//        inventory.add(new Item(ItemType.PLATEARMOUR));
-//        inventory.add(new Item(ItemType.BOW));
-//        inventory.add(new Item(ItemType.ONEHANDEDWEAPON));
-//        inventory.add(new Item(ItemType.SHIELD));
-//        inventory.add(new Item(ItemType.TWOHANDEDWEAPON));
+        inventory.add(new Item(ItemType.CLOTHARMOUR));
+        inventory.add(new Item(ItemType.LEATHERARMOUR));
+        inventory.add(new Item(ItemType.PLATEARMOUR));
+        inventory.add(new Item(ItemType.BOW));
+        inventory.add(new Item(ItemType.ONEHANDEDWEAPON));
+        inventory.add(new Item(ItemType.SHIELD));
+        inventory.add(new Item(ItemType.TWOHANDEDWEAPON));
     }        
     
     //Methods
-    public abstract String findClass();   //illegal to call getClass.
+    public String findClass(){
+        return "No class";
+    }
     
     public void showInventory(){
         int i = 1;
@@ -89,8 +91,19 @@ public abstract class Player {
         Item itemToEquip = getInventory().get(invSlot-1);
         ItemType itemToEquipType = itemToEquip.getItemType();
         ItemSlot itemToEquipSlot = itemToEquip.getItemSlot();
-        getInventory().remove(invSlot-1);
         
+        if (findClass().equals("Wizard") && (itemToEquipType == ItemType.LEATHERARMOUR || itemToEquipType == ItemType.PLATEARMOUR || itemToEquipSlot != ItemSlot.CHEST)){
+            System.out.println("You are not eligible to equip that item.");
+            return;
+        }
+        
+        else if (findClass().equals("Archer") && (itemToEquipType == ItemType.PLATEARMOUR || itemToEquipType == ItemType.SHIELD || itemToEquipType == ItemType.ONEHANDEDWEAPON || itemToEquipType == ItemType.TWOHANDEDWEAPON)){
+            System.out.println("You are not eligible to equip that item.");
+            return;
+        }
+                
+        getInventory().remove(invSlot-1);
+               
         //Remove both mainhand and offhand if twohandedweapon or bow is equipped
         if (itemToEquipType == ItemType.BOW || itemToEquipType == ItemType.TWOHANDEDWEAPON){
             if (equipped.containsKey(ItemSlot.OFFHAND)){
@@ -120,7 +133,10 @@ public abstract class Player {
         }
         
         equipped.put(itemToEquipSlot, itemToEquip);
+        
+        System.out.println("Item equipped!");
     }
+    
     
     //getters and setters
     public String getName() {

@@ -19,6 +19,8 @@ public class Wizard extends Player {
         hitChance = 85;
         setSpells(); 
     }
+    
+    @Override
     public String findClass() {
         return "Wizard";
     }

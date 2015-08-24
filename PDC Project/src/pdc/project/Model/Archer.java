@@ -15,6 +15,8 @@ public class Archer extends Player {
         dodgeChance = 28;
         health = 100;
     } 
+        
+    @Override
     public String findClass() {
         return "Archer";
     }

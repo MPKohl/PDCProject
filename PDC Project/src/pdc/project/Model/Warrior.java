@@ -17,6 +17,7 @@ public class Warrior extends Player {
         dodgeChance = 10;    
     }
     
+    @Override
     public String findClass() {
         return "Warrior";
     }
