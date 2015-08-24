@@ -102,12 +102,16 @@ public class CUIController {
                 int input = scan.nextInt();
                 data.getPlayer().equipItem(input);
                 System.out.println("Item equipped!");
+                scan.nextLine();
             } catch (InputMismatchException e){
                 System.err.println("Wrong input.");
+                scan.nextLine();
             } catch (NullPointerException e){
                 System.err.println("Wrong input.");
+                scan.nextLine();
             } catch (IndexOutOfBoundsException e){
                 System.err.println("Wrong input.");
+                scan.next();
             }
         }
         data.getBoard().printBoard();

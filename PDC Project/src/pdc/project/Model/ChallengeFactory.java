@@ -199,7 +199,7 @@ public class ChallengeFactory {
         correctAnswer = new CorrectAnswer("Egg.");
         wrongAnswers = new WrongAnswer[3];
         wrongAnswers[0] = new WrongAnswer("Jukebox.");
-        wrongAnswers[1] = new WrongAnswer("Skull");
+        wrongAnswers[1] = new WrongAnswer("Skull.");
         wrongAnswers[2] = new WrongAnswer("Toilet.");
         
         challenge = new Challenge(question, correctAnswer, wrongAnswers);
