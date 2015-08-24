@@ -79,10 +79,13 @@ public class CUIController {
             data.getPlayer().showInventory();
         } else if (ans.equalsIgnoreCase("e")){
             data.getPlayer().showEquippedItems();
+        } else if (ans.equalsIgnoreCase("equip")){
+            equipItem(scan);
         } else if (ans.equalsIgnoreCase("help")){
             System.out.println("Type 'i' to open the inventory.");
             System.out.println("Type 'e' to show current equipped items.");
             System.out.println("Type 'quit' to quit the game.");
+            System.out.println("Type 'equip' to equip an item from your inventory.");
         } else {
             System.out.println("You cannot move in that direction");
             }
@@ -90,6 +93,24 @@ public class CUIController {
         }
     }
 
+    private static void equipItem(Scanner scan){
+        data.getPlayer().showInventory();
+        if (!data.getPlayer().getInventory().isEmpty()){
+            System.out.println("Type in the number of the item you want to equip:");
+        
+            try {
+                int input = scan.nextInt();
+                data.getPlayer().equipItem(input);
+            } catch (InputMismatchException e){
+                System.err.println("Wrong input.");
+            } catch (NullPointerException e){
+                System.err.println("Wrong input.");
+            } catch (IndexOutOfBoundsException e){
+                System.err.println("Wrong input.");
+            }
+        }
+        
+    }
     
     private static void checkTile(Board board){
         int x = board.getPosition()[0];

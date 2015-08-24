@@ -20,6 +20,7 @@ public abstract class Player {
     private int lvl;
     //Construcotrs.
     public Player() {}
+    
     public Player(int damage, String name, int health, int exp, ArrayList inventory,
             int score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance) {
@@ -34,6 +35,13 @@ public abstract class Player {
         this.critChance = critChance;
         this.dodgeChance = dodgeChance;  
         this.lvl = 1;
+        inventory.add(new Item(ItemType.CLOTHARMOUR));
+        inventory.add(new Item(ItemType.LEATHERARMOUR));
+        inventory.add(new Item(ItemType.PLATEARMOUR));
+        inventory.add(new Item(ItemType.BOW));
+        inventory.add(new Item(ItemType.ONEHANDEDWEAPON));
+        inventory.add(new Item(ItemType.SHIELD));
+        inventory.add(new Item(ItemType.TWOHANDEDWEAPON));
     }        
     
     //Methods
@@ -41,11 +49,11 @@ public abstract class Player {
     
     public void showInventory(){
         int i = 1;
-        if (inventory.isEmpty()){
+        if (getInventory().isEmpty()){
             System.out.println("Inventory is empty.");
         }
         try {
-            for (Item item : inventory) {
+            for (Item item : getInventory()) {
                 System.out.print(i + ". " + item.getName());
                 if (item.getItemType() == ItemType.CLOTHARMOUR || item.getItemType() == ItemType.LEATHERARMOUR || item.getItemType() == ItemType.PLATEARMOUR || item.getItemType() == ItemType.SHIELD)
                     System.out.println(" - Damage reduction: " + item.getDmgReduction() + "%");
@@ -77,19 +85,19 @@ public abstract class Player {
         }
     }
     
-    private void equipItem(int invSlot){
-        Item itemToEquip = inventory.get(invSlot-1);
+    public void equipItem(int invSlot){
+        Item itemToEquip = getInventory().get(invSlot-1);
         ItemType itemToEquipType = itemToEquip.getItemType();
-        inventory.remove(invSlot-1);
+        getInventory().remove(invSlot-1);
         
         //Remove both mainhand and offhand if twohandedweapon or bow is equipped
         if (itemToEquipType == ItemType.BOW || itemToEquipType == ItemType.TWOHANDEDWEAPON){
             if (equipped.containsKey(ItemSlot.OFFHAND)){
-                inventory.add(equipped.get(ItemSlot.OFFHAND));
+                getInventory().add(equipped.get(ItemSlot.OFFHAND));
                 equipped.remove(ItemSlot.OFFHAND);
             }
             if (equipped.containsKey(ItemSlot.MAINHAND)){
-                inventory.add(equipped.get(ItemSlot.MAINHAND));
+                getInventory().add(equipped.get(ItemSlot.MAINHAND));
                 equipped.remove(ItemSlot.MAINHAND);
             }
         }
@@ -98,7 +106,7 @@ public abstract class Player {
         else if (itemToEquipType == ItemType.SHIELD){
             if (equipped.containsKey(ItemSlot.MAINHAND)){
                 if (equipped.get(ItemSlot.MAINHAND).getItemType() == ItemType.TWOHANDEDWEAPON){
-                    inventory.add(equipped.get(ItemSlot.MAINHAND));
+                    getInventory().add(equipped.get(ItemSlot.MAINHAND));
                     equipped.remove(ItemSlot.MAINHAND);
                 }
             }
@@ -106,7 +114,7 @@ public abstract class Player {
         
         //If an item is already equipped in that slot, remove it and put it in inventory
         else if (equipped.containsKey(itemToEquipType)){
-            inventory.add(equipped.get(itemToEquipType));
+            getInventory().add(equipped.get(itemToEquipType));
             equipped.remove(itemToEquipType);
         }
         
@@ -204,6 +212,34 @@ public abstract class Player {
     
     public void getCurrentStats(){
         System.out.println("Health: " + this.getHealth() + " Level: " + this.getLvl() +  " exp: " + this.getExp() + " Score: " + this.getScore());
+    }
+
+    /**
+     * @return the damage
+     */
+    public int getDamage() {
+        return damage;
+    }
+
+    /**
+     * @param damage the damage to set
+     */
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    /**
+     * @return the inventory
+     */
+    public ArrayList<Item> getInventory() {
+        return inventory;
+    }
+
+    /**
+     * @param inventory the inventory to set
+     */
+    public void setInventory(ArrayList<Item> inventory) {
+        this.inventory = inventory;
     }
  
 }

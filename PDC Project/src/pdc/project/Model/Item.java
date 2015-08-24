@@ -5,9 +5,9 @@ import java.util.Random;
 /**
  * Super class for all items.
  */
-public abstract class Item {
+public class Item {
     private String name;
-    private int pointValue;
+    private int pointValue = 100;
     private ItemType itemType;
     private ItemSlot itemSlot;
     private int dmgReduction = 0;
@@ -45,6 +45,7 @@ public abstract class Item {
                 setItemSlot(ItemSlot.MAINHAND);
                 break;
         }
+        giveRandomName();
     }
     
     private int random(int a){
