@@ -86,9 +86,6 @@ public class Board {
         board[2][0] = new EmptyTile();
         board[3][0] = new EmptyTile();
         board[4][0] = challengeFactory.getRandomChallenge();
-        
-        
-        
     }
     
     public void changePosition(int newX, int newY){

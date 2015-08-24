@@ -1,17 +1,20 @@
 package pdc.project.Controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import pdc.project.Model.*;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pdc.project.Model.Player;
-import pdc.project.View.CUI;
-
 /**
  * 
  */
 public class CUIController {
-    private static Scanner scan = new Scanner(System.in);
-    private static Board board;
+    private static final Scanner scan = new Scanner(System.in);
+    private static DataHolderSingleton data = DataHolderSingleton.getInstance();
     //method that takes an array of tiles
             //depending on the tiles give options to the user (i.e. move up, move left, etc.)
             //don't show options the user can't take
@@ -26,55 +29,117 @@ public class CUIController {
      */
     public static void move(Tile[] reachableTiles, Board board){
         boolean x = true;
-            while(x){
-            boolean moveUp    =    false;
-            boolean moveDown  =    false;
-            boolean moveRight =    false;
-            boolean moveLeft  =    false;
-            if(!(reachableTiles[0] instanceof Blocked)){
-                System.out.println("1. Move Up");
-                moveUp=true;
+        while(x){
+        Scanner moveScan = new Scanner(System.in);
+        boolean moveUp    =    false;
+        boolean moveDown  =    false;
+        boolean moveRight =    false;
+        boolean moveLeft  =    false;
+        if(!(reachableTiles[0] instanceof Blocked)){
+            System.out.println("1. Move Up");
+            moveUp=true;
+        }
+        if(!(reachableTiles[1] instanceof Blocked)){
+            System.out.println("2. Move Down");
+            moveDown=true;
+        }
+        if(!(reachableTiles[2] instanceof Blocked)){  
+            System.out.println("3. Move Right");
+            moveRight=true;
+        }
+        if(!(reachableTiles[3] instanceof Blocked)){
+            System.out.println("4. Move Left");
+            moveLeft=true;
+        }
+        int[] position = board.getPosition();
+        String ans = moveScan.nextLine();
+        if (ans.equals("1") && moveUp){
+            board.changePosition(position[0], position[1]-1);
+            x=false;
+            checkTile(board);
+        }else if (ans.equals("2")&& moveDown){
+            board.changePosition(position[0], position[1]+1);
+            x=false;
+            checkTile(board);
+        }else if (ans.equals("3") && moveRight){
+            board.changePosition(position[0]+1, position[1]);
+            x=false;
+            checkTile(board);
+        }else if (ans.equals("4")&& moveLeft){
+            board.changePosition(position[0]-1, position[1]);
+            x=false;
+            checkTile(board);
+        }else if(ans.equalsIgnoreCase("quit")){
+            System.out.println("Thanks for playing!");
+            scan.close();
+            moveScan.close();
+            System.exit(0); // -- can be changed later but for now --
+            //quitGame
+        } else if (ans.equalsIgnoreCase("i")){
+            data.getPlayer().showInventory();
+        } else if (ans.equalsIgnoreCase("e")){
+            data.getPlayer().showEquippedItems();
+        } else if (ans.equalsIgnoreCase("help")){
+            System.out.println("Type 'i' to open the inventory.");
+            System.out.println("Type 'e' to show current equipped items.");
+            System.out.println("Type 'quit' to quit the game.");
+        } else {
+            System.out.println("You cannot move in that direction");
             }
-            if(!(reachableTiles[1] instanceof Blocked)){
-                System.out.println("2. Move Down");
-                moveDown=true;
-            }
-            if(!(reachableTiles[2] instanceof Blocked)){  
-                System.out.println("3. Move Right");
-                moveRight=true;
-            }
-            if(!(reachableTiles[3] instanceof Blocked)){
-                System.out.println("4. Move Left");
-                moveLeft=true;
-            }
-            int[] position = board.getPosition();
-            String ans = scan.nextLine();
-            if (ans.equals("1") && moveUp){
-                board.changePosition(position[0], position[1]-1);
-                x=false;
-            }else if (ans.equals("2")&& moveDown){
-                board.changePosition(position[0], position[1]+1);
-                x=false;
-            }else if (ans.equals("3") && moveRight){
-                board.changePosition(position[0]+1, position[1]);
-                x=false;
-            }else if (ans.equals("4")&& moveLeft){
-                board.changePosition(position[0]-1, position[1]);
-                x=false;
-            }else if(ans.equalsIgnoreCase("quit")){
-                System.out.println("Thanks for playing!");
-                System.exit(0); // -- can be changed later but for now --
-                //quitGame
-            } else if (ans.equalsIgnoreCase("i")){
-                System.out.println("Show inventory");
-            }else{
-                System.out.println("You cannot move in that direction");
-                }
-
-            //System.out.println("Current player position\n x: " + position[0] + "\n y: " + position[1]);
-            }
+        //System.out.println("Current player position\n x: " + position[0] + "\n y: " + position[1]);
+        }
     }
+
+    
+    private static void checkTile(Board board){
+        int x = board.getPosition()[0];
+        int y = board.getPosition()[1];
+        
+        if (board.getBoard()[x][y] instanceof Challenge){
+            Challenge ch = (Challenge) board.getBoard()[x][y];
+            System.out.println("A wizard appears before you and says the following:");
+            System.out.println(ch.getQuestion().getText());
+            ArrayList<TextOutput> answers = new ArrayList<>();
+            answers.add(ch.getCorrectAnswer());
+            for (TextOutput t : ch.getWrongAnswers())
+                answers.add(t);
             
+            Collections.shuffle(answers);
+            
+            int optionNr = 1;
+            for (TextOutput a : answers){
+                System.out.println(optionNr + ". " + a.getText());
+                optionNr++;
+            }
+             
+            try {
+                int userAnswer = scan.nextInt();
+                if (answers.get(userAnswer-1) instanceof CorrectAnswer){
+                    data.getPlayer().challengeReward();
+                    System.out.println("The wizard seems pleased with your answer and says Thanks Brah.");
+                    System.out.println("You suddenly feel a lot better. Hot damn.");
+                }
+                else {
+                    System.out.println("The wizard gives you the finger and says byesies.");
+                }
+            } 
+            catch (InputMismatchException e){
+                System.err.println(e + "Input was not valid, the wizard is unsatisfied");
+                scan.next();
+            }
+            catch (Exception e) {
+                System.err.println(e + "Input could not be read, please try again");
+            }
+            finally {
+                board.getBoard()[x][y] = new EmptyTile();
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
+    }
         
     
     public static boolean checkIfSave(){
@@ -98,16 +163,20 @@ public class CUIController {
         int classType = 0;
         System.out.println("What is your name adventurer?");
         String playerName = scan.nextLine();
-        System.out.println("What class would you like to be?");
         boolean x = true;
         while(x){
+            System.out.println("What class would you like to be?");
             System.out.println(" 1. Warrior"
                     + "\n 2. Archer"
                     + "\n 3. Wizard");
             try{
                 classType = scan.nextInt();
-                x = false;
-                scan.nextLine();
+                if (classType == 1 || classType == 2 || classType == 3){
+                    x = false;
+                    scan.nextLine();
+                } else {
+                    System.out.println("I did not recognise that command");
+                }
             } catch(InputMismatchException e){
                 System.err.println("I did not recognise that command");
                 scan.next();
@@ -116,33 +185,25 @@ public class CUIController {
             Player player = createPlayer(playerName, classType);
             System.out.println("Welcome " + player.getName() + " the "+ player.findClass()
         + " to the best RPG ever");
-            return player;
-
-        
+            System.out.println("Type 'help' at any time to see commands");
+            return player;    
     }
     
     public Player createPlayer(String playerName, int classType){
-        boolean x = true;
-        while(x){
             if (classType == 1){
-                    return new Warrior(playerName, 100, 0, null, 0, null, 3.5, 2.5, 1.5);
+                    return new Warrior(playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
                 }
             if (classType == 2){
-                    return new Archer(playerName, 100, 0, null, 0, null, 3.5, 2.5, 1.5);
+                    return new Archer(playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
                 }
             if (classType == 3){
-                    return new Wizard(playerName, 100, 0, null, 0, null, 3.5, 2.5, 1.5);
+                    return new Wizard(playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
                 }
             System.out.println("Sorry I did not recognise that command "
                         + "please try again.");
 
-            }
         return null;
     }
-
-
-        
-        
     
     //method that takes a random challenge
             //show options for that challenge

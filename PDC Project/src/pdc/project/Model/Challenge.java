@@ -9,9 +9,9 @@ import java.util.ArrayList;
  */
 public class Challenge extends Tile {
     
-    Question question;
-    CorrectAnswer correctAnswer;
-    ArrayList<WrongAnswer> wrongAnswers = new ArrayList<>();
+    private Question question;
+    private CorrectAnswer correctAnswer;
+    private ArrayList<WrongAnswer> wrongAnswers = new ArrayList<>();
     
     public Challenge(Question question, CorrectAnswer correct, WrongAnswer[] wrong){
         setType(TileType.CHALLENGE);
@@ -24,15 +24,57 @@ public class Challenge extends Tile {
     
     public TextOutput[] getChallenge(){
         
-        TextOutput[] array = new TextOutput[2 + wrongAnswers.size()];
+        TextOutput[] array = new TextOutput[2 + getWrongAnswers().size()];
         
-        array[0] = question;
-        array[1] = correctAnswer;
+        array[0] = getQuestion();
+        array[1] = getCorrectAnswer();
         
-        for (int i = 0 ; i < wrongAnswers.size() ; i++)
-            array[i+2] = wrongAnswers.get(i);
+        for (int i = 0 ; i < getWrongAnswers().size() ; i++)
+            array[i+2] = getWrongAnswers().get(i);
         return array;
     }
     
     //Timer
+
+    /**
+     * @return the question
+     */
+    public Question getQuestion() {
+        return question;
+    }
+
+    /**
+     * @param question the question to set
+     */
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    /**
+     * @return the correctAnswer
+     */
+    public CorrectAnswer getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+    /**
+     * @param correctAnswer the correctAnswer to set
+     */
+    public void setCorrectAnswer(CorrectAnswer correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    /**
+     * @return the wrongAnswers
+     */
+    public ArrayList<WrongAnswer> getWrongAnswers() {
+        return wrongAnswers;
+    }
+
+    /**
+     * @param wrongAnswers the wrongAnswers to set
+     */
+    public void setWrongAnswers(ArrayList<WrongAnswer> wrongAnswers) {
+        this.wrongAnswers = wrongAnswers;
+    }
 }
