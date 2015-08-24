@@ -151,7 +151,7 @@ public class CUIController {
                 else {
                     System.out.println("\nThe wizard shakes his head and dissapears with a *BANG*!\n");
                 }
-            } 
+            }
             catch (InputMismatchException e){
                 System.err.println("\nInput was not valid, the wizard shakes his head and walks away.");
                 scan.next();
@@ -178,6 +178,7 @@ public class CUIController {
             
             board.getBoard()[x][y] = new EmptyTile();
             
+            data.getPlayer().enemyReward();
         }
     }
         
