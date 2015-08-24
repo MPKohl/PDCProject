@@ -78,8 +78,7 @@ public class CUIController {
             System.out.println("Thanks for playing!");
             scan.close();
             moveScan.close();
-            System.exit(0); // -- can be changed later but for now --
-            //quitGame
+            System.exit(0);
         } else if (ans.equalsIgnoreCase("i")){
             data.getPlayer().showInventory();
         } else if (ans.equalsIgnoreCase("e")){
@@ -152,7 +151,7 @@ public class CUIController {
                 else {
                     System.out.println("\nThe wizard shakes his head and dissapears with a *BANG*!\n");
                 }
-            } 
+            }
             catch (InputMismatchException e){
                 System.err.println("\nInput was not valid, the wizard shakes his head and walks away.");
                 scan.next();
@@ -178,6 +177,8 @@ public class CUIController {
             Combat.combatStart(enemy, player);
             
             board.getBoard()[x][y] = new EmptyTile();
+            
+            data.getPlayer().enemyReward();
         }
     }
         

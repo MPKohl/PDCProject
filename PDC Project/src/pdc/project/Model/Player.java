@@ -2,6 +2,7 @@ package pdc.project.Model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Super class for the player.
@@ -200,27 +201,27 @@ public abstract class Player {
              exp = 0;
          }
     }
-    /*
-    public void EnemyReward(){
+    
+    public void enemyReward(){
         Random r = new Random();
+        Item item = null;
         exp += 15;
         score += 20;
-        int firstRoll = r.nextInt(8);
-        switch (firstRoll)
-            case 0: 
-                Armour armour = new Armour();
-                
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-        inventory.add();
+        int firstRoll = r.nextInt(7);
+        switch (firstRoll){
+            case 0: item = new Item(ItemType.BOW); break;          
+            case 1: item = new Item(ItemType.CLOTHARMOUR); break;
+            case 2: item = new Item(ItemType.LEATHERARMOUR); break;
+            case 3: item = new Item(ItemType.ONEHANDEDWEAPON); break;
+            case 4: item = new Item(ItemType.PLATEARMOUR); break;
+            case 5: item = new Item(ItemType.SHIELD); break;
+            case 6: item = new Item(ItemType.TWOHANDEDWEAPON); break;
+        }
+        inventory.add(item);
         
         //add item to inventory
-    }*/
+    }
+        
     public void challengeReward() {
         health = 100;
         exp +=  15;
