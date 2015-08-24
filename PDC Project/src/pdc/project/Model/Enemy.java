@@ -7,41 +7,61 @@ import java.util.Random;
  * the enemy.
  */
 public class Enemy extends Tile{
-    //Name
     private String enemyName;
-    //Health
     private int enemyHealth;
-    //Damage low
     private int damageLow;
-    //Damage High
     private int damageHigh;
-    //Chance to hit
     private int chanceToHit;
-    //Chance to crit
     private int chanceToCrit;
-    //Chance to dodge
     private int chanceToDodge;
-    //Difficulty - Enumeration
-    //Experience yield
     private int expYield;
-    //Item yield
     private Item itemYield;
     private String difficulty = "";
-    
-    
     
     public Enemy() {}
     public Enemy(int xLoc, int yLoc){
         setType(TileType.ENEMY);
         randomizeName();
+        chooseDifficulty(xLoc,yLoc,12);
+        chooseStats(difficulty);
     }
-    
-    public void randDifficulty(Board board,int xLoc, int yLoc) {
+    public void chooseStats(String difficulty) {
+        Random random = new Random();
+        if (difficulty.equals("easy")) {
+            damageLow = random.nextInt(5)+1;
+            damageHigh = random.nextInt(15)+1;
+            chanceToHit = 70;
+            chanceToDodge = 10;
+            chanceToCrit = 10;
+            expYield = 35;
+            enemyHealth = 100;
+        }
+        if (difficulty.equals("medium")) {
+            damageLow = random.nextInt(10)+1;
+            damageHigh = random.nextInt(20)+1;
+            chanceToHit = 70;
+            chanceToDodge = 10;
+            chanceToCrit = 10;
+            expYield = 35;
+            enemyHealth = 100;
+        }
+        if (difficulty.equals("hard")) {
+            damageLow = random.nextInt(15)+1;
+            damageHigh = random.nextInt(25)+1;
+            chanceToHit = 70;
+            chanceToDodge = 10;
+            chanceToCrit = 10;
+            expYield = 35;
+            enemyHealth = 100;
+        }
+        
+    }
+    public void chooseDifficulty(int xLoc, int yLoc, int gameBoardSize) {
         int divideResult = 0;
-        divideResult = (int)board.getBoard()[0].length  /3;
-        int easy = yLoc - divideResult;
-        int medium = yLoc - (divideResult*2);
-        int hard = yLoc - (divideResult*3);
+        divideResult = (int)gameBoardSize/3;
+        int easy = 12 - divideResult; //==8
+        int medium = 12 - (divideResult*2); //==4
+        int hard = 12 - (divideResult*3); //==0
         if (yLoc >= easy) {
             setDifficulty("easy"); //can fight 2 monsters with no heal
         }
