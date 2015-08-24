@@ -127,7 +127,7 @@ public class CUIController {
         
         if (board.getBoard()[x][y] instanceof Challenge){
             Challenge ch = (Challenge) board.getBoard()[x][y];
-            System.out.println("\\nA wizard appears before you in a flash of smoke and poses you the following riddle:");
+            System.out.println("\nA wizard appears before you in a flash of smoke and poses you the following riddle:");
             System.out.println(ch.getQuestion().getText());
             ArrayList<TextOutput> answers = new ArrayList<>();
             answers.add(ch.getCorrectAnswer());
