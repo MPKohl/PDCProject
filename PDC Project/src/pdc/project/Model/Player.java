@@ -32,7 +32,8 @@ public abstract class Player {
         this.equipped = equipped;
         this.hitChance = hitChance;
         this.critChance = critChance;
-        this.dodgeChance = dodgeChance;     
+        this.dodgeChance = dodgeChance;  
+        this.lvl = 1;
     }        
     
     //Methods

@@ -127,6 +127,9 @@ public class CUIController {
                 System.err.println(e + "Input was not valid, the wizard is unsatisfied");
                 scan.next();
             }
+            catch (IndexOutOfBoundsException e){
+                System.err.println(e + "Input was not valid, the wizard is unsatisfied");
+            }
             catch (Exception e) {
                 System.err.println(e + "Input could not be read, please try again");
             }
