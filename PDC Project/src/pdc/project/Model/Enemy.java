@@ -26,10 +26,40 @@ public class Enemy extends Tile{
     private int expYield;
     //Item yield
     private Item itemYield;
+    private String difficulty = "";
     
-    public Enemy(){
+    
+    
+    public Enemy() {}
+    public Enemy(int xLoc, int yLoc){
         setType(TileType.ENEMY);
         randomizeName();
+    }
+    
+    public void randDifficulty(Board board,int xLoc, int yLoc) {
+        int divideResult = 0;
+        divideResult = (int)board.getBoard()[0].length  /3;
+        int easy = yLoc - divideResult;
+        int medium = yLoc - (divideResult*2);
+        int hard = yLoc - (divideResult*3);
+        if (yLoc >= easy) {
+            setDifficulty("easy"); //can fight 2 monsters with no heal
+        }
+        if (yLoc >= medium) {
+            setDifficulty("medium"); //could need to heal, could not need
+        }
+        if (yLoc >= hard) {
+            setDifficulty("hard"); //can fight no more than 1 monster with no heal.
+        }             
+    }
+    public void randEasy() {
+        
+    }
+    public void randMedium() {
+        
+    }
+    public void randHard() {
+        
     }
     
     public void randomizeName(){
@@ -189,5 +219,11 @@ public class Enemy extends Tile{
      */
     public void setItemYield(Item itemYield) {
         this.itemYield = itemYield;
+    }
+    public void setDifficulty(String difficulty) {
+        this.difficulty = difficulty;
+    }
+    public String getDifficulty() {
+        return difficulty;
     }
 }

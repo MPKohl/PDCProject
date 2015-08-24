@@ -79,7 +79,11 @@ public class CUIController {
             data.getPlayer().showInventory();
         } else if (ans.equalsIgnoreCase("e")){
             data.getPlayer().showEquippedItems();
-        } else{
+        } else if (ans.equalsIgnoreCase("help")){
+            System.out.println("Type 'i' to open the inventory.");
+            System.out.println("Type 'e' to show current equipped items.");
+            System.out.println("Type 'quit' to quit the game.");
+        } else {
             System.out.println("You cannot move in that direction");
             }
         //System.out.println("Current player position\n x: " + position[0] + "\n y: " + position[1]);
@@ -181,18 +185,19 @@ public class CUIController {
             Player player = createPlayer(playerName, classType);
             System.out.println("Welcome " + player.getName() + " the "+ player.findClass()
         + " to the best RPG ever");
+            System.out.println("Type 'help' at any time to see commands");
             return player;    
     }
     
     public Player createPlayer(String playerName, int classType){
             if (classType == 1){
-                    return new Warrior(playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
+                    return new Warrior(0,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
                 }
             if (classType == 2){
-                    return new Archer(playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
+                    return new Archer(0,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
                 }
             if (classType == 3){
-                    return new Wizard(playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
+                    return new Wizard(0,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 3.5, 2.5, 1.5);
                 }
             System.out.println("Sorry I did not recognise that command "
                         + "please try again.");

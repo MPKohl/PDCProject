@@ -9,6 +9,7 @@ import java.util.Random;
  */
 public abstract class Player {
     private String name = "";
+    private int damage;
     private int health;
     private int exp;
     private ArrayList<Item> inventory = new ArrayList<>();
@@ -20,9 +21,10 @@ public abstract class Player {
     private int lvl;
     //Construcotrs.
     public Player() {}
-    public Player(String name, int health, int exp, ArrayList<Item> inventory,
-            int score, HashMap<ItemSlot, Item> equipped, double hitChance, double critChance, 
+    public Player(int damage, String name, int health, int exp, ArrayList inventory,
+            int score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance) {
+        this.damage = damage;
         this.name = name;
         this.health = health;
         this.exp = exp;
