@@ -210,16 +210,19 @@ public abstract class Player {
     }
     
     public void enemyReward(){
-        //random for wizard
-        //random for warrior
-        //random for archer
-        //roll 
         Random r = new Random();
         Item item = null;
         giveExp(15);
         score += 20;
-        int firstRoll = r.nextInt(7);
-        switch (firstRoll){
+        int roll = 0;
+        if (this.findClass().equals("Warrior"))
+            roll = randWarrior(r);
+        else if (this.findClass().equals("Archer"))
+            roll = randArcher(r);
+        else if (this.findClass().equals("Wizard"))
+            roll = randWizard(r);
+
+        switch (roll){
             case 0: item = new Item(ItemType.BOW); break;          
             case 1: item = new Item(ItemType.CLOTHARMOUR); break;
             case 2: item = new Item(ItemType.LEATHERARMOUR); break;
@@ -230,7 +233,29 @@ public abstract class Player {
         }
         inventory.add(item);
     }
-        
+    private int randWarrior(Random r){
+        int roll = r.nextInt(7);
+        return roll;
+    } 
+    private int randArcher(Random r){
+        int roll = r.nextInt(40);
+        if (roll < 10)
+            return 0;
+        else if (roll < 20)
+            return 1;
+        else if (roll < 30)
+            return 2;
+        roll = r.nextInt(7);
+        return roll;
+    }
+    private int randWizard(Random r){
+        int roll = r.nextInt(10);
+        if (roll < 7)
+            return 1;
+        roll = r.nextInt(7);
+        return roll;
+    } 
+    
     public void challengeReward() {
         health = 100;
         giveExp(15);
