@@ -204,7 +204,8 @@ public abstract class Player {
     public void giveExp(int exp){
         this.exp += exp;
         if (this.exp >= 100){
-            int remExp = this.exp - 100;
+            this.exp= this.exp - 100;
+            this.lvl +=1;
         }
     }
     
@@ -215,8 +216,7 @@ public abstract class Player {
         //roll 
         Random r = new Random();
         Item item = null;
-        exp += 15;
-        //check lvlup give xp
+        giveExp(15);
         score += 20;
         int firstRoll = r.nextInt(7);
         switch (firstRoll){
@@ -233,8 +233,7 @@ public abstract class Player {
         
     public void challengeReward() {
         health = 100;
-        exp +=  15;
-        //islvlup
+        giveExp(15);
         score += 20;
     }
     

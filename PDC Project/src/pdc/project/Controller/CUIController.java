@@ -85,11 +85,23 @@ public class CUIController {
             data.getPlayer().showEquippedItems();
         } else if (ans.equalsIgnoreCase("equip")){
             equipItem(scan);
-        } else if (ans.equalsIgnoreCase("help")){
+        } else if (ans.equalsIgnoreCase("cmds")){
             System.out.println("Type 'i' to open the inventory.");
             System.out.println("Type 'e' to show current equipped items.");
-            System.out.println("Type 'quit' to quit the game.");
             System.out.println("Type 'equip' to equip an item from your inventory.");
+            System.out.println("Type 'help' to view the help screen");
+            System.out.println("Type 'quit' to quit the game.");
+            
+        } else if (ans.equalsIgnoreCase("help")){
+            System.out.println("\nThis is a turn based RPG game."
+                    + "\nYour player is the 'P' on the map."
+                    + "\nType 'cmds' at any time to view useful commands to help you complete the game"
+                    + "\n'C' on the map is a challenge, move into the challenge to complete it"
+                    + "\nIf you complete a challenge your health will be restored and you will gain experiece points and score"
+                    + "\nThroughout your travels your player will run into spooky monsters"
+                    + "\nIf you manage to defeat these monsters you will be rewarded with a random item, updated score and experiecnce points."
+                    + "\n'X' on the map is a blocked square, you cannot move into these squares."
+                    + "\nHave fun!\n");
         } else {
             System.err.println("Please choose one of the given options.");
             }
@@ -227,7 +239,7 @@ public class CUIController {
             Player thePlayer = createPlayer(playerName, classType);
             System.out.println("\nWelcome " + player.getName() + " the "+ player.findClass()
         + " to the best RPG ever");
-            System.out.println("Type 'help' at any time to see commands.\n");
+            System.out.println("Type 'help' at any time to get help.\n");
             return player;    
     }
     
