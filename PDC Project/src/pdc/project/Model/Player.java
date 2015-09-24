@@ -208,6 +208,10 @@ public abstract class Player {
             this.lvl +=1;
         }
     }
+    public void bossReward(){
+        score +=100;
+        giveExp(50);
+    }
     
     public void enemyReward(){
         Random r = new Random();
