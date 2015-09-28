@@ -33,6 +33,8 @@ public class Combat {
             poisonDmg(enemy, player);
             System.out.println("Your Poison seeds hurt the enemy!");
             System.out.println("The " + enemy.getEnemyName() + "'s health is now " +enemy.getEnemyHealth());
+            if(enemy.getEnemyHealth() <= 0)
+                return false;
             poisonCount++;
         }
         if (poisonCount==2){
