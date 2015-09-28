@@ -42,7 +42,7 @@ public class Combat {
             ((Wizard)data.getPlayer()).setPoison(false);
             poisonCount=0;
         }
-        if (ironCount==2){
+        if (ironCount==1){
             System.out.println("Oh no! Your iron skin has worn off!");
             ((Wizard)data.getPlayer()).setIronSkin(false);
             ironCount=0;
@@ -75,8 +75,7 @@ public class Combat {
                         return true;
                     } else {
                         ((Wizard)data.getPlayer()).setIronSkin(true);
-                        System.out.println("\nIron Skin is now enabled for 2 turns");
-                        ironCount = 0;
+                        System.out.println("\nIron Skin is now enabled for 1 turn");
                         //enemy attacks
                         if(enemy.getEnemyHealth() > 0){
                             System.out.println("Enemy health: " + enemy.getEnemyHealth() + "\nEnter any key to continue: ");
@@ -98,7 +97,6 @@ public class Combat {
                     } else {
                         ((Wizard)data.getPlayer()).setPoison(true);
                         System.out.println("\nPoison is now enabled for 2 turns");
-                        poisonCount = 0;
                         
                         //enemy attacks
                         if(enemy.getEnemyHealth() > 0){
