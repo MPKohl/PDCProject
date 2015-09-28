@@ -26,6 +26,13 @@ public class Combat {
         
         playerAttack(enemy, player);
     }
+    private static void sleep(int time){
+        try {
+            Thread.sleep(time);
+                } catch (InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+    }
     
     private static boolean wizardAttack(Enemy enemy, Player player){
         Scanner scan = new Scanner(System.in);
@@ -36,16 +43,19 @@ public class Combat {
             if(enemy.getEnemyHealth() <= 0)
                 return false;
             poisonCount++;
+            sleep(100);
         }
         if (poisonCount==2){
             System.out.println("Oh no! Your Poison seeds have worn off!");
             ((Wizard)data.getPlayer()).setPoison(false);
             poisonCount=0;
+            sleep(1000);
         }
         if (ironCount==1){
             System.out.println("Oh no! Your iron skin has worn off!");
             ((Wizard)data.getPlayer()).setIronSkin(false);
             ironCount=0;
+            sleep(1000);
         }
         System.out.println("1. Fireball");
         System.out.println("2. Iron Skin");
@@ -58,8 +68,7 @@ public class Combat {
                         playerDamageCalc(enemy, player);
                     }
                     if(enemy.getEnemyHealth() > 0){
-                        System.out.println("Enemy health: " + enemy.getEnemyHealth() + "\nEnter any key to continue: ");
-                        scan.next();
+                        System.out.println("Enemy health: " + enemy.getEnemyHealth());
                         enemyAttack(enemy, player);
                         return false;
                     }
@@ -171,7 +180,8 @@ public class Combat {
             System.out.println("The enemy tries to attack but it is blocked by your iron skin!");
             ironCount++;
         } else {
-            System.out.println("The enemy attacks\n");
+            System.out.println("The " + enemy.getEnemyName() + " starts to begin it's attack!\n");
+            sleep(1000);
             if((!playerDodgeCalc(player)) && (enemyHitCalc(enemy))){
                 enemyDamageCalc(enemy, player);
             }
