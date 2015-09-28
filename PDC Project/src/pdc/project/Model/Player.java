@@ -49,6 +49,7 @@ public abstract class Player {
     public String findClass(){
         return "No class";
     }
+
     
     public void showInventory(){
         int i = 1;

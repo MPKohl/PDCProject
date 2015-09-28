@@ -6,12 +6,17 @@ package pdc.project.Controller;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
+import pdc.project.Model.DataHolderSingleton;
 import pdc.project.Model.Enemy;
 import pdc.project.Model.Player;
+import pdc.project.Model.Wizard;
+
 
 
 public class Combat {
-    
+    private static int poisonCount;
+    private static int ironCount;
+    private static DataHolderSingleton data = DataHolderSingleton.getInstance();
     //Method to start the combat, show player and enemy stats
     
     public static void combatStart(Enemy enemy, Player player){
@@ -22,6 +27,100 @@ public class Combat {
         playerAttack(enemy, player);
     }
     
+    private static boolean wizardAttack(Enemy enemy, Player player){
+        Scanner scan = new Scanner(System.in);
+        if (((Wizard)data.getPlayer()).getPoison()==true && poisonCount < 2){
+            poisonDmg(enemy, player);
+            System.out.println("Your Poison seeds hurt the enemy!");
+            System.out.println("The " + enemy.getEnemyName() + "'s health is now " +enemy.getEnemyHealth());
+            poisonCount++;
+        }
+        if (poisonCount==2){
+            System.out.println("Oh no! Your Poison seeds have worn off!");
+            ((Wizard)data.getPlayer()).setPoison(false);
+            poisonCount=0;
+        }
+        if (ironCount==2){
+            System.out.println("Oh no! Your iron skin has worn off!");
+            ((Wizard)data.getPlayer()).setIronSkin(false);
+            ironCount=0;
+        }
+        System.out.println("1. Fireball");
+        System.out.println("2. Iron Skin");
+        System.out.println("3. Poison Seeds");
+        try{
+                int command = scan.nextInt();
+                scan.nextLine();
+                if (command == 1){
+                    if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
+                        playerDamageCalc(enemy, player);
+                    }
+                    if(enemy.getEnemyHealth() > 0){
+                        System.out.println("Enemy health: " + enemy.getEnemyHealth() + "\nEnter any key to continue: ");
+                        scan.next();
+                        enemyAttack(enemy, player);
+                        return false;
+                    }
+                     else {
+                        System.out.println(enemy.getEnemyName() + " has been defeated, enter any key to continue: ");
+                        scan.next();
+                        return false;
+                    }
+                } else if(command == 2){
+                    //iron skin
+                    if (((Wizard)data.getPlayer()).getIronSkin()==true){
+                        System.out.println("\nIron Skin is already enabled");
+                        return true;
+                    } else {
+                        ((Wizard)data.getPlayer()).setIronSkin(true);
+                        System.out.println("\nIron Skin is now enabled for 2 turns");
+                        ironCount = 0;
+                        //enemy attacks
+                        if(enemy.getEnemyHealth() > 0){
+                            System.out.println("Enemy health: " + enemy.getEnemyHealth() + "\nEnter any key to continue: ");
+                            scan.next();
+                            enemyAttack(enemy, player);
+                            return false;
+                        } else {
+                            System.out.println(enemy.getEnemyName() + " has been defeated, enter any key to continue: ");
+                            scan.next();
+                            return false;
+                        }
+                    }
+                    
+                } else if(command == 3){
+                    //poison seeds
+                    if (((Wizard)data.getPlayer()).getPoison()==true){
+                        System.out.println("\nPoison is already enabled");
+                        return true;
+                    } else {
+                        ((Wizard)data.getPlayer()).setPoison(true);
+                        System.out.println("\nPoison is now enabled for 2 turns");
+                        poisonCount = 0;
+                        
+                        //enemy attacks
+                        if(enemy.getEnemyHealth() > 0){
+                            System.out.println("Enemy health: " + enemy.getEnemyHealth() + "\nEnter any key to continue: ");
+                            scan.next();
+                            enemyAttack(enemy, player);
+                            return false;
+                        } else {
+                            System.out.println(enemy.getEnemyName() + " has been defeated, enter any key to continue: ");
+                            scan.next();
+                            return false;
+                        }
+                    }
+                }
+            }catch(InputMismatchException e){
+                System.err.println("I did not recognise that command");
+                scan.next();
+                return true;
+            }
+        return false;
+    }
+    
+    
+    
     //Main Player attack method
     
     public static void playerAttack(Enemy enemy, Player player){
@@ -29,7 +128,12 @@ public class Combat {
         Scanner scan = new Scanner(System.in);    
     
         boolean x = true;
+        int turnCount = 0;
         while (x){
+            turnCount++;
+            if(data.getPlayer()instanceof Wizard){
+                x = wizardAttack(enemy, player);
+            }else{
             System.out.println("1. Attack");
             try{               
                 int command = scan.nextInt();
@@ -57,23 +161,30 @@ public class Combat {
             }
         }
         }
+    }
     
     //Main Enemy attack method
     
     public static void enemyAttack(Enemy enemy, Player player){
         Scanner scan = new Scanner(System.in);
-        System.out.println("The enemy attacks\n");
-        if((!playerDodgeCalc(player)) && (enemyHitCalc(enemy))){
-            enemyDamageCalc(enemy, player);
+        if(((Wizard)data.getPlayer()).getIronSkin()==true && ironCount < 2){
+            System.out.println("The enemy tries to attack but it is blocked by your iron skin!");
+            ironCount++;
+        } else {
+            System.out.println("The enemy attacks\n");
+            if((!playerDodgeCalc(player)) && (enemyHitCalc(enemy))){
+                enemyDamageCalc(enemy, player);
+            }
         }
         if(player.getHealth() > 0){
             System.out.println("Player health: " + player.getHealth() + "\nEnter any key to continue: ");  
             scan.next();
             playerAttack(enemy, player);
         }
-        else
-            quit();
+            else
+                quit();
             
+        
     }
     
     /////////////////////
@@ -241,5 +352,9 @@ public class Combat {
         System.out.println("GAME OVER\nPress any key to exit: ");
         scan.nextLine();
         System.exit(0);
+    }
+
+    private static void poisonDmg(Enemy enemy, Player player) {
+        enemy.setEnemyHealth(enemy.getEnemyHealth() - 5);
     }
 }
