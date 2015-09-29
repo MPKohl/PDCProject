@@ -15,7 +15,8 @@ public class ChallengeFactory {
     public ChallengeFactory() {
         //Create a list of all challenges
         
-        Question question = new Question("I can have no color, though there may be darkness within. I have no weight and hold nothing, and if placed in a container it becomes lighter.");
+        Question question = new Question("I can have no color, though there may be darkness within. "
+                + "I have no weight and hold nothing, and if placed in a container it becomes lighter.");
         CorrectAnswer correctAnswer = new CorrectAnswer("A hole.");
         WrongAnswer[] wrongAnswers = new WrongAnswer[7];
         wrongAnswers[0] = new WrongAnswer("Air.");
@@ -30,7 +31,8 @@ public class ChallengeFactory {
         
         newChallenges.add(challenge);
         
-        question = new Question("Of all your possessions, I am the hardest to guard. If you have me, you will want to share me. If you share me, you no longer have me.");
+        question = new Question("Of all your possessions, I am the hardest to guard. "
+                + "If you have me, you will want to share me. If you share me, you no longer have me.");
         correctAnswer = new CorrectAnswer("A secret.");
         wrongAnswers = new WrongAnswer[7];
         wrongAnswers[0] = new WrongAnswer("Your life.");
@@ -45,7 +47,8 @@ public class ChallengeFactory {
         
         newChallenges.add(challenge);
         
-        question = new Question("Alive as you but without breath, as cold in my life as in my death; never a thirst though. I always drink dressed in a mail but never a clink.");
+        question = new Question("Alive as you but without breath, as cold in my life as in my death; never a thirst though."
+                + " I always drink dressed in a mail but never a clink.");
         correctAnswer = new CorrectAnswer("Fish.");
         wrongAnswers = new WrongAnswer[7];
         wrongAnswers[0] = new WrongAnswer("Specter.");
@@ -60,7 +63,8 @@ public class ChallengeFactory {
         
         newChallenges.add(challenge);
         
-        question = new Question("I am free for the taking through all of your life, though given but once at birth. I am less than nothing in weight, but will fell the strongest of you if held.");
+        question = new Question("I am free for the taking through all of your life, though given but once at birth."
+                + " I am less than nothing in weight, but will fell the strongest of you if held.");
         correctAnswer = new CorrectAnswer("Breath.");
         wrongAnswers = new WrongAnswer[7];
         wrongAnswers[0] = new WrongAnswer("Good Will.");
@@ -75,7 +79,8 @@ public class ChallengeFactory {
         
         newChallenges.add(challenge);
         
-        question = new Question("I have holes throughout, from back to front and top to bottom to core. More nothing than something within, and yet I still hold water.");
+        question = new Question("I have holes throughout, from back to front and top to bottom to core."
+                + " More nothing than something within, and yet I still hold water.");
         correctAnswer = new CorrectAnswer("A Sponge.");
         wrongAnswers = new WrongAnswer[7];
         wrongAnswers[0] = new WrongAnswer("A Well.");
@@ -90,7 +95,8 @@ public class ChallengeFactory {
         
         newChallenges.add(challenge);
         
-        question = new Question("They flow and leap, but only as you pass. Dress yourself in darkest black, and they are darker still. Always they flee in the light, though without the sun there would be none.");
+        question = new Question("They flow and leap, but only as you pass."
+                + " Dress yourself in darkest black, and they are darker still. Always they flee in the light, though without the sun there would be none.");
         correctAnswer = new CorrectAnswer("Shadows.");
         wrongAnswers = new WrongAnswer[7];
         wrongAnswers[0] = new WrongAnswer("Ravens.");
@@ -105,7 +111,8 @@ public class ChallengeFactory {
         
         newChallenges.add(challenge);
         
-        question = new Question("They come to witness the night without being called, a sailor's guide and a poet's tears. They are lost to sight each day without the hand of a thief.");
+        question = new Question("They come to witness the night without being called, a sailor's guide and a poet's tears."
+                + " They are lost to sight each day without the hand of a thief.");
         correctAnswer = new CorrectAnswer("Stars.");
         wrongAnswers = new WrongAnswer[7];
         wrongAnswers[0] = new WrongAnswer("Eyes.");
@@ -135,7 +142,8 @@ public class ChallengeFactory {
         
         newChallenges.add(challenge);
         
-        question = new Question("The life I lead is mere hours or less, I serve all my time by being consumed. I am quickest when thin, slowest when fat, and wind is the bane of the gift that I bring.");
+        question = new Question("The life I lead is mere hours or less, I serve all my time by being consumed."
+                + " I am quickest when thin, slowest when fat, and wind is the bane of the gift that I bring.");
         correctAnswer = new CorrectAnswer("A Candle.");
         wrongAnswers = new WrongAnswer[7];
         wrongAnswers[0] = new WrongAnswer("A Wisp.");
@@ -150,7 +158,8 @@ public class ChallengeFactory {
         
         newChallenges.add(challenge);
         
-        question = new Question("The man who invented it, doesn't want it for himself. The man who bought it, doesn't need it for himself. The man who needs it, doesn't know when he needs it.");
+        question = new Question("The man who invented it, doesn't want it for himself."
+                + " The man who bought it, doesn't need it for himself. The man who needs it, doesn't know when he needs it.");
         correctAnswer = new CorrectAnswer("A Coffin.");
         wrongAnswers = new WrongAnswer[7];
         wrongAnswers[0] = new WrongAnswer("A Charriot.");
@@ -165,7 +174,8 @@ public class ChallengeFactory {
         
         newChallenges.add(challenge);
         
-        question = new Question("A spirited jig it dances bright, banishing all but darkest night. Give it food and it will live, give it water and it will die.");
+        question = new Question("A spirited jig it dances bright, banishing all but darkest night.4"
+                + " Give it food and it will live, give it water and it will die.");
         correctAnswer = new CorrectAnswer("Fire.");
         wrongAnswers = new WrongAnswer[7];
         wrongAnswers[0] = new WrongAnswer("A Fool.");
@@ -180,7 +190,8 @@ public class ChallengeFactory {
         
         newChallenges.add(challenge);
         
-        question = new Question("Lighter than what I am made of, more of me is hidden than is seen, I am the bane of the mariner, a tooth within the sea. Speak my name.");
+        question = new Question("Lighter than what I am made of, more of me is hidden than is seen,"
+                + " I am the bane of the mariner, a tooth within the sea. Speak my name.");
         correctAnswer = new CorrectAnswer("Ice.");
         wrongAnswers = new WrongAnswer[7];
         wrongAnswers[0] = new WrongAnswer("Sharks.");
@@ -230,6 +241,7 @@ public class ChallengeFactory {
         
         newChallenges.add(challenge);
     }
+    
     
     
     

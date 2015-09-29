@@ -187,6 +187,9 @@ public class CUIController {
             Enemy enemy = (Enemy) board.getBoard()[x][y];
 
             Combat.combatStart(enemy, player);
+            if(board.getBoard()[x][y] instanceof Boss){
+                finishGame();
+            }
             
             board.getBoard()[x][y] = new EmptyTile();
             
@@ -194,7 +197,13 @@ public class CUIController {
         }
     }
         
-    
+    public static void finishGame(){
+        data.getPlayer().bossReward();
+        System.out.println("You have completed the game! Well done!");
+        data.getPlayer().getCurrentStats();
+        System.exit(0);
+        
+    }
     public static boolean checkIfSave(){
         boolean x = true;
          while(x){
