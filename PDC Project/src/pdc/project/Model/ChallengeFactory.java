@@ -9,8 +9,8 @@ import java.util.Random;
  */
 public class ChallengeFactory {
     
-    private ArrayList<Challenge> newChallenges = new ArrayList<Challenge>();
-    private ArrayList<Challenge> doneChallenges = new ArrayList<Challenge>();
+    private ArrayList<Challenge> newChallenges = new ArrayList<>();
+    private ArrayList<Challenge> doneChallenges = new ArrayList<>();
 
     public ChallengeFactory() {
         //Create a list of all challenges

@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import pdc.project.Model.*;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import pdc.project.Model.Player;
 /**
  * 
@@ -40,19 +38,19 @@ public class CUIController {
         boolean moveDown  =    false;
         boolean moveRight =    false;
         boolean moveLeft  =    false;
-        if(!(reachableTiles[0] instanceof Blocked)){
+        if(!(reachableTiles[0].getType() == TileType.BLOCKED)){
             System.out.println("1. Move Up.");
             moveUp=true;
         }
-        if(!(reachableTiles[1] instanceof Blocked)){
+        if(!(reachableTiles[1].getType() == TileType.BLOCKED)){
             System.out.println("2. Move Down.");
             moveDown=true;
         }
-        if(!(reachableTiles[2] instanceof Blocked)){  
+        if(!(reachableTiles[2].getType() == TileType.BLOCKED)){  
             System.out.println("3. Move Right.");
             moveRight=true;
         }
-        if(!(reachableTiles[3] instanceof Blocked)){
+        if(!(reachableTiles[3].getType() == TileType.BLOCKED)){
             System.out.println("4. Move Left.");
             moveLeft=true;
         }
@@ -118,10 +116,7 @@ public class CUIController {
                 int input = scan.nextInt();
                 data.getPlayer().equipItem(input);
                 scan.nextLine();
-            } catch (InputMismatchException e){
-                System.err.println("Wrong input.");
-                scan.nextLine();
-            } catch (NullPointerException e){
+            } catch (InputMismatchException | NullPointerException e){
                 System.err.println("Wrong input.");
                 scan.nextLine();
             } catch (IndexOutOfBoundsException e){
@@ -135,8 +130,9 @@ public class CUIController {
     private static void checkTile(Board board, Player player){
         int x = board.getPosition()[0];
         int y = board.getPosition()[1];
+        Tile tile = board.getBoard()[x][y];
         
-        if (board.getBoard()[x][y] instanceof Challenge){
+        if (tile.getType() == TileType.CHALLENGE){
             Challenge ch = (Challenge) board.getBoard()[x][y];
             System.out.println("\nA wizard appears before you in a flash of smoke and poses you the following riddle:");
             System.out.println(ch.getQuestion().getText());
@@ -177,17 +173,17 @@ public class CUIController {
             finally {
                 board.getBoard()[x][y] = new EmptyTile();
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException ex) {
                     Thread.currentThread().interrupt();
                 }
             }
         }
-        else if(board.getBoard()[x][y] instanceof Enemy){
+        else if(tile.getType() == TileType.ENEMY){
             Enemy enemy = (Enemy) board.getBoard()[x][y];
 
             Combat.combatStart(enemy, player);
-            if(board.getBoard()[x][y] instanceof Boss){
+            if(tile.getType() == TileType.BOSS){
                 finishGame();
             }
             
@@ -204,6 +200,7 @@ public class CUIController {
         System.exit(0);
         
     }
+    
     public static boolean checkIfSave(){
         boolean x = true;
          while(x){
@@ -219,6 +216,7 @@ public class CUIController {
         }
          return false;
     }
+    
     public Player playerDetails(){
         System.out.println("THE AMAZING ADVENTURE");
         System.out.println("---------------------");
@@ -245,11 +243,13 @@ public class CUIController {
                 scan.next();
             }
         }
-            Player thePlayer = createPlayer(playerName, classType);
-            System.out.println("\nWelcome " + player.getName() + " the "+ player.findClass()
+        Player thePlayer = createPlayer(playerName, classType);
+        
+        System.out.println("\nWelcome " + player.getName() + " the "+ player.findClass()
         + " to the best RPG ever");
-            System.out.println("Type 'help' at any time to get help.\n");
-            return player;    
+        System.out.println("Type 'help' at any time to get help.\n");
+        
+        return player;    
     }
     
     

@@ -1,6 +1,7 @@
 package pdc.project.Model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Class for challenge tiles. Extends Tile. 
@@ -18,8 +19,7 @@ public class Challenge extends Tile {
         this.question = question;
         this.correctAnswer = correct;
         
-        for (int i = 0 ; i < wrong.length ; i++)
-            this.wrongAnswers.add(wrong[i]);
+        this.wrongAnswers.addAll(Arrays.asList(wrong));
     }
     
     public TextOutput[] getChallenge(){

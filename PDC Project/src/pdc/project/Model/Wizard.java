@@ -14,11 +14,6 @@ public class Wizard extends Player {
             int score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance) {
         super(damage,name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance);
-        health = 100;
-        damage = 30;
-        dodgeChance = 5;
-        critChance = 20;
-        hitChance = 90;
         poison = false;
         ironSkin = false;
         setSpells(); 

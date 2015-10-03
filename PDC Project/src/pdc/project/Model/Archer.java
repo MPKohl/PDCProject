@@ -9,11 +9,6 @@ public class Archer extends Player {
             int score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance) {
         super(damage,name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance);
-        critChance = 10;
-        damage = 15;
-        hitChance = 80;
-        dodgeChance = 30;
-        health = 100;
     } 
         
     @Override

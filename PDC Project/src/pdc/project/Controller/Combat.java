@@ -1,7 +1,4 @@
-
 package pdc.project.Controller;
-
-
 
 import java.util.InputMismatchException;
 import java.util.Random;
@@ -10,7 +7,6 @@ import pdc.project.Model.DataHolderSingleton;
 import pdc.project.Model.Enemy;
 import pdc.project.Model.Player;
 import pdc.project.Model.Wizard;
-
 
 
 public class Combat {

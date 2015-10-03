@@ -8,13 +8,7 @@ public class Warrior extends Player {
             int score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance) {
             
-        super(damage,name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance);
-        health = 100;
-        damage = 20;
-        exp = 0;
-        hitChance = 90;
-        critChance = 20;
-        dodgeChance = 10;    
+        super(damage,name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance);   
     }
     
     @Override
