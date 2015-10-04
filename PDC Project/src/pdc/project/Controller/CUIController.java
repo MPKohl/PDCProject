@@ -17,9 +17,7 @@ public class CUIController {
     
     private static final Scanner scan = new Scanner(System.in);
     private static DataHolderSingleton data = DataHolderSingleton.getInstance();
-    //method that takes an array of tiles
-            //depending on the tiles give options to the user (i.e. move up, move left, etc.)
-            //don't show options the user can't take
+    
     /**
      * Returns the commands reachable from the current tile. 
      * Tile[0] = Tile above current position. 
@@ -133,51 +131,7 @@ public class CUIController {
         Tile tile = board.getBoard()[x][y];
         
         if (tile.getType() == TileType.CHALLENGE){
-            Challenge ch = (Challenge) board.getBoard()[x][y];
-            System.out.println("\nA wizard appears before you in a flash of smoke and poses you the following riddle:");
-            System.out.println(ch.getQuestion().getText());
-            ArrayList<TextOutput> answers = new ArrayList<>();
-            answers.add(ch.getCorrectAnswer());
-            for (TextOutput t : ch.getWrongAnswers())
-                answers.add(t);
-            
-            Collections.shuffle(answers);
-            
-            int optionNr = 1;
-            for (TextOutput a : answers){
-                System.out.println(optionNr + ". " + a.getText());
-                optionNr++;
-            }
-             
-            try {
-                int userAnswer = scan.nextInt();
-                if (answers.get(userAnswer-1) instanceof CorrectAnswer){
-                    data.getPlayer().challengeReward();
-                    System.out.println("\nThe wizard seems pleased with your answer and raises his arms over you before fading away.");
-                    System.out.println("You suddenly feel rejuvenated.\n");
-                }
-                else {
-                    System.out.println("\nThe wizard shakes his head and dissapears with a *BANG*!\n");
-                }
-            }
-            catch (InputMismatchException e){
-                System.err.println("\nInput was not valid, the wizard shakes his head and walks away.");
-                scan.next();
-            }
-            catch (IndexOutOfBoundsException e){
-                System.err.println("\nInput was not valid, the wizard shakes his head and walks away.");
-            }
-            catch (Exception e) {
-                System.err.println("\nInput could not be read, the wizard shakes his head and walks away.");
-            }
-            finally {
-                board.getBoard()[x][y] = new EmptyTile();
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                }
-            }
+            poseChallenge(board, player, x, y);
         }
         else if(tile.getType() == TileType.ENEMY){
             Enemy enemy = (Enemy) board.getBoard()[x][y];
@@ -190,6 +144,54 @@ public class CUIController {
             board.getBoard()[x][y] = new EmptyTile();
             
             data.getPlayer().enemyReward();
+        }
+    }
+    
+    private static void poseChallenge(Board board, Player player, int x, int y){
+        Challenge ch = (Challenge) board.getBoard()[x][y];
+        System.out.println("\nA wizard appears before you in a flash of smoke and poses you the following riddle:");
+        System.out.println(ch.getQuestion().getText());
+        ArrayList<TextOutput> answers = new ArrayList<>();
+        answers.add(ch.getCorrectAnswer());
+        for (TextOutput t : ch.getWrongAnswers())
+            answers.add(t);
+            
+        Collections.shuffle(answers);
+            
+        int optionNr = 1;
+        for (TextOutput a : answers){
+            System.out.println(optionNr + ". " + a.getText());
+            optionNr++;
+        }
+            
+        try {
+            int userAnswer = scan.nextInt();
+            if (answers.get(userAnswer-1) instanceof CorrectAnswer){
+                data.getPlayer().challengeReward();
+                System.out.println("\nThe wizard seems pleased with your answer and raises his arms over you before fading away.");
+                System.out.println("You suddenly feel rejuvenated.\n");
+            }
+            else {
+                System.out.println("\nThe wizard shakes his head and dissapears with a *BANG*!\n");
+            }
+        }
+        catch (InputMismatchException e){
+            System.err.println("\nInput was not valid, the wizard shakes his head and walks away.");
+            scan.next();
+        }
+        catch (IndexOutOfBoundsException e){
+            System.err.println("\nInput was not valid, the wizard shakes his head and walks away.");
+        }
+        catch (Exception e) {
+            System.err.println("\nInput could not be read, the wizard shakes his head and walks away.");
+        }
+        finally {
+            board.getBoard()[x][y] = new EmptyTile();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
         
@@ -228,8 +230,8 @@ public class CUIController {
         while(x){
             System.out.println("\nWhat class would you like to be?");
             System.out.println(" 1. Warrior"
-                    + "\n 2. Archer"
-                    + "\n 3. Wizard");
+                           + "\n 2. Archer"
+                           + "\n 3. Wizard");
             try{
                 classType = scan.nextInt();
                 if (classType == 1 || classType == 2 || classType == 3){
@@ -243,7 +245,7 @@ public class CUIController {
                 scan.next();
             }
         }
-        Player thePlayer = createPlayer(playerName, classType);
+        Player player = createPlayer(playerName, classType);
         
         System.out.println("\nWelcome " + player.getName() + " the "+ player.findClass()
         + " to the best RPG ever");
@@ -271,10 +273,4 @@ public class CUIController {
 
         return null;
     }
-    
-
-    
-    //method that takes a random challenge
-            //show options for that challenge
-            //call the print method
 }
