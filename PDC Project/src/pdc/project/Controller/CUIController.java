@@ -13,10 +13,20 @@ import pdc.project.Model.Player;
  */
 public class CUIController {
 
-    Player player;
-    
     private static final Scanner scan = new Scanner(System.in);
     private static DataHolderSingleton data = DataHolderSingleton.getInstance();
+    
+    private static Player player = data.getPlayer();
+    private static Board board = data.getBoard();
+    
+    public static void startGame(){
+        boolean x = true;
+        while(x){
+            CUIController.move(board.reachableTiles());
+            player.getCurrentStats();
+            board.printBoard();
+        }
+    }
     
     /**
      * Returns the commands reachable from the current tile. 
@@ -28,81 +38,91 @@ public class CUIController {
      * @param board the game board.
      * @param player
      */
-    public static void move(Tile[] reachableTiles, Board board, Player player){
-        boolean x = true;
-        while(x){
-        Scanner moveScan = new Scanner(System.in);
-        boolean moveUp    =    false;
-        boolean moveDown  =    false;
-        boolean moveRight =    false;
-        boolean moveLeft  =    false;
-        if(!(reachableTiles[0].getType() == TileType.BLOCKED)){
-            System.out.println("1. Move Up.");
-            moveUp=true;
-        }
-        if(!(reachableTiles[1].getType() == TileType.BLOCKED)){
-            System.out.println("2. Move Down.");
-            moveDown=true;
-        }
-        if(!(reachableTiles[2].getType() == TileType.BLOCKED)){  
-            System.out.println("3. Move Right.");
-            moveRight=true;
-        }
-        if(!(reachableTiles[3].getType() == TileType.BLOCKED)){
-            System.out.println("4. Move Left.");
-            moveLeft=true;
-        }
-        int[] position = board.getPosition();
-        String ans = moveScan.nextLine();
-        if (ans.equals("1") && moveUp){
-            board.changePosition(position[0], position[1]-1);
-            x=false;
-            checkTile(board, player);
-        }else if (ans.equals("2")&& moveDown){
-            board.changePosition(position[0], position[1]+1);
-            x=false;
-            checkTile(board, player);
-        }else if (ans.equals("3") && moveRight){
-            board.changePosition(position[0]+1, position[1]);
-            x=false;
-            checkTile(board, player);
-        }else if (ans.equals("4")&& moveLeft){
-            board.changePosition(position[0]-1, position[1]);
-            x=false;
-            checkTile(board, player);
-        }else if(ans.equalsIgnoreCase("quit")){
-            System.out.println("Thanks for playing!");
-            scan.close();
-            moveScan.close();
-            System.exit(0);
-        } else if (ans.equalsIgnoreCase("i")){
-            data.getPlayer().showInventory();
-        } else if (ans.equalsIgnoreCase("e")){
-            data.getPlayer().showEquippedItems();
-        } else if (ans.equalsIgnoreCase("equip")){
-            equipItem(scan);
-        } else if (ans.equalsIgnoreCase("cmds")){
-            System.out.println("Type 'i' to open the inventory.");
-            System.out.println("Type 'e' to show current equipped items.");
-            System.out.println("Type 'equip' to equip an item from your inventory.");
-            System.out.println("Type 'help' to view the help screen");
-            System.out.println("Type 'quit' to quit the game.");
+    public static void move(Tile[] reachableTiles){
+        boolean moveChosen = false;
+        
+        while(!moveChosen){
             
-        } else if (ans.equalsIgnoreCase("help")){
-            System.out.println("\nThis is a turn based RPG game."
-                    + "\nYour player is the 'P' on the map."
-                    + "\nType 'cmds' at any time to view useful commands to help you complete the game"
-                    + "\n'C' on the map is a challenge, move into the challenge to complete it"
-                    + "\nIf you complete a challenge your health will be restored and you will gain experiece points and score"
-                    + "\nThroughout your travels your player will run into spooky monsters"
-                    + "\nIf you manage to defeat these monsters you will be rewarded with a random item, updated score and experiecnce points."
-                    + "\n'X' on the map is a blocked square, you cannot move into these squares."
-                    + "\nHave fun!\n");
-        } else {
-            System.err.println("Please choose one of the given options.");
+            Scanner moveScan = new Scanner(System.in);
+            boolean moveUp    =    false;
+            boolean moveDown  =    false;
+            boolean moveRight =    false;
+            boolean moveLeft  =    false;
+            int[] position = board.getPosition();
+            
+            if(!(reachableTiles[0].getType() == TileType.BLOCKED)){
+                System.out.println("1. Move Up.");
+                moveUp=true;
             }
-        //System.out.println("Current player position\n x: " + position[0] + "\n y: " + position[1]);
+            if(!(reachableTiles[1].getType() == TileType.BLOCKED)){
+                System.out.println("2. Move Down.");
+                moveDown=true;
+            }
+            if(!(reachableTiles[2].getType() == TileType.BLOCKED)){  
+                System.out.println("3. Move Right.");
+                moveRight=true;
+            }
+            if(!(reachableTiles[3].getType() == TileType.BLOCKED)){
+                System.out.println("4. Move Left.");
+                moveLeft=true;
+            }
+            
+            String answer = moveScan.nextLine();
+            if (answer.equals("1") && moveUp){
+                board.changePosition(position[0], position[1]-1);
+                moveChosen=true;
+                checkTile(board, player);
+            } else if (answer.equals("2")&& moveDown){
+                board.changePosition(position[0], position[1]+1);
+                moveChosen=true;
+                checkTile(board, player);
+            } else if (answer.equals("3") && moveRight){
+                board.changePosition(position[0]+1, position[1]);
+                moveChosen=true;
+                checkTile(board, player);
+            } else if (answer.equals("4")&& moveLeft){
+                board.changePosition(position[0]-1, position[1]);
+                moveChosen=true;
+                checkTile(board, player);
+            } else if(answer.equalsIgnoreCase("quit")){
+                System.out.println("Thanks for playing!");
+                scan.close();
+                moveScan.close();
+                System.exit(0);
+            } else if (answer.equalsIgnoreCase("i")){
+                data.getPlayer().showInventory();
+            } else if (answer.equalsIgnoreCase("e")){
+                data.getPlayer().showEquippedItems();
+            } else if (answer.equalsIgnoreCase("equip")){
+                equipItem(scan);
+            } else if (answer.equalsIgnoreCase("cmds")){
+                printCommands();
+            } else if (answer.equalsIgnoreCase("help")){
+                printHelp();
+            } else {
+                System.err.println("Please choose one of the given options.");
+            }
         }
+    }
+    
+    private static void printCommands(){
+        System.out.println("Type 'i' to open the inventory.");
+        System.out.println("Type 'e' to show current equipped items.");
+        System.out.println("Type 'equip' to equip an item from your inventory.");
+        System.out.println("Type 'help' to view the help screen");
+        System.out.println("Type 'quit' to quit the game.");
+    }
+    
+    private static void printHelp(){
+        System.out.println("\nThis is a turn based RPG game."
+                         + "\nYour player is the 'P' on the map."
+                         + "\nType 'cmds' at any time to view useful commands to help you complete the game"
+                         + "\n'C' on the map is a challenge, move into the challenge to complete it"
+                         + "\nIf you complete a challenge your health will be restored and you will gain experiece points and score"
+                         + "\nThroughout your travels your player will run into spooky monsters"
+                         + "\nIf you manage to defeat these monsters you will be rewarded with a random item, updated score and experiecnce points."
+                         + "\n'X' on the map is a blocked square, you cannot move into these squares."
+                         + "\nHave fun!\n");
     }
 
     private static void equipItem(Scanner scan){
@@ -251,7 +271,7 @@ public class CUIController {
         + " to the best RPG ever");
         System.out.println("Type 'help' at any time to get help.\n");
         
-        return player;    
+        return player;
     }
     
     

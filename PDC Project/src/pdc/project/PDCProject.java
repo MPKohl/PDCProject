@@ -1,8 +1,5 @@
 package pdc.project;
 
-import pdc.project.Model.*;
-import pdc.project.View.CUI;
-
 /**
  * 
  */
