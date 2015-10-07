@@ -190,7 +190,7 @@ public class Combat {
 
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            //System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
             System.out.println("Your attack has missed the enemy.");
@@ -203,7 +203,7 @@ public class Combat {
     public static void archerCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            //System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
             System.out.println("Your attack has missed the enemy.");
@@ -216,7 +216,7 @@ public class Combat {
     public static void wizardCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            //System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
             System.out.println("Your attack has missed the enemy.");
