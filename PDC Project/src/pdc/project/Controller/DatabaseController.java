@@ -2,6 +2,8 @@
 package pdc.project.Controller;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Controls all communication between program and database.
@@ -9,8 +11,8 @@ import java.util.ArrayList;
 public class DatabaseController {
     
     private static Connection conn;
-    private final String url = "url=jdbc:mysql://localhost/CarDB";
-    private final String username = "root";
+    private final String url = "url=jdbc:derby://localhost:1527/GameDB";
+    private final String username = "pdc";
     private final String password = "123";
     
     /**
@@ -24,7 +26,18 @@ public class DatabaseController {
 
         } catch(SQLException e){
             //Handle errors
-            System.err.println("SQLException: " + e.getMessage());
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    public void createTables(){
+        try {
+            Statement stmt=conn.createStatement();
+            String createHighScoreTable="CREATE TABLE HIGHSCORE (player_name VARCHAR(255) NOT NULL, score INT(255) NOT NULL)";
+            stmt.executeUpdate(createHighScoreTable);
+            
+        } catch (SQLException e) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     
@@ -34,10 +47,10 @@ public class DatabaseController {
     public void closeConnection(){
         try{
             conn.close();
+            System.out.println("Connection Closed");
         } catch(SQLException e){
-            System.err.println("SQLException: " + e.getMessage());
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
-        System.out.println("Connection Closed");
     }
     
     /**
@@ -59,7 +72,7 @@ public class DatabaseController {
             stmt.close();
         } catch (SQLException e) {
             //Handle errors
-            System.err.println("SQLException: " + e.getMessage());
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
         return returnedList;
     }
@@ -160,7 +173,7 @@ public class DatabaseController {
             stmt.executeUpdate(sqlUpdate);
             
         } catch (SQLException e) {
-            System.err.println("SQLException: " + e.getMessage());
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 }
