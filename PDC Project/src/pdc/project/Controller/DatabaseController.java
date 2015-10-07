@@ -70,7 +70,7 @@ public class DatabaseController {
      */
     public ArrayList<String> showSaves(){
         Statement stmt;
-        String sqlQuery = "SELECT save_id, save_name, player_name FROM savegames, player WHERE savegames.player_id = player.player_id";
+        String sqlQuery = "SELECT save_id, save_name, player_name FROM savegames, player WHERE savegames.player_id = player.player_id;";
         ArrayList<String> returnedList = new ArrayList<>();
         try {
             stmt = conn.createStatement();
@@ -90,6 +90,33 @@ public class DatabaseController {
         }
         return returnedList;
     }
+    /**
+     * loads a game from the database query with ResutlSet
+     * @param id is the save id the user has chosen.
+     * @return ArrayList 
+     */
+    public ArrayList<String> loadGame(int id){
+        Statement stmt;
+        String boardQuery = "SELECT x_pos, y_pos, tile_status FROM savegames, tile, board WHERE savegames.save_id = '" + id + "' AND savegames.board_id = board.board_id;";
+        String playerQuery = "SELECT player_name, player_class, player_lvl, player_exp, player_health, player_score FROM savegames, player, player_stats WHERE player.player_id = savegames.player_id AND player_stats.player_id = player.player_id;";
+        ArrayList<String> returnedList = new ArrayList<>();
+        try {
+            stmt = conn.createStatement();
+            ResultSet rsBoard = stmt.executeQuery(boardQuery);
+            while (rsBoard.next()) {
+                int x_pos = rsBoard.getInt("x_pos");
+                int y_pos = rsBoard.getInt("y_pos");
+                String tile_status = rsBoard.getString("tile_status");
+                String result = (x_pos + ", " + y_pos + ", " + tile_status);
+                returnedList.add(result);
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            //Handle errors
+            System.err.println("SQLException: " + e.getMessage());
+        }
+        return returnedList;
+    }
     
     
      /**
@@ -98,7 +125,7 @@ public class DatabaseController {
      */
     public ArrayList<String> showHighscores(){
         Statement stmt;
-        String sqlQuery = "SELECT player_name, player_score FROM player, player_stats WHERE player.player_id = player_stats.player_id ORDER BY player_score";
+        String sqlQuery = "SELECT player_name, player_score FROM player, player_stats WHERE player.player_id = player_stats.player_id ORDER BY player_score;";
         ArrayList<String> returnedList = new ArrayList<>();
         try {
             stmt = conn.createStatement();
