@@ -223,26 +223,11 @@ public class CUIController {
         
     }
     
-    public static boolean checkIfSave(){
-        boolean x = true;
-         while(x){
-            System.out.println("\nWould you like to load a previously saved game? (Y/N)");
-            String ans = scan.nextLine();
-            if (ans.equalsIgnoreCase("Y")){
-                //load game method
-                return true;
-            } else if(ans.equalsIgnoreCase("N")){
-                return false;
-            }
-            System.err.println("Please choose either Y or N.");
-        }
-         return false;
-    }
+
     
     public Player playerDetails(){
         System.out.println("THE AMAZING ADVENTURE");
         System.out.println("---------------------");
-        CUIController.checkIfSave();
         int classType = 0;
         System.out.println("\nWhat is your name adventurer?");
         String playerName = scan.nextLine();
