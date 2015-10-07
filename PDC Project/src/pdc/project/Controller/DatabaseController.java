@@ -98,8 +98,7 @@ public class DatabaseController {
             }
             stmt.close();
         } catch (SQLException e) {
-            //Handle errors
-            System.err.println("SQLException: " + e.getMessage());
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
         return returnedList;
     }
@@ -125,8 +124,7 @@ public class DatabaseController {
             }
             stmt.close();
         } catch (SQLException e) {
-            //Handle errors
-            System.err.println("SQLException: " + e.getMessage());
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
         return returnedList;
     }
@@ -152,8 +150,7 @@ public class DatabaseController {
             }
             stmt.close();
         } catch (SQLException e) {
-            //Handle errors
-            System.err.println("SQLException: " + e.getMessage());
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
         return returnedList;
     }
