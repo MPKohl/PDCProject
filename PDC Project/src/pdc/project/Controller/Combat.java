@@ -93,7 +93,7 @@ public class Combat {
     }
     
     //Archer attack phase method   
-     public static void archerAttackPhase(Enemy enemy, Player player, int defensiveCount, int dotCount){ 
+    public static void archerAttackPhase(Enemy enemy, Player player, int defensiveCount, int dotCount){ 
         
         Scanner scan = new Scanner(System.in);   
     
@@ -137,7 +137,7 @@ public class Combat {
     }
      
     //Wizard attack phase method    
-      public static void wizardAttackPhase(Enemy enemy, Player player, int defensiveCount, int dotCount){
+    public static void wizardAttackPhase(Enemy enemy, Player player, int defensiveCount, int dotCount){
 
         Scanner scan = new Scanner(System.in);   
     
