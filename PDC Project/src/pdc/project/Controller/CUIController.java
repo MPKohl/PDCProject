@@ -277,15 +277,15 @@ public class CUIController {
     
     public Player createPlayer(String playerName, int classType){
             if (classType == 1){
-                    player = new Warrior(30,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0);
+                    player = new Warrior(30,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
                     return player;
                 }
             if (classType == 2){
-                    player = new Archer(20,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 80.0, 10.0, 30.0);
+                    player = new Archer(20,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 80.0, 10.0, 30.0, false, false);
                     return player;
                 }
             if (classType == 3){
-                     player = new Wizard(30,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0);
+                     player = new Wizard(30,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
                     return player;
                 }
             System.out.println("Sorry I did not recognise that command "

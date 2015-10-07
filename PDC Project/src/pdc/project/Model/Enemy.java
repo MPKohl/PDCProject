@@ -17,13 +17,15 @@ public class Enemy extends Tile{
     private int expYield;
     private Item itemYield;
     private String difficulty = "";
+    private boolean stun;
     
     public Enemy() {}
-    public Enemy(int xLoc, int yLoc){
+    public Enemy(int xLoc, int yLoc, boolean stun){
         setType(TileType.ENEMY);
         randomizeName();
         chooseDifficulty(xLoc,yLoc,12);
         chooseStats(difficulty);
+        this.stun = false;
     }
     public void chooseStats(String difficulty) {
         Random random = new Random();
@@ -245,5 +247,13 @@ public class Enemy extends Tile{
     }
     public String getDifficulty() {
         return difficulty;
+    }
+    
+    //Added by SED for stun variable
+    public void setStun(boolean stun){
+        this.stun = stun;
+    }
+    public boolean getStun(){
+        return stun;
     }
 }

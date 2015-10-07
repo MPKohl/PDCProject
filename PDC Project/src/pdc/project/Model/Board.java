@@ -22,7 +22,7 @@ public class Board {
         board[4][11] = new EmptyTile();
         
         board[0][10] = new Blocked();
-        board[1][10] = new Enemy(1,10);
+        board[1][10] = new Enemy(1,10, false);
         board[2][10] = new EmptyTile();
         board[3][10] = challengeFactory.getRandomChallenge();
         board[4][10] = new Blocked();
@@ -34,7 +34,7 @@ public class Board {
         board[4][9] = challengeFactory.getRandomChallenge();
         
         board[0][8] = new Blocked();
-        board[1][8] = new Enemy(1,8);
+        board[1][8] = new Enemy(1,8, false);
         board[2][8] = new EmptyTile();
         board[3][8] = new Blocked();
         board[4][8] = new EmptyTile();
@@ -42,7 +42,7 @@ public class Board {
         board[0][7] = challengeFactory.getRandomChallenge();
         board[1][7] = new EmptyTile();
         board[2][7] = new EmptyTile();
-        board[3][7] = new Enemy(3,7);
+        board[3][7] = new Enemy(3,7, false);
         board[4][7] = new EmptyTile();
         
         board[0][6] = new Blocked();
@@ -54,17 +54,17 @@ public class Board {
         board[0][5] = challengeFactory.getRandomChallenge();
         board[1][5] = new Blocked();
         board[2][5] = new EmptyTile();
-        board[3][5] = new Enemy(3,5);
+        board[3][5] = new Enemy(3,5, false);
         board[4][5] = new EmptyTile();
         
         board[0][4] = new EmptyTile();
         board[1][4] = new Blocked();
-        board[2][4] = new Enemy(2,4);
+        board[2][4] = new Enemy(2,4, false);
         board[3][4] = new Blocked();
         board[4][4] = challengeFactory.getRandomChallenge();
         
         board[0][3] = new EmptyTile();
-        board[1][3] = new Enemy(1,3);
+        board[1][3] = new Enemy(1,3, false);
         board[2][3] = new EmptyTile();
         board[3][3] = new EmptyTile();
         board[4][3] = new Blocked();
@@ -78,7 +78,7 @@ public class Board {
         board[0][1] = new Blocked();
         board[1][1] = new Blocked();
         board[2][1] = new Blocked();
-        board[3][1] = new Enemy(3,1);
+        board[3][1] = new Enemy(3,1, false);
         board[4][1] = new Blocked();
         
         board[0][0] = new Blocked();

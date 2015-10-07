@@ -19,12 +19,14 @@ public abstract class Player {
     private double critChance;
     private double dodgeChance;
     private int lvl;
+    private boolean defensive;
+    private boolean dot;
     //Construcotrs.
     public Player() {}
     
     public Player(int damage, String name, int health, int exp, ArrayList inventory,
             int score, HashMap equipped, double hitChance, double critChance, 
-            double dodgeChance) {
+            double dodgeChance, boolean defensive, boolean dot) {
         this.damage = damage;
         this.name = name;
         this.health = health;
@@ -36,6 +38,8 @@ public abstract class Player {
         this.critChance = critChance;
         this.dodgeChance = dodgeChance;  
         this.lvl = 1;
+        defensive = false;
+        dot = false;
         //inventory.add(new Item(ItemType.CLOTHARMOUR));
         //inventory.add(new Item(ItemType.LEATHERARMOUR));
         //inventory.add(new Item(ItemType.PLATEARMOUR));
@@ -297,6 +301,24 @@ public abstract class Player {
      */
     public void setInventory(ArrayList<Item> inventory) {
         this.inventory = inventory;
+    }
+    
+    //Getters and setters for attack booleans (SED)
+    
+    public boolean getDefensive(){
+        return defensive;
+    }
+    
+    public void setDefensive(boolean defensive){
+        this.defensive = defensive;
+    }
+    
+    public boolean getDot(){
+        return dot;
+    }
+    
+    public void setDot(boolean dot){
+        this.dot = dot;
     }
  
 }
