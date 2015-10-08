@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class DatabaseController {
     
     private static Connection conn;
-    private final String url = "url=jdbc:derby://localhost:1527/GameDB";
+    private final String url = "url=jdbc:derby://localhost:1527/GameDB;create=true";
     private final String username = "pdc";
     private final String password = "123";
     
@@ -21,22 +21,13 @@ public class DatabaseController {
     public void initialize() {
         
         try{
+            //DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
+            
             //Open a connection
             conn = DriverManager.getConnection(url, username, password); //Database credentials
 
         } catch(SQLException e){
             //Handle errors
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
-        }
-    }
-    
-    public void createTables(){
-        try {
-            Statement stmt=conn.createStatement();
-            String createHighScoreTable="CREATE TABLE HIGHSCORE (player_name VARCHAR(255) NOT NULL, score INT(255) NOT NULL)";
-            stmt.executeUpdate(createHighScoreTable);
-            
-        } catch (SQLException e) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -49,6 +40,17 @@ public class DatabaseController {
             conn.close();
             System.out.println("Connection Closed");
         } catch(SQLException e){
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    public void createTable(){
+        try {
+            Statement stmt=conn.createStatement();
+            String createHighScoreTable="CREATE TABLE HIGHSCORE (player_name VARCHAR(255) NOT NULL, score INT(255) NOT NULL)";
+            stmt.executeUpdate(createHighScoreTable);
+            
+        } catch (SQLException e) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -81,7 +83,7 @@ public class DatabaseController {
      * Show the saves saved on the database query with ResutlSet
      * @return ArrayList 
      */
-    public ArrayList<String> showSaves(){
+    /*public ArrayList<String> showSaves(){
         Statement stmt;
         String sqlQuery = "SELECT save_id, save_name, player_name FROM savegames, player WHERE savegames.player_id = player.player_id;";
         ArrayList<String> returnedList = new ArrayList<>();
@@ -101,13 +103,13 @@ public class DatabaseController {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
         return returnedList;
-    }
+    }*/
     /**
      * loads a game from the database query with ResutlSet
      * @param id is the save id the user has chosen.
      * @return ArrayList 
      */
-    public ArrayList<String> loadGame(int id){
+    /*public ArrayList<String> loadGame(int id){
         Statement stmt;
         String boardQuery = "SELECT x_pos, y_pos, tile_status FROM savegames, tile, board WHERE savegames.save_id = '" + id + "' AND savegames.board_id = board.board_id;";
         String playerQuery = "SELECT player_name, player_class, player_lvl, player_exp, player_health, player_score FROM savegames, player, player_stats WHERE player.player_id = savegames.player_id AND player_stats.player_id = player.player_id;";
@@ -127,7 +129,7 @@ public class DatabaseController {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
         return returnedList;
-    }
+    }*/
     
     
      /**
