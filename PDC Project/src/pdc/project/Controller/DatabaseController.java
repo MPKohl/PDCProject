@@ -192,7 +192,7 @@ public class DatabaseController {
      */
     public void highScoreUpdate(){
         DataHolderSingleton data = DataHolderSingleton.getInstance();
-        int score = data.getPlayer().getScore();
+        double score = data.getPlayer().getScore();
         String player_name = data.getPlayer().getName();
         String player_class = data.getPlayer().findClass();
         Statement stmt;

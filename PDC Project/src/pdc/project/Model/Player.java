@@ -13,7 +13,7 @@ public abstract class Player {
     private int health;
     private int exp;
     private ArrayList<Item> inventory = new ArrayList<>();
-    private int score;
+    private double score;
     private HashMap<ItemSlot, Item> equipped = new HashMap<>();
     private double hitChance;
     private double critChance;
@@ -25,7 +25,7 @@ public abstract class Player {
     public Player() {}
     
     public Player(int damage, String name, int health, int exp, ArrayList inventory,
-            int score, HashMap equipped, double hitChance, double critChance, 
+            double score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance, boolean defensive, boolean dot) {
         this.damage = damage;
         this.name = name;
@@ -154,7 +154,7 @@ public abstract class Player {
     public int getExp() {
         return exp;
     }
-    public int getScore() {
+    public double getScore() {
         return score;
     }
     public HashMap getEquipped() {
@@ -178,7 +178,7 @@ public abstract class Player {
     public void setExp(int exp) {
         this.exp = exp;
     }
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
     public void setEquipped(HashMap equipped) {
@@ -226,7 +226,7 @@ public abstract class Player {
             finalTime[i] = finishTime[i] - startTime[i]; 
         }
         if(finalTime[0] == 0 && finalTime[1] < 4){
-            
+            score = score* 0.15;
         }
             
     }
