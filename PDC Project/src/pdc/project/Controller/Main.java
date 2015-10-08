@@ -33,7 +33,7 @@ public class Main {
         
         DatabaseController dbController = new DatabaseController();
         dbController.initialize();
-        dbController.createTable();
+        //dbController.createTable();
         
         data.setBoard(new Board());
         CUIController cuiController = new CUIController();

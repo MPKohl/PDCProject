@@ -14,7 +14,7 @@ import pdc.project.Model.Player;
 public class DatabaseController {
     
     private static Connection conn;
-    private final String url = "url=jdbc:derby://localhost:1527/GameDB;create=true";
+    private final String url = "url=jdbc:derby://localhost:1527/GameDB";
     private final String username = "pdc";
     private final String password = "123";
     
@@ -24,17 +24,17 @@ public class DatabaseController {
     public void initialize() {
         
         try{
-            //DriverManager.registerDriver(new org.apache.derby.jdbc.EmbeddedDriver());
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
             
             //Open a connection
             conn = DriverManager.getConnection(url, username, password); //Database credentials
 
-        } catch(SQLException e){
+        } catch(SQLException | ClassNotFoundException e){
             //Handle errors
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
-    
+
     public void createTables(){
         try {
             Statement stmt=conn.createStatement();
