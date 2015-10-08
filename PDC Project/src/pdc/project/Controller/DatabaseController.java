@@ -4,6 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pdc.project.Model.DataHolderSingleton;
+import pdc.project.Model.GameTimer;
+import pdc.project.Model.Player;
 
 /**
  * Controls all communication between program and database.
@@ -28,6 +31,17 @@ public class DatabaseController {
 
         } catch(SQLException e){
             //Handle errors
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    public void createTables(){
+        try {
+            Statement stmt=conn.createStatement();
+            String createHighScoreTable="CREATE TABLE HIGHSCORE (player_name VARCHAR(255) NOT NULL, score INT(255) NOT NULL, player_class VARCHAR(255) NOT NULL);";
+            stmt.executeUpdate(createHighScoreTable);
+            
+        } catch (SQLException e) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -157,9 +171,6 @@ public class DatabaseController {
         return returnedList;
     }
     
-    
-    
-    
     /**
      * Example update
      * @param 
@@ -167,6 +178,26 @@ public class DatabaseController {
     public void exampleUpdate(String value1, String value2){
         Statement stmt;
         String sqlUpdate = "INSERT INTO some_table (column1, column2, ...) VALUES ('" + value1 + "', '" + value2 + "', ...);";
+        try {
+            stmt = conn.createStatement();
+            stmt.executeUpdate(sqlUpdate);
+            
+        } catch (SQLException e) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    
+    /**
+     * Updates the high score table
+     */
+    public void highScoreUpdate(){
+        DataHolderSingleton data = DataHolderSingleton.getInstance();
+        int score = data.getPlayer().getScore();
+        String player_name = data.getPlayer().getName();
+        String player_class = data.getPlayer().findClass();
+        Statement stmt;
+        String sqlUpdate = "INSERT INTO highscore (player_name, score, class) VALUES ('" + player_name + "', '" + score + "', '"  +  player_class + "');";
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(sqlUpdate);
