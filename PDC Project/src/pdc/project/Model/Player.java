@@ -218,6 +218,19 @@ public abstract class Player {
         giveExp(50);
     }
     
+    public void timerReward(int[] startTime){
+        DataHolderSingleton data = DataHolderSingleton.getInstance();
+        int[] finishTime = data.getTimer().getCurrentTime();
+        int[] finalTime = new int[3];
+        for(int i = 0; i > 3; i++){
+            finalTime[i] = finishTime[i] - startTime[i]; 
+        }
+        if(finalTime[0] == 0 && finalTime[1] < 4){
+            
+        }
+            
+    }
+    
     public void enemyReward(){
         Random r = new Random();
         Item item = null;

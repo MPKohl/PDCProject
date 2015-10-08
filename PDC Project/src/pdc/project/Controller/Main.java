@@ -24,12 +24,12 @@ public class Main {
         GameTimer gameTimer = new GameTimer();
         gameTimer.startThread();
         try {
-        Thread.sleep(0);
+        Thread.sleep(10000);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
         int[] curTime = gameTimer.getCurrentTime();
-        //gameTimer.printCurrentTime(curTime);
+        gameTimer.printCurrentTime(curTime);
         
         
         

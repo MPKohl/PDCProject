@@ -18,6 +18,7 @@ public class CUIController {
     
     private static Player player = data.getPlayer();
     private static Board board = data.getBoard();
+    int[] startTime;
     
     public static void startGame(){
         boolean x = true;
@@ -214,13 +215,29 @@ public class CUIController {
             }
         }
     }
+    public static void playAgain(){
+        boolean correctInput = false;
+        while(!correctInput){
+            String input = scan.nextLine();
+            if(input.equalsIgnoreCase("y")){
+                //play again
+                correctInput=true;
+            } else if(input.equalsIgnoreCase("n")){
+                System.exit(0);
+            }
+            else
+                System.out.println("Sorry I did not recognise that command");
+        }
+    }
         
     public static void finishGame(){
         data.getPlayer().bossReward();
         System.out.println("You have completed the game! Well done!");
         data.getPlayer().getCurrentStats();
-        System.exit(0);
-        
+        //data.getPlayer().timerReward(startTime);
+        //update high scores
+        System.out.println("Would you like to play again?");
+        playAgain();        
     }
     
 
@@ -231,8 +248,8 @@ public class CUIController {
         int classType = 0;
         System.out.println("\nWhat is your name adventurer?");
         String playerName = scan.nextLine();
-        boolean x = true;
-        while(x){
+        boolean correctInput = false;
+        while(!correctInput){
             System.out.println("\nWhat class would you like to be?");
             System.out.println(" 1. Warrior"
                            + "\n 2. Archer"
@@ -240,7 +257,7 @@ public class CUIController {
             try{
                 classType = scan.nextInt();
                 if (classType == 1 || classType == 2 || classType == 3){
-                    x = false;
+                    correctInput = true;
                     scan.nextLine();
                 } else {
                     System.err.println("Please choose either 1, 2 or 3.");
@@ -255,7 +272,7 @@ public class CUIController {
         System.out.println("\nWelcome " + player.getName() + " the "+ player.findClass()
         + " to the best RPG ever");
         System.out.println("Type 'help' at any time to get help.\n");
-        
+        startTime = data.getTimer().getCurrentTime();
         return player;
     }
     

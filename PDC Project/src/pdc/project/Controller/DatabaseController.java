@@ -149,7 +149,6 @@ public class DatabaseController {
                 String player_score = rs.getString("player_score");
                 String result = (player_name + ", " + player_score);
                 returnedList.add(result);
-                
             }
             stmt.close();
         } catch (SQLException e) {
