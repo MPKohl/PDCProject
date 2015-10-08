@@ -226,7 +226,10 @@ public abstract class Player {
             finalTime[i] = finishTime[i] - startTime[i]; 
         }
         if(finalTime[0] == 0 && finalTime[1] < 4){
-            score = score* 0.15;
+            score = score + score * 0.35;
+        }
+        else if(finalTime[0] == 0 && finalTime[1] < 6){
+            score = score + score * 0.15;
         }
             
     }
