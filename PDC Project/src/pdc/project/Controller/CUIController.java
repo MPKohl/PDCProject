@@ -21,9 +21,9 @@ public class CUIController {
     int[] startTime;
     
     public static void startGame(){
-        boolean x = true;
-        while(x){
-            CUIController.move(board.reachableTiles());
+        boolean gameIsRunning = true;
+        while(gameIsRunning){
+            move(board.reachableTiles());
             player.getCurrentStats();
             board.printBoard();
         }
@@ -69,6 +69,7 @@ public class CUIController {
             }
             
             String answer = moveScan.nextLine();
+            answer = answer.trim();
             if (answer.equals("1") && moveUp){
                 board.changePosition(position[0], position[1]-1);
                 moveChosen=true;

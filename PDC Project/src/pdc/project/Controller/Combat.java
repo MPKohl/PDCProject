@@ -50,26 +50,26 @@ public class Combat {
                      
         Scanner scan = new Scanner(System.in);   
     
-        boolean x = true;
-        while (x){
+        boolean correctInput = false;
+        while (!correctInput){
             System.out.println("1. Sword strike\n2: Bleeding strike\n3: Defensive stance");
             try{               
                 int command = scan.nextInt();
                 scan.nextLine();
                 
                 if(command == 1){
-                    x = false;
+                    correctInput = true;
                     warriorCalcution(enemy, player, defensiveCount, dotCount);
                 }
                 else if(command == 2){
-                    x = false;
+                    correctInput = true;
                     player.setDot(true);
                     dotCount = 3;
                     int damage = bleedCalc(enemy);
                     enemyHealthReduction(enemy, damage);
                 }
                 else if(command == 3){
-                    x = false;
+                    correctInput = true;
                     player.setDefensive(true);
                     defensiveCount = 2;                                      
                 }
@@ -97,26 +97,26 @@ public class Combat {
         
         Scanner scan = new Scanner(System.in);   
     
-        boolean x = true;
-        while (x){
+        boolean correctInput = false;
+        while (!correctInput){
             System.out.println("1. Sword strike\n2: Bleeding strike\n3: Defensive stance");
             try{               
                 int command = scan.nextInt();
                 scan.nextLine();
                 
                 if(command == 1){
-                    x = false;
+                    correctInput = true;
                     archerCalculation(enemy, player, defensiveCount, dotCount);
                 }
                 else if(command == 2){
-                    x = false;
+                    correctInput = true;
                     player.setDot(true);
                     dotCount = 3;
                     int damage = poisonShotCalc(enemy, player);
                     enemyHealthReduction(enemy, damage);
                 }
                 else if(command == 3){
-                    x = false;
+                    correctInput = true;
                     player.setDefensive(true);
                     defensiveCount = 2;                                      
                 }
@@ -141,26 +141,26 @@ public class Combat {
 
         Scanner scan = new Scanner(System.in);   
     
-        boolean x = true;
-        while (x){
+        boolean correctInput = false;
+        while (!correctInput){
             System.out.println("1. Dark Missile\n2: Soul Leech\n3: Blood Shield");
             try{               
                 int command = scan.nextInt();
                 scan.nextLine();
                 
                 if(command == 1){
-                    x = false;
+                    correctInput = true;
                     wizardCalculation(enemy, player, defensiveCount, dotCount);
                 }
                 else if(command == 2){
-                    x = false;
+                    correctInput = true;
                     player.setDot(true);
                     dotCount = 3;
                     int damage = soulLeechCalc(enemy, player);
                     enemyHealthReduction(enemy, damage);
                 }
                 else if(command == 3){
-                    x = false;
+                    correctInput = true;
                     player.setDefensive(true);
                     defensiveCount = 2;                                      
                 }
