@@ -219,6 +219,7 @@ public class CUIController {
         boolean correctInput = false;
         while(!correctInput){
             String input = scan.nextLine();
+            input = input.trim();
             if(input.equalsIgnoreCase("y")){
                 //play again
                 correctInput=true;
@@ -272,22 +273,22 @@ public class CUIController {
         System.out.println("\nWelcome " + player.getName() + " the "+ player.findClass()
         + " to the best RPG ever");
         System.out.println("Type 'help' at any time to get help.\n");
-        startTime = data.getTimer().getCurrentTime();
+        //startTime = data.getTimer().getCurrentTime();
         return player;
     }
     
     
     public Player createPlayer(String playerName, int classType){
             if (classType == 1){
-                    player = new Warrior(30,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
+                    player = new Warrior(30,playerName, 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
                     return player;
                 }
             if (classType == 2){
-                    player = new Archer(20,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 80.0, 10.0, 30.0, false, false);
+                    player = new Archer(20,playerName, 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 80.0, 10.0, 30.0, false, false);
                     return player;
                 }
             if (classType == 3){
-                     player = new Wizard(30,playerName, 100, 0, new ArrayList<Item>(), 0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
+                     player = new Wizard(30,playerName, 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
                     return player;
                 }
             System.out.println("Sorry I did not recognise that command "

@@ -24,15 +24,15 @@ public class Main {
         GameTimer gameTimer = new GameTimer();
         gameTimer.startThread();
         try {
-        Thread.sleep(10000);
+        Thread.sleep(0);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
         int[] curTime = gameTimer.getCurrentTime();
         gameTimer.printCurrentTime(curTime);
         
-        DatabaseController dbController = new DatabaseController();
-        dbController.initialize();
+        //DatabaseController dbController = new DatabaseController();
+        //dbController.initialize();
         //dbController.createTable();
         
         data.setBoard(new Board());

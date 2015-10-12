@@ -8,7 +8,7 @@ import java.util.HashMap;
  */
 public class Wizard extends Player {
     public Wizard(int damage, String name, int health, int exp, ArrayList inventory,
-            int score, HashMap equipped, double hitChance, double critChance, 
+            double score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance, boolean defensive, boolean dot) {
         super(damage,name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance, defensive, dot);
     }
