@@ -2,10 +2,13 @@ package pdc.project.Controller;
 
 
 
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 import pdc.project.Model.Enemy;
+import pdc.project.Model.Item;
+import pdc.project.Model.ItemType;
 import pdc.project.Model.Player;
 
 
@@ -312,6 +315,15 @@ public class Combat {
         else if(player.getDot() && (player.findClass().contains("Warrior"))){
             totalDamage += bleedCalc(enemy);
         }
+        
+        HashMap<Integer, Item> equipped = player.getEquipped();
+        
+        if(equipped != null){
+            for (Item item : equipped.values()) {
+                if (item.getItemType() == ItemType.BOW || item.getItemType() == ItemType.ONEHANDEDWEAPON || item.getItemType() == ItemType.TWOHANDEDWEAPON)
+                    totalDamage += item.getDmg();
+            }
+        }
         enemyHealthReduction(enemy, totalDamage); 
     }
        
@@ -323,6 +335,16 @@ public class Combat {
         }
         else    
             totalDamage = enemy.getDamageHigh();  
+        
+
+        HashMap<Integer, Item> equipped = player.getEquipped();
+        if (equipped != null){
+            for (Item item : equipped.values()) {
+                if (item.getItemType() == ItemType.CLOTHARMOUR || item.getItemType() == ItemType.LEATHERARMOUR || item.getItemType() == ItemType.PLATEARMOUR || item.getItemType() == ItemType.SHIELD)
+                    totalDamage -= item.getDmgReduction();
+            }
+        }
+        
         playerHealthReduction(player, totalDamage);
     }
     
