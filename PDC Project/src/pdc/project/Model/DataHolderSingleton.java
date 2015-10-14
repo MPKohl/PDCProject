@@ -5,6 +5,8 @@
  */
 package pdc.project.Model;
 
+import pdc.project.Controller.DatabaseController;
+
 /**
  *
  * @author shanon
@@ -28,6 +30,7 @@ public class DataHolderSingleton {
    private Player player;
    private Challenge challenge;
    private GameTimer timer;
+   private DatabaseController dbController = new DatabaseController();
    //need to talk about what instance variables this needs.
    
    private static DataHolderSingleton dataHolder = new DataHolderSingleton( );
@@ -90,4 +93,19 @@ public class DataHolderSingleton {
     public void setTimer(GameTimer timer) {
         this.timer = timer;
     }
+
+    /**
+     * @return the dbController
+     */
+    public DatabaseController getDbController() {
+        return dbController;
+    }
+
+    /**
+     * @param dbController the dbController to set
+     */
+    public void setDbController(DatabaseController dbController) {
+        this.dbController = dbController;
+    }
+    
 }    

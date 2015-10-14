@@ -1,6 +1,7 @@
 package pdc.project.Controller;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -101,6 +102,10 @@ public class CUIController {
                 printCommands();
             } else if (answer.equalsIgnoreCase("help")){
                 printHelp();
+            } else if (answer.equalsIgnoreCase("highscores")){
+                printHighscores();
+            } else if (answer.equalsIgnoreCase("save")){
+                saveHighscore();
             } else {
                 System.err.println("Please choose one of the given options.");
             }
@@ -112,6 +117,8 @@ public class CUIController {
         System.out.println("Type 'e' to show current equipped items.");
         System.out.println("Type 'equip' to equip an item from your inventory.");
         System.out.println("Type 'help' to view the help screen");
+        System.out.println("Type 'highscores' to view the highscores");
+        System.out.println("Type 'save' to save your score");
         System.out.println("Type 'quit' to quit the game.");
     }
     
@@ -125,6 +132,20 @@ public class CUIController {
                          + "\nIf you manage to defeat these monsters you will be rewarded with a random item, updated score and experiecnce points."
                          + "\n'X' on the map is a blocked square, you cannot move into these squares."
                          + "\nHave fun!\n");
+    }
+    
+    private static void printHighscores(){
+        for (String score : data.getDbController().getHighscores()){
+            System.out.println(score);
+        }
+    }
+    
+    private static void saveHighscore(){
+        if (data.getDbController().updateHighscores()){
+            System.out.println("Highscore saved succesfully.");
+        } else {
+            System.err.println("ERROR: Highscore not saved.");
+        }
     }
 
     private static void equipItem(Scanner scan){
@@ -241,7 +262,7 @@ public class CUIController {
         System.out.println("You have completed the game! Well done!");
         data.getPlayer().getCurrentStats();
         //data.getPlayer().timerReward(startTime);
-        //update high scores
+        saveHighscore();
         System.out.println("Would you like to play again?");
         playAgain();        
     }
