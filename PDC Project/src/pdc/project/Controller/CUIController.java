@@ -159,14 +159,18 @@ public class CUIController {
             Enemy enemy = (Enemy) board.getBoard()[x][y];
 
             Combat.combatStart(enemy, player);
-            if(tile.getType() == TileType.BOSS){
-                finishGame();
-            }
+            
             
             board.getBoard()[x][y] = new EmptyTile();
             
-            data.getPlayer().enemyReward();
+            Item itemRewarded = data.getPlayer().enemyReward();
+            System.out.println("\nAt your feet a " + itemRewarded.getName() + " appears! You pick it up and put it in your Inventory");
         }
+        else if(tile.getType() == TileType.BOSS){
+            Enemy enemy = (Enemy) board.getBoard() [x][y];
+            Combat.combatStart(enemy, player);
+            finishGame();
+            }
     }
     
     private static void poseChallenge(Board board, Player player, int x, int y){

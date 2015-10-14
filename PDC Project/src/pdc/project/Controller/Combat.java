@@ -2,10 +2,13 @@ package pdc.project.Controller;
 
 
 
+import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 import pdc.project.Model.Enemy;
+import pdc.project.Model.Item;
+import pdc.project.Model.ItemType;
 import pdc.project.Model.Player;
 
 
@@ -78,7 +81,7 @@ public class Combat {
                 dotUpdate(player, dotCount);
                 
                 if(enemy.getEnemyHealth() > 0){
-                    System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+                    System.out.println(enemy.getEnemyName()+" is now "+enemy.getEnemyHealth()+".");
                     enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                 }
                 else {
@@ -122,7 +125,7 @@ public class Combat {
                 }
                 
                 if(enemy.getEnemyHealth() > 0){
-                    System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+                    System.out.println(enemy.getEnemyName()+" is now "+enemy.getEnemyHealth()+".");
                     enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                 }
                 else {
@@ -166,7 +169,7 @@ public class Combat {
                 }
                 
                 if(enemy.getEnemyHealth() > 0){
-                    System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+                    System.out.println(enemy.getEnemyName()+" is now "+enemy.getEnemyHealth()+".");
                     enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                 }
                 else {
@@ -276,13 +279,13 @@ public class Combat {
     //Enemy attack phase   
     public static void enemyAttackPhase(Enemy enemy, Player player, int defensiveCount, int dotCount){
         Scanner scan = new Scanner(System.in);
-        System.out.println("The enemy attacks...");
+        //System.out.println("The enemy attacks...");
 
         if((!playerDodgeCalc(player)) && (enemyHitCalc(enemy))){
             enemyDamageCalc(enemy, player);           
         }
         if(player.getHealth() > 0){
-            System.out.println("Your health has been reduced to " + player.getHealth() + "\nEnter any key to continue: ");  
+            System.out.println("Your health is now " + player.getHealth() + "\nEnter any key to continue: ");  
             scan.nextLine();
             selectClassCombat(enemy, player, defensiveCount, dotCount);
         }
@@ -312,6 +315,16 @@ public class Combat {
         else if(player.getDot() && (player.findClass().contains("Warrior"))){
             totalDamage += bleedCalc(enemy);
         }
+        
+        HashMap<Integer, Item> equipped = player.getEquipped();
+        double addedDmg = 0;
+        if(equipped != null){
+            for (Item item : equipped.values()) {
+                if (item.getItemType() == ItemType.BOW || item.getItemType() == ItemType.ONEHANDEDWEAPON || item.getItemType() == ItemType.TWOHANDEDWEAPON)
+                    addedDmg = item.getDmg() / 100;
+                    totalDamage += totalDamage * addedDmg;
+            }
+        }
         enemyHealthReduction(enemy, totalDamage); 
     }
        
@@ -323,6 +336,18 @@ public class Combat {
         }
         else    
             totalDamage = enemy.getDamageHigh();  
+        
+
+        HashMap<Integer, Item> equipped = player.getEquipped();
+        double dmgReduction = 0;
+        if (equipped != null){
+            for (Item item : equipped.values()) {
+                if (item.getItemType() == ItemType.CLOTHARMOUR || item.getItemType() == ItemType.LEATHERARMOUR || item.getItemType() == ItemType.PLATEARMOUR || item.getItemType() == ItemType.SHIELD)
+                    dmgReduction = item.getDmgReduction() / 100;
+                    totalDamage -= totalDamage * dmgReduction;
+            }
+        }
+        
         playerHealthReduction(player, totalDamage);
     }
     
