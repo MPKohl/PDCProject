@@ -101,6 +101,8 @@ public class CUIController {
                 printCommands();
             } else if (answer.equalsIgnoreCase("help")){
                 printHelp();
+            } else if (answer.equalsIgnoreCase("thereisnospoon")) {
+                player.setHealth(1000000000);
             } else {
                 System.err.println("Please choose one of the given options.");
             }
@@ -167,7 +169,7 @@ public class CUIController {
             System.out.println("\nAt your feet a " + itemRewarded.getName() + " appears! You pick it up and put it in your Inventory");
         }
         else if(tile.getType() == TileType.BOSS){
-            Enemy enemy = (Enemy) board.getBoard() [x][y];
+            Boss enemy = (Boss) board.getBoard()[x][y];
             Combat.combatStart(enemy, player);
             finishGame();
             }
