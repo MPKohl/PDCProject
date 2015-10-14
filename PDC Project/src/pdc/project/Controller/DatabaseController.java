@@ -59,8 +59,19 @@ public class DatabaseController {
     public void createTable(){
         try {
             Statement stmt=conn.createStatement();
-            String createHighScoreTable="CREATE TABLE HIGHSCORE (player_name VARCHAR(255) NOT NULL, score INT(255) NOT NULL)";
+            String createHighScoreTable="CREATE TABLE HIGHSCORE (player_name VARCHAR(255), score INTEGER)";
             stmt.executeUpdate(createHighScoreTable);
+            
+        } catch (SQLException e) {
+            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    
+    public void deleteTable(){
+        try {
+            Statement stmt=conn.createStatement();
+            String deleteHighScoreTable="DROP TABLE HIGHSCORE";
+            stmt.executeUpdate(deleteHighScoreTable);
             
         } catch (SQLException e) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
