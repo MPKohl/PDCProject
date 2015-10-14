@@ -237,7 +237,7 @@ public abstract class Player {
             
     }
     
-    public void enemyReward(){
+    public Item enemyReward(){
         Random r = new Random();
         Item item = null;
         giveExp(15);
@@ -260,6 +260,7 @@ public abstract class Player {
             case 6: item = new Item(ItemType.TWOHANDEDWEAPON); break;
         }
         inventory.add(item);
+        return item;
     }
     private int randWarrior(Random r){
         int roll = r.nextInt(7);
