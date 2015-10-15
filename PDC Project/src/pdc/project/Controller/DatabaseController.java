@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pdc.project.Model.DataHolderSingleton;
+import pdc.project.Model.DataHolder;
 import pdc.project.Model.PlayerClass;
 
 /**
@@ -113,7 +113,7 @@ public class DatabaseController {
      * @return true if successful.
      */
     public boolean updateHighscores(){
-        DataHolderSingleton data = DataHolderSingleton.getInstance();
+        DataHolder data = DataHolder.getInstance();
         double player_score = data.getPlayer().getScore();
         String player_name = data.getPlayer().getName();
         String player_class;

@@ -5,19 +5,19 @@ import pdc.project.Controller.DatabaseController;
 /**
  * Singleton that holds the data of the game to ensure that no duplicates are created.
  */
-public class DataHolderSingleton {
+public class DataHolder {
 
     /**
      * @return the dataHolder
      */
-    public static DataHolderSingleton getDataHolder() {
+    public static DataHolder getDataHolder() {
         return dataHolder;
     }
 
     /**
      * @param aDataHolder the dataHolder to set
      */
-    public static void setDataHolder(DataHolderSingleton aDataHolder) {
+    public static void setDataHolder(DataHolder aDataHolder) {
         dataHolder = aDataHolder;
     }
     
@@ -28,15 +28,15 @@ public class DataHolderSingleton {
     private DatabaseController dbController = new DatabaseController();
     //need to talk about what instance variables this needs.
    
-    private static DataHolderSingleton dataHolder = new DataHolderSingleton( );
+    private static DataHolder dataHolder = new DataHolder( );
    
-    private DataHolderSingleton(){ }  //private constructor so it can never be intitliased.
+    private DataHolder(){ }  //private constructor so it can never be intitliased.
 
     /**
      * Returns the only instance of the Singleton
      * @return Returns the Singleton with the game data
      */
-    public static DataHolderSingleton getInstance( ) {
+    public static DataHolder getInstance( ) {
        return getDataHolder();
     }
    

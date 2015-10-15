@@ -222,7 +222,7 @@ public abstract class Player {
     }
     
     public void timerReward(int[] startTime){
-        DataHolderSingleton data = DataHolderSingleton.getInstance();
+        DataHolder data = DataHolder.getInstance();
         int[] finishTime = data.getTimer().getCurrentTime();
         int[] finalTime = new int[3];
         for(int i = 0; i > 3; i++){

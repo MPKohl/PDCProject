@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class CUIController {
 
     private static final Scanner scan = new Scanner(System.in);
-    private static DataHolderSingleton data = DataHolderSingleton.getInstance();
+    private static DataHolder data = DataHolder.getInstance();
     int[] startTime;
     
     /**
