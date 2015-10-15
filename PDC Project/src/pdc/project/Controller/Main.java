@@ -32,7 +32,6 @@ public class Main {
         gameTimer.printCurrentTime(curTime);
         
         data.getDbController().openConnection();
-        data.getDbController().deleteTable();
         data.getDbController().createTable();
         
         data.setBoard(new Board());
