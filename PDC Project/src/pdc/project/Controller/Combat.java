@@ -90,7 +90,7 @@ public class Combat {
                     scan.next();
                 }
             }catch(InputMismatchException e){
-                    System.err.println("Command not recognised.");
+                    System.out.println("Command not recognised.");
                     scan.next();
             }
         }
@@ -134,7 +134,7 @@ public class Combat {
                     scan.next();
                 }
             }catch(InputMismatchException e){
-                    System.err.println("Command not recognised.");
+                    System.out.println("Command not recognised.");
                     scan.next();
             }
         }
@@ -178,7 +178,7 @@ public class Combat {
                     scan.next();
                 }
             }catch(InputMismatchException e){
-                    System.err.println("Command not recognised.");
+                    System.out.println("Command not recognised.");
                     scan.next();
             }
         }

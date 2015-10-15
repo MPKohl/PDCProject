@@ -27,7 +27,7 @@ public class CUIController {
         
         System.out.println("\nWelcome " + data.getPlayer().getName() + " the "+ data.getPlayer().findClass()
         + " to the best RPG ever!");
-        System.out.println("Type 'help' at any time to get help.\n");
+        System.out.println("Type 'help' to get help.\n");
         
         data.getBoard().printBoard();
         
@@ -127,7 +127,7 @@ public class CUIController {
             } else if (answer.equalsIgnoreCase("clear")){
                 clearHighscores();
             } else {
-                System.err.println("Please choose one of the given options.");
+                System.out.println("Please choose one of the given options.");
             }
         }
     }
@@ -152,12 +152,13 @@ public class CUIController {
     private static void printHelp(){
         System.out.println("\nThis is a turn based RPG game."
                          + "\nYour player is the 'P' on the map."
-                         + "\nType 'cmds' at any time to view useful commands to help you complete the game"
+                         + "\nType 'cmds' to view useful commands to help you complete the game"
                          + "\n'C' on the map is a challenge, move into the challenge to complete it"
                          + "\nIf you complete a challenge your health will be restored and you will gain experiece points and score"
                          + "\nThroughout your travels your player will run into spooky monsters"
                          + "\nIf you manage to defeat these monsters you will be rewarded with a random item, updated score and experiecnce points."
                          + "\n'X' on the map is a blocked square, you cannot move into these squares."
+                         + "\n'X' Remember to equip items after combat!"
                          + "\nHave fun!\n");
     }
     
@@ -179,7 +180,7 @@ public class CUIController {
         if (data.getDbController().updateHighscores()){
             System.out.println("\nHighscore saved succesfully.\n");
         } else {
-            System.err.println("\nERROR: Highscore not saved.\n");
+            System.out.println("\nERROR: Highscore not saved.\n");
         }
     }
     
@@ -207,10 +208,10 @@ public class CUIController {
                 data.getPlayer().equipItem(input);
                 scan.nextLine();
             } catch (InputMismatchException | NullPointerException e){
-                System.err.println("\nWrong input.");
+                System.out.println("\nWrong input.");
                 scan.nextLine();
             } catch (IndexOutOfBoundsException e){
-                System.err.println("\nWrong input.");
+                System.out.println("\nWrong input.");
                 scan.next();
             }
         }
@@ -294,21 +295,21 @@ public class CUIController {
             }
         }
         catch (InputMismatchException e){
-            System.err.println("\nInput was not valid, the wizard shakes his head and walks away.");
+            System.out.println("\nInput was not valid, the wizard shakes his head and walks away.");
             scan.next();
         }
         catch (IndexOutOfBoundsException e){
-            System.err.println("\nInput was not valid, the wizard shakes his head and walks away.");
+            System.out.println("\nInput was not valid, the wizard shakes his head and walks away.");
         }
         catch (Exception e) {
-            System.err.println("\nInput could not be read, the wizard shakes his head and walks away.");
+            System.out.println("\nInput could not be read, the wizard shakes his head and walks away.");
         }
         finally {
             //Empties the Tile so the Challenge can't be trigered again
             data.getBoard().getBoard()[x][y] = new EmptyTile();
             try {
                 //Pause for effect
-                Thread.sleep(2000);
+                Thread.sleep(1500);
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
@@ -367,10 +368,10 @@ public class CUIController {
                     correctInput = true;
                     scan.nextLine();
                 } else {
-                    System.err.println("Please choose either 1, 2 or 3.");
+                    System.out.println("Please choose either 1, 2 or 3.");
                 }
             } catch(InputMismatchException e){
-                System.err.println("Please choose either 1, 2 or 3.");
+                System.out.println("Please choose either 1, 2 or 3.");
                 scan.next();
             }
         }
