@@ -120,6 +120,7 @@ public class CUIController {
             } else if (answer.equalsIgnoreCase("thereisnospoon")) {
                 // Cheat code for testing purposes
                 data.getPlayer().setHealth(1000000000);
+                data.getPlayer().setLvl(200);
             } else if (answer.equalsIgnoreCase("highscores")){
                 printHighscores();
             } else if (answer.equalsIgnoreCase("save")){
@@ -342,7 +343,7 @@ public class CUIController {
         data.getPlayer().bossReward();
         System.out.println("You have completed the game! Well done!");
         data.getPlayer().getCurrentStats();
-        //data.getPlayer().timerReward(startTime);
+        data.getPlayer().timerReward(startTime);
         saveHighscore();
         System.out.println("Would you like to play again? (y/n)");
         playAgain();        

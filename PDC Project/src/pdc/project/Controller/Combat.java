@@ -82,7 +82,7 @@ public class Combat {
                 dotUpdate(player, dotCount);
                 
                 if(enemy.getEnemyHealth() > 0){
-                    System.out.println(enemy.getEnemyName()+" is now "+enemy.getEnemyHealth()+".");
+                    System.out.println(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
                     enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                 }
                 else {
