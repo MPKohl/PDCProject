@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pdc.project.Model.DataHolderSingleton;
-import pdc.project.Model.GameTimer;
-import pdc.project.Model.Player;
 
 /**
  * Controls all communication between program and database.
@@ -45,40 +43,52 @@ public class DatabaseController {
         }
     }
     
+    /**
+     * Creates the Highscore table with 3 columns:
+     * player_name 
+     * player_score 
+     * player_class
+     */
     public void createTable(){
         try {
             Statement stmt=conn.createStatement();
             String createHighScoreTable="CREATE TABLE Highscore (player_name VARCHAR(255), player_score FLOAT, player_class VARCHAR(255))";
             stmt.executeUpdate(createHighScoreTable);
-            
+            stmt.close();
         } catch (SQLException e) {
             if(e.getSQLState().equals("X0Y32")){
-                return; //Table already exists
+                // Do nothing if table already exists
             } else {
                 Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
             }
         }
     }
     
+    /**
+     * Deletes the Highscore table.
+     */
     public void deleteTable(){
         try {
             Statement stmt=conn.createStatement();
             String deleteHighScoreTable="DROP TABLE Highscore";
             stmt.executeUpdate(deleteHighScoreTable);
-            
+            stmt.close();
         } catch (SQLException e) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
        
      /**
-     * Show High Scores query with ResultSet
-     * @return ArrayList 
+     * Returns an ArrayList<String> with the highscores sorted by score in 
+     * descending order in the following format: 
+     * player_name --- player_score --- player_class
+     * @return ArrayList of highscores in String format
      */
     public ArrayList<String> getHighscores(){
         Statement stmt;
         String sqlQuery = "SELECT player_name, player_score, player_class FROM Highscore ORDER BY player_score DESC";
         ArrayList<String> returnedList = new ArrayList<>();
+        
         try {
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sqlQuery);
@@ -93,11 +103,13 @@ public class DatabaseController {
         } catch (SQLException e) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
         }
+        
         return returnedList;
     }
     
     /**
-     * Updates the high score table
+     * Updates the high score table.
+     * @return true if successful.
      */
     public boolean updateHighscores(){
         DataHolderSingleton data = DataHolderSingleton.getInstance();
@@ -112,14 +124,17 @@ public class DatabaseController {
             stmt.setFloat(2, (float) player_score);
             stmt.setString(3, player_class);
             stmt.executeUpdate();
+            stmt.close();
             return true;
-            
         } catch (SQLException e) {
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
             return false;
         }
     }
     
+    /**
+     * Clears the Highscore table by deleting it and remaking it.
+     */
     public void clearHighscores(){
         deleteTable();
         createTable();

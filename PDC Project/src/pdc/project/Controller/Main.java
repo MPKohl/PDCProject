@@ -21,6 +21,7 @@ public class Main {
      */
     public static void main(String[] args) {
         DataHolderSingleton data = DataHolderSingleton.getInstance();
+        
         GameTimer gameTimer = new GameTimer();
         gameTimer.startThread();
         try {
