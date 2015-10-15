@@ -45,7 +45,7 @@ public class CUIController {
      * Tile[1] = Tile below current position. 
      * Tile[2] = Tile to the right of current position.
      * Tile[3] = Tile to the left of current position. 
-     * @param reachableTiles Takes the current reachable tiles.
+     * @param reachableTiles Takes the current reachable tiles in an array.
      */
     public static void move(Tile[] reachableTiles){
         boolean moveChosen = false;
