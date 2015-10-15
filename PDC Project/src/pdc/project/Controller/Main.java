@@ -35,13 +35,11 @@ public class Main {
         data.getDbController().createTable();
         
         data.setBoard(new Board());
-        CUIController cuiController = new CUIController();
-        data.setPlayer(cuiController.playerDetails());
-        data.getBoard().printBoard();
-        cuiController.startGame();
-        
-        
+        CUIController.startGame();
+                        
         GameBoardGUI GUI1 = new GameBoardGUI();
         GUI1.show();
+        
+        data.getDbController().closeConnection();
     }      
 }

@@ -13,7 +13,7 @@ public abstract class Player {
     private int health;
     private int exp;
     private ArrayList<Item> inventory = new ArrayList<>();
-    private double score;
+    private double score = 0.0;
     private HashMap<ItemSlot, Item> equipped = new HashMap<>();
     private double hitChance;
     private double critChance;

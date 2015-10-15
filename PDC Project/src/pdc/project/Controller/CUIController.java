@@ -1,32 +1,41 @@
 package pdc.project.Controller;
 
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import pdc.project.Model.*;
 import java.util.Scanner;
-import pdc.project.Model.Player;
 /**
- * 
+ * The CUIController controls the game mechanics for the CUI version. 
  */
 public class CUIController {
 
     private static final Scanner scan = new Scanner(System.in);
     private static DataHolderSingleton data = DataHolderSingleton.getInstance();
-    
-    private static Player player = data.getPlayer();
-    private static Board board = data.getBoard();
     int[] startTime;
     
+    /**
+     * Starts the game and keeps it running until the player quits or finishes the game.
+     */
     public static void startGame(){
+        System.out.println("THE AMAZING ADVENTURE");
+        System.out.println("---------------------");
+        
+        // Initialises the player nad saves it in the singleton
+        data.setPlayer(playerDetails());
+        
+        System.out.println("\nWelcome " + data.getPlayer().getName() + " the "+ data.getPlayer().findClass()
+        + " to the best RPG ever!");
+        System.out.println("Type 'help' at any time to get help.\n");
+        
+        data.getBoard().printBoard();
+        
         boolean gameIsRunning = true;
         while(gameIsRunning){
-            move(board.reachableTiles());
-            player.getCurrentStats();
-            board.printBoard();
+            move(data.getBoard().reachableTiles());
+            data.getPlayer().getCurrentStats();
+            data.getBoard().printBoard();
         }
     }
     
@@ -37,8 +46,6 @@ public class CUIController {
      * Tile[2] = Tile to the right of current position.
      * Tile[3] = Tile to the left of current position. 
      * @param reachableTiles Takes the current reachable tiles.
-     * @param board the game board.
-     * @param player
      */
     public static void move(Tile[] reachableTiles){
         boolean moveChosen = false;
@@ -50,7 +57,7 @@ public class CUIController {
             boolean moveDown  =    false;
             boolean moveRight =    false;
             boolean moveLeft  =    false;
-            int[] position = board.getPosition();
+            int[] position = data.getBoard().getPosition();
             
             if(!(reachableTiles[0].getType() == TileType.BLOCKED)){
                 System.out.println("1. Move Up.");
@@ -72,31 +79,38 @@ public class CUIController {
             String answer = moveScan.nextLine();
             answer = answer.trim();
             if (answer.equals("1") && moveUp){
-                board.changePosition(position[0], position[1]-1);
+                data.getBoard().changePosition(position[0], position[1]-1);
                 moveChosen=true;
-                checkTile(board, player);
+                checkCurrentTile();
+                
             } else if (answer.equals("2")&& moveDown){
-                board.changePosition(position[0], position[1]+1);
+                data.getBoard().changePosition(position[0], position[1]+1);
                 moveChosen=true;
-                checkTile(board, player);
+                checkCurrentTile();
+                
             } else if (answer.equals("3") && moveRight){
-                board.changePosition(position[0]+1, position[1]);
+                data.getBoard().changePosition(position[0]+1, position[1]);
                 moveChosen=true;
-                checkTile(board, player);
+                checkCurrentTile();
+                
             } else if (answer.equals("4")&& moveLeft){
-                board.changePosition(position[0]-1, position[1]);
+                data.getBoard().changePosition(position[0]-1, position[1]);
                 moveChosen=true;
-                checkTile(board, player);
+                checkCurrentTile();
+                
             } else if(answer.equalsIgnoreCase("quit")){
-                System.out.println("Thanks for playing!");
+                System.out.println("\nThanks for playing!");
                 saveHighscore();
+                
                 scan.close();
                 moveScan.close();
+                
                 System.exit(0);
+                
             } else if (answer.equalsIgnoreCase("i")){
                 data.getPlayer().showInventory();
             } else if (answer.equalsIgnoreCase("e")){
-                data.getPlayer().showEquippedItems();
+                data.getPlayer().showEquippedItems();             
             } else if (answer.equalsIgnoreCase("equip")){
                 equipItem(scan);
             } else if (answer.equalsIgnoreCase("cmds")){
@@ -104,27 +118,37 @@ public class CUIController {
             } else if (answer.equalsIgnoreCase("help")){
                 printHelp();
             } else if (answer.equalsIgnoreCase("thereisnospoon")) {
-                player.setHealth(1000000000);
+                // Cheat code for testing purposes
+                data.getPlayer().setHealth(1000000000);
             } else if (answer.equalsIgnoreCase("highscores")){
                 printHighscores();
             } else if (answer.equalsIgnoreCase("save")){
                 saveHighscore();
+            } else if (answer.equalsIgnoreCase("clear")){
+                clearHighscores();
             } else {
                 System.err.println("Please choose one of the given options.");
             }
         }
     }
     
+    /**
+     * Prints the commands for the game to the console.
+     */
     private static void printCommands(){
-        System.out.println("Type 'i' to open the inventory.");
-        System.out.println("Type 'e' to show current equipped items.");
-        System.out.println("Type 'equip' to equip an item from your inventory.");
-        System.out.println("Type 'help' to view the help screen");
-        System.out.println("Type 'highscores' to view the highscores");
-        System.out.println("Type 'save' to save your score");
-        System.out.println("Type 'quit' to quit the game.");
+        System.out.println("\nType 'i' to open the inventory."
+                         + "\nType 'e' to show current equipped items."
+                         + "\nType 'equip' to equip an item from your inventory."
+                         + "\nType 'help' to view the help screen"
+                         + "\nType 'highscores' to view the highscores"
+                         + "\nType 'save' to save your score"
+                         + "\nType 'clear' to clear highscores."
+                         + "\nType 'quit' to quit the game.\n");
     }
     
+    /**
+     * Prints a help paragraph to the console.
+     */
     private static void printHelp(){
         System.out.println("\nThis is a turn based RPG game."
                          + "\nYour player is the 'P' on the map."
@@ -137,89 +161,133 @@ public class CUIController {
                          + "\nHave fun!\n");
     }
     
+    /**
+     * Prints the highscores from the database in order of highest score to the console.
+     */
     private static void printHighscores(){
+        System.out.println("\nHIGHSCORES:");
         for (String score : data.getDbController().getHighscores()){
             System.out.println(score);
         }
+        System.out.println("");
     }
     
+    /**
+     * Saves the the current score in the database.
+     */
     private static void saveHighscore(){
         if (data.getDbController().updateHighscores()){
-            System.out.println("Highscore saved succesfully.");
+            System.out.println("\nHighscore saved succesfully.\n");
         } else {
-            System.err.println("ERROR: Highscore not saved.");
+            System.err.println("\nERROR: Highscore not saved.\n");
         }
     }
+    
+    /**
+     * Deletes all highscores.
+     */
+    private static void clearHighscores(){
+        data.getDbController().clearHighscores();
+        System.out.println("\nHighscores cleared.\n");
+    }
 
+    /**
+     * Prints the inventory and gives the player an option to choose which
+     * item to equip by writing the corresponding number.
+     * @param scan Scanner that scans for user input
+     */
     private static void equipItem(Scanner scan){
+        // Prints the inventory
         data.getPlayer().showInventory();
         if (!data.getPlayer().getInventory().isEmpty()){
-            System.out.println("Type in the number of the item you want to equip:");
+            System.out.println("\nType in the number of the item you want to equip:");
         
             try {
                 int input = scan.nextInt();
                 data.getPlayer().equipItem(input);
                 scan.nextLine();
             } catch (InputMismatchException | NullPointerException e){
-                System.err.println("Wrong input.");
+                System.err.println("\nWrong input.");
                 scan.nextLine();
             } catch (IndexOutOfBoundsException e){
-                System.err.println("Wrong input.");
+                System.err.println("\nWrong input.");
                 scan.next();
             }
         }
         data.getBoard().printBoard();
     }
     
-    private static void checkTile(Board board, Player player){
-        int x = board.getPosition()[0];
-        int y = board.getPosition()[1];
-        Tile tile = board.getBoard()[x][y];
+    /**
+     * Checks what Tile the player is currently on and executes the correct sequence
+     * for that Tile.
+     */
+    private static void checkCurrentTile(){
+        int x = data.getBoard().getPosition()[0];
+        int y = data.getBoard().getPosition()[1];
+        Tile tile = data.getBoard().getBoard()[x][y];
         
+        // If the Tile is a challenge, execute the challenge
         if (tile.getType() == TileType.CHALLENGE){
-            poseChallenge(board, player, x, y);
+            poseChallenge(x, y);
         }
+        
+        // If the Tile is an enemy, execute the combat sequence
         else if(tile.getType() == TileType.ENEMY){
-            Enemy enemy = (Enemy) board.getBoard()[x][y];
+            Enemy enemy = (Enemy) data.getBoard().getBoard()[x][y];
 
-            Combat.combatStart(enemy, player);
+            Combat.combatStart(enemy, data.getPlayer());
             
-            
-            board.getBoard()[x][y] = new EmptyTile();
+            // Inserts an empty Tile after combat is done
+            data.getBoard().getBoard()[x][y] = new EmptyTile();
             
             Item itemRewarded = data.getPlayer().enemyReward();
-            System.out.println("\nAt your feet a " + itemRewarded.getName() + " appears! You pick it up and put it in your Inventory");
+            System.out.println("\nAt your feet a " + itemRewarded.getName() + " appears! You pick it up and put it in your Inventory.");
         }
+        
+        // If the Tile is the final boss, execute combat sequence and end game afterwards
         else if(tile.getType() == TileType.BOSS){
-            Boss enemy = (Boss) board.getBoard()[x][y];
-            Combat.combatStart(enemy, player);
+            Boss enemy = (Boss) data.getBoard().getBoard()[x][y];
+            Combat.combatStart(enemy, data.getPlayer());
             finishGame();
-            }
+        }
     }
     
-    private static void poseChallenge(Board board, Player player, int x, int y){
-        Challenge ch = (Challenge) board.getBoard()[x][y];
+    /**
+     * Poses the player a riddle with one correct answer and several wrong
+     * answers that are shuffled randomly.
+     * @param x Position of player on x-axis of board.
+     * @param y Position of player on y-axis of board.
+     */
+    private static void poseChallenge(int x, int y){
+        Challenge ch = (Challenge) data.getBoard().getBoard()[x][y];
+        
         System.out.println("\nA wizard appears before you in a flash of smoke and poses you the following riddle:");
+        
+        // Prints the riddle
         System.out.println(ch.getQuestion().getText());
+        
+        // Make a list of all possible answers and shuffle them
         ArrayList<TextOutput> answers = new ArrayList<>();
         answers.add(ch.getCorrectAnswer());
         for (TextOutput t : ch.getWrongAnswers())
             answers.add(t);
-            
         Collections.shuffle(answers);
             
+        // Prints all the options with a number for each answer
         int optionNr = 1;
         for (TextOutput a : answers){
             System.out.println(optionNr + ". " + a.getText());
             optionNr++;
         }
             
+        // Try/catch that handles the users input and rewards the player for a correct answer
+        // All wrong answers result in no reward and a termination of the challenge sequence
         try {
             int userAnswer = scan.nextInt();
             if (answers.get(userAnswer-1) instanceof CorrectAnswer){
                 data.getPlayer().challengeReward();
-                System.out.println("\nThe wizard seems pleased with your answer and raises his arms over you before fading away.");
-                System.out.println("You suddenly feel rejuvenated.\n");
+                System.out.println("\nThe wizard seems pleased with your answer and raises his arms over you before fading away." +
+                                   "\nYou suddenly feel rejuvenated.\n");
             }
             else {
                 System.out.println("\nThe wizard shakes his head and dissapears with a *BANG*!\n");
@@ -236,45 +304,54 @@ public class CUIController {
             System.err.println("\nInput could not be read, the wizard shakes his head and walks away.");
         }
         finally {
-            board.getBoard()[x][y] = new EmptyTile();
+            //Empties the Tile so the Challenge can't be trigered again
+            data.getBoard().getBoard()[x][y] = new EmptyTile();
             try {
+                //Pause for effect
                 Thread.sleep(2000);
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
             }
         }
     }
+    
+    /**
+     * Gives the player the option to play again.
+     */
     public static void playAgain(){
         boolean correctInput = false;
         while(!correctInput){
             String input = scan.nextLine();
             input = input.trim();
-            if(input.equalsIgnoreCase("y")){
+            if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")){
                 //play again
                 correctInput=true;
-            } else if(input.equalsIgnoreCase("n")){
+            } else if(input.equalsIgnoreCase("n") || input.equalsIgnoreCase("no")){
                 System.exit(0);
             }
             else
                 System.out.println("Sorry I did not recognise that command");
         }
     }
-        
+    
+    /**
+     * Rewards the player for finishing the game and gives him/her the option to play again
+     */
     public static void finishGame(){
         data.getPlayer().bossReward();
         System.out.println("You have completed the game! Well done!");
         data.getPlayer().getCurrentStats();
         //data.getPlayer().timerReward(startTime);
         saveHighscore();
-        System.out.println("Would you like to play again?");
+        System.out.println("Would you like to play again? (y/n)");
         playAgain();        
     }
     
-
-    
-    public Player playerDetails(){
-        System.out.println("THE AMAZING ADVENTURE");
-        System.out.println("---------------------");
+    /**
+     * Enables the user to choose a name and a class. Returns the Player object created.
+     * @return Player object with chosen name and class.
+     */
+    private static Player playerDetails(){
         int classType = 0;
         System.out.println("\nWhat is your name adventurer?");
         String playerName = scan.nextLine();
@@ -297,32 +374,34 @@ public class CUIController {
                 scan.next();
             }
         }
-        Player player = createPlayer(playerName, classType);
         
-        System.out.println("\nWelcome " + player.getName() + " the "+ player.findClass()
-        + " to the best RPG ever");
-        System.out.println("Type 'help' at any time to get help.\n");
         //startTime = data.getTimer().getCurrentTime();
-        return player;
+        return createPlayer(playerName, classType);
     }
     
-    
-    public Player createPlayer(String playerName, int classType){
-            if (classType == 1){
-                    player = new Warrior(30,playerName, 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
-                    return player;
-                }
-            if (classType == 2){
-                    player = new Archer(20,playerName, 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 80.0, 10.0, 30.0, false, false);
-                    return player;
-                }
-            if (classType == 3){
-                     player = new Wizard(30,playerName, 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
-                    return player;
-                }
-            System.out.println("Sorry I did not recognise that command "
-                        + "please try again.");
-
-        return null;
+    /**
+     * Returns a Player object with the given name and class. The rest of the 
+     * player stats are preset. The parameter classType means the following: 
+     * 1 = Warrior 
+     * 2 = Archer 
+     * 3 = Wizard 
+     * @param playerName String representation of player name
+     * @param classType Int representation of player class
+     * @return Player object with chosen name and class
+     */
+    private static Player createPlayer(String playerName, int classType){
+        if (classType == 1){
+            return new Warrior(30,playerName, 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
+        }
+        else if (classType == 2){
+            return new Archer(20,playerName, 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 80.0, 10.0, 30.0, false, false);
+        }
+        else if (classType == 3){
+            return new Wizard(30,playerName, 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
+        }
+        else {
+            System.out.println("This should never happen, but you dun goofed and now you're a wizard... Harry.");
+            return new Wizard(30,playerName, 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
+        }
     }
 }
