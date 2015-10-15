@@ -10,6 +10,7 @@ import pdc.project.Model.Enemy;
 import pdc.project.Model.Item;
 import pdc.project.Model.ItemType;
 import pdc.project.Model.Player;
+import pdc.project.Model.PlayerClass;
 
 
 public class Combat {
@@ -33,13 +34,13 @@ public class Combat {
     //Method to check class of player and choose appropriate attack phase
     public static void selectClassCombat(Enemy enemy, Player player, int defensiveCount, int dotCount){
 
-        if(player.findClass().contains("Warrior")){   
+        if(player.findClass() == PlayerClass.WARRIOR){   
             warriorAttackPhase(enemy, player, defensiveCount, dotCount);
         }
-        else if(player.findClass().contains("Archer")){
+        else if(player.findClass() == PlayerClass.ARCHER){
             archerAttackPhase(enemy, player, defensiveCount, dotCount);
         }
-        else if(player.findClass().contains("Wizard")){
+        else if(player.findClass() == PlayerClass.WIZARD){
             wizardAttackPhase(enemy, player, defensiveCount, dotCount);
         }
     }
@@ -306,13 +307,13 @@ public class Combat {
         else    
             totalDamage = player.getDamage();
         
-        if((player.getDot()) && (player.findClass().contains("Archer"))){
+        if((player.getDot()) && (player.findClass() == PlayerClass.ARCHER)){
             totalDamage += poisonShotCalc(enemy, player);
         }
-        else if(player.getDot() && (player.findClass().contains("Wizard"))){
+        else if(player.getDot() && (player.findClass() == PlayerClass.WIZARD)){
             totalDamage += soulLeechCalc(enemy, player);
         }
-        else if(player.getDot() && (player.findClass().contains("Warrior"))){
+        else if(player.getDot() && (player.findClass() == PlayerClass.WARRIOR)){
             totalDamage += bleedCalc(enemy);
         }
         
@@ -374,7 +375,7 @@ public class Combat {
     //Player dodge chance calculation 
     public static boolean playerDodgeCalc(Player player){
         
-        if("Warrior".equals(player.findClass())){
+        if(player.findClass() == PlayerClass.WARRIOR){
             Random r = new Random();
             int Low = 1;
             int High = 10;
@@ -382,7 +383,7 @@ public class Combat {
         
             return R == 1;        
         }
-        if("Archer".equals(player.findClass())){
+        if(player.findClass() == PlayerClass.ARCHER){
             if(player.getDefensive()){
                 Random r = new Random();
                 int Low = 1;
@@ -400,7 +401,7 @@ public class Combat {
                 return R <= 3; 
             }
         }
-        if("Wizard".equals(player.findClass())){
+        if(player.findClass() == PlayerClass.WIZARD){
             Random r = new Random();
             int Low = 1;
             int High = 20;
@@ -414,7 +415,7 @@ public class Combat {
     //Player critical hit chance calculation  
     public static boolean playerCritCalc(Player player){
         
-        if("Warrior".equals(player.findClass())){
+        if(player.findClass() == PlayerClass.WARRIOR){
             Random r = new Random();
             int Low = 1;
             int High = 10;
@@ -422,7 +423,7 @@ public class Combat {
         
             return R == 1 || R == 2;        
         }
-        if("Archer".equals(player.findClass())){
+        if(player.findClass() == PlayerClass.ARCHER){
             Random r = new Random();
             int Low = 1;
             int High = 10;
@@ -430,7 +431,7 @@ public class Combat {
         
             return R == 1 || R == 2 || R == 3;            
         }
-        if("Wizard".equals(player.findClass())){
+        if(player.findClass() == PlayerClass.WIZARD){
             Random r = new Random();
             int Low = 1;
             int High = 20;
@@ -443,7 +444,7 @@ public class Combat {
     
     // Player hit chance calculation    
     public static boolean playerHitCalc(Player player){
-        if("Warrior".equals(player.findClass())){
+        if(player.findClass() == PlayerClass.WARRIOR){
             Random r = new Random();
             int Low = 1;
             int High = 10;
@@ -451,7 +452,7 @@ public class Combat {
         
             return R != 1;        
         }
-        if("Archer".equals(player.findClass())){
+        if(player.findClass() == PlayerClass.ARCHER){
             Random r = new Random();
             int Low = 1;
             int High = 10;
@@ -459,7 +460,7 @@ public class Combat {
         
             return R != 1 || R != 2;            
         }
-        if("Wizard".equals(player.findClass())){
+        if(player.findClass() == PlayerClass.WIZARD){
             Random r = new Random();
             int Low = 1;
             int High = 20;

@@ -12,7 +12,7 @@ public class Warrior extends Player {
     }
     
     @Override
-    public String findClass() {
-        return "Warrior";
+    public PlayerClass findClass() {
+        return PlayerClass.WARRIOR;
     }
 }

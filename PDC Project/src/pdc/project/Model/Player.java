@@ -50,8 +50,8 @@ public abstract class Player {
     }        
     
     //Methods
-    public String findClass(){
-        return "No class";
+    public PlayerClass findClass(){
+        return PlayerClass.NONE;
     }
 
     

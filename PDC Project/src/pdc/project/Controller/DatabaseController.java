@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pdc.project.Model.DataHolderSingleton;
+import pdc.project.Model.PlayerClass;
 
 /**
  * Controls all communication between program and database.
@@ -115,7 +116,16 @@ public class DatabaseController {
         DataHolderSingleton data = DataHolderSingleton.getInstance();
         double player_score = data.getPlayer().getScore();
         String player_name = data.getPlayer().getName();
-        String player_class = data.getPlayer().findClass();
+        String player_class;
+        if (data.getPlayer().findClass() == PlayerClass.WIZARD){
+            player_class = "Wizard";
+        } else if (data.getPlayer().findClass() == PlayerClass.WARRIOR){
+            player_class = "Warrior";
+        } else if (data.getPlayer().findClass() == PlayerClass.ARCHER) {
+            player_class = "Archer";
+        } else {
+            player_class = "Unknown";
+        }
         PreparedStatement stmt;
         String sqlUpdate = "INSERT INTO Highscore (player_name, player_score, player_class) VALUES (?, ?, ?)";
         try {

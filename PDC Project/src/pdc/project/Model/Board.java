@@ -10,6 +10,10 @@ public class Board {
     //Player position
     private int[] position = new int[2];
     
+    /**
+     * Constructor that creates the default board of 60 Tiles with the player at 
+     * position x = 2, y = 11
+     */
     public Board(){
         position[0] = 2;
         position[1] = 11;
@@ -88,14 +92,32 @@ public class Board {
         board[4][0] = challengeFactory.getRandomChallenge();
     }
     
+    /**
+     * Changes the position of the player to a new coordinate and marks the 
+     * previous Tile as visited.
+     * @param newX new X coordinate
+     * @param newY new Y coordinate
+     */
     public void changePosition(int newX, int newY){
         getBoard()[position[0]][position[1]].visit();
         position[0] = newX;
         position[1] = newY;
     }
+    
+    /**
+     * Returns the position of the player in an int[] where [1] is the 
+     * x coordinate and [2] is the y coordinate.
+     * @return int[] with current x and y coordinates.
+     */
     public int[] getPosition(){
         return position;
     }
+    
+    /**
+     * Sets the position of the player with an int[] where [1] is the 
+     * x coordinate and [2] is the y coordinate.
+     * @param position int[] with new x and y coordinates.
+     */
     public void setPosition(int[] position){
         this.position = position;
     }

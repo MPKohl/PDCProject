@@ -14,7 +14,7 @@ public class Wizard extends Player {
     }
 
     @Override
-    public String findClass() {
-        return "Wizard";
+    public PlayerClass findClass() {
+        return PlayerClass.WIZARD;
     }
 }
