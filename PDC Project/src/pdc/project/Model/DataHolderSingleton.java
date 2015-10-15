@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdc.project.Model;
 
 import pdc.project.Controller.DatabaseController;
 
 /**
- *
- * @author shanon
+ * Singleton that holds the data of the game to ensure that no duplicates are created.
  */
 public class DataHolderSingleton {
 
@@ -26,24 +20,32 @@ public class DataHolderSingleton {
     public static void setDataHolder(DataHolderSingleton aDataHolder) {
         dataHolder = aDataHolder;
     }
-   private Board board;
-   private Player player;
-   private Challenge challenge;
-   private GameTimer timer;
-   private DatabaseController dbController = new DatabaseController();
-   //need to talk about what instance variables this needs.
+    
+    private Board board;
+    private Player player;
+    private Challenge challenge;
+    private GameTimer timer;
+    private DatabaseController dbController = new DatabaseController();
+    //need to talk about what instance variables this needs.
    
-   private static DataHolderSingleton dataHolder = new DataHolderSingleton( );
+    private static DataHolderSingleton dataHolder = new DataHolderSingleton( );
    
-   private DataHolderSingleton(){ }  //private constructor so it can never be intitliased.
+    private DataHolderSingleton(){ }  //private constructor so it can never be intitliased.
 
-   public static DataHolderSingleton getInstance( ) {
-      return getDataHolder();
-   }
+    /**
+     * Returns the only instance of the Singleton
+     * @return Returns the Singleton with the game data
+     */
+    public static DataHolderSingleton getInstance( ) {
+       return getDataHolder();
+    }
    
-   public void setBoard(Board board ) {
-      this.board = board;
-   }
+    /**
+     * @param board the Board to set
+     */
+    public void setBoard(Board board ) {
+       this.board = board;
+    }
 
     /**
      * @return the board

@@ -8,9 +8,8 @@ public abstract class Tile {
     TileType type;
     boolean isVisited = false;
     
-    public Tile(){
-        
-    }
+    public Tile(){}
+    
     //Visited - boolean
     private boolean isVisited(){
         return isVisited;

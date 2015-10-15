@@ -13,6 +13,11 @@ public class Item {
     private int dmgReduction = 0;
     private int dmg = 0;
     
+    /**
+     * Constuctor for Items. Gives the item a random value of a stat,
+     * depending on the chosen type.
+     * @param type 
+     */
     public Item(ItemType type) {
         setItemType(type);
         switch (type){
@@ -48,6 +53,11 @@ public class Item {
         giveRandomName();
     }
     
+    /**
+     * Returns a random int from 0 to a (exclusive).
+     * @param a upper bound (exclusive)
+     * @return 
+     */
     private int random(int a){
         Random random = new Random();
         return random.nextInt(a);

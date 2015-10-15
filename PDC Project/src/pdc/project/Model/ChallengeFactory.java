@@ -5,15 +5,18 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * 
+ * This class creates all the challenges and keeps a list of the challenges 
+ * that have been added to the map and the ones that haven't.
  */
 public class ChallengeFactory {
     
     private ArrayList<Challenge> newChallenges = new ArrayList<>();
     private ArrayList<Challenge> doneChallenges = new ArrayList<>();
 
+    /**
+     * Constructor that creates all the challenges and adds them to the newChallenges list
+     */
     public ChallengeFactory() {
-        //Create a list of all challenges
         
         Question question = new Question("I can have no color, though there may be darkness within. "
                 + "I have no weight and hold nothing, and if placed in a container it becomes lighter.");
@@ -242,9 +245,11 @@ public class ChallengeFactory {
         newChallenges.add(challenge);
     }
     
-    
-    
-    
+    /**
+     * Returns a random challenge from the list of unused challenges, removes it 
+     * from that list and adds it to the list of used challenges.
+     * @return Returns a random Challenge
+     */
     public Challenge getRandomChallenge(){
         //Picks a random new challenge
         Random random = new Random();
