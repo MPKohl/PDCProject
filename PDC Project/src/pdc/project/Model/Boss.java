@@ -1,8 +1,7 @@
 package pdc.project.Model;
 
 /**
- *
- * @author MPKohl
+ * Subclass of enemy for the Boss of the game. The Boss is always the same.
  */
 public class Boss extends Enemy {
     private String enemyName;
@@ -12,8 +11,12 @@ public class Boss extends Enemy {
     private int chanceToHit;
     private int chanceToCrit;
     private int chanceToDodge;
-    //has no item and exp yield because it represents end of game.
+    
+    /**
+     * Constructor for Boss. Sets all stats to preset values.
+     */
     public Boss() {
+        //has no item and exp yield because it represents end of game.
         setType(TileType.BOSS);
         enemyName = "Martini Lord of the Underworld";
         enemyHealth = 500;
@@ -24,12 +27,19 @@ public class Boss extends Enemy {
         chanceToDodge = 10;
     }
     
-    
-    
+    /**
+     * Returns the name of the enemy.
+     * @return String enemyName the name of the enemy. 
+     */
     @Override
     public String getEnemyName() {
         return enemyName;
     }
+    
+    /**
+     * Returns the health of the enemy as an int.
+     * @return int enemyHealth the amount of health the enemy has left.
+     */
     @Override
     public int getEnemyHealth() {
         return enemyHealth;

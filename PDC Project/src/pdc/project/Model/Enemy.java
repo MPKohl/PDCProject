@@ -27,6 +27,7 @@ public class Enemy extends Tile{
         chooseStats(difficulty);
         this.stun = false;
     }
+    
     public void chooseStats(String difficulty) {
         Random random = new Random();
         if (difficulty.equals("easy")) {
@@ -56,8 +57,8 @@ public class Enemy extends Tile{
             expYield = 35;
             enemyHealth = 100;
         }
-        
     }
+    
     public void chooseDifficulty(int xLoc, int yLoc, int gameBoardSize) {
         int divideResult = 0;
         divideResult = (int)gameBoardSize/3;

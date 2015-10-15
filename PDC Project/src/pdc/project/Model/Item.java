@@ -50,6 +50,7 @@ public class Item {
                 setItemSlot(ItemSlot.MAINHAND);
                 break;
         }
+        
         giveRandomName();
     }
     
