@@ -31,9 +31,9 @@ public class Main {
         int[] curTime = gameTimer.getCurrentTime();
         gameTimer.printCurrentTime(curTime);
         
-//        data.getDbController().openConnection();
-  //      data.getDbController().deleteTable();
-    //    data.getDbController().createTable();
+        data.getDbController().openConnection();
+        data.getDbController().deleteTable();
+        data.getDbController().createTable();
         
         data.setBoard(new Board());
         CUIController cuiController = new CUIController();
