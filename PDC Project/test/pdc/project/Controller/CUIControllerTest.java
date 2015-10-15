@@ -39,7 +39,8 @@ public class CUIControllerTest {
     @Test
     public void testStartGame() {
         System.out.println("startGame");
-        CUIController.startGame();
+        CUIController cui = new CUIController();
+        cui.startGame();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -51,7 +52,8 @@ public class CUIControllerTest {
     public void testMove() {
         System.out.println("move");
         Tile[] reachableTiles = null;
-        CUIController.move(reachableTiles);
+        CUIController cui = new CUIController();
+        cui.move(reachableTiles);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -73,7 +75,8 @@ public class CUIControllerTest {
     @Test
     public void testFinishGame() {
         System.out.println("finishGame");
-        CUIController.finishGame();
+        CUIController cui = new CUIController();
+        cui.finishGame();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
