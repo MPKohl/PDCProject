@@ -87,6 +87,7 @@ public class CUIController {
                 checkTile(board, player);
             } else if(answer.equalsIgnoreCase("quit")){
                 System.out.println("Thanks for playing!");
+                saveHighscore();
                 scan.close();
                 moveScan.close();
                 System.exit(0);

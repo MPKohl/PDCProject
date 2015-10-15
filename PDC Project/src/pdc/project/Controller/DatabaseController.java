@@ -14,7 +14,7 @@ import pdc.project.Model.Player;
 public class DatabaseController {
     
     private static Connection conn;
-    private final String url = "jdbc:derby://localhost:1527/GameDB;create=true";
+    private final String url = "jdbc:derby://localhost:1527/GameDB;create=true;user=pdc;password=123";
     private final String username = "pdc";
     private final String password = "123";
     
@@ -48,18 +48,22 @@ public class DatabaseController {
     public void createTable(){
         try {
             Statement stmt=conn.createStatement();
-            String createHighScoreTable="CREATE TABLE HIGHSCORE (player_name VARCHAR(255), player_score FLOAT, player_class VARCHAR(255))";
+            String createHighScoreTable="CREATE TABLE Highscore (player_name VARCHAR(255), player_score FLOAT, player_class VARCHAR(255))";
             stmt.executeUpdate(createHighScoreTable);
             
         } catch (SQLException e) {
-            Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
+            if(e.getSQLState().equals("X0Y32")){
+                return; //Table already exists
+            } else {
+                Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
+            }
         }
     }
     
     public void deleteTable(){
         try {
             Statement stmt=conn.createStatement();
-            String deleteHighScoreTable="DROP TABLE HIGHSCORE";
+            String deleteHighScoreTable="DROP TABLE Highscore";
             stmt.executeUpdate(deleteHighScoreTable);
             
         } catch (SQLException e) {
@@ -73,7 +77,7 @@ public class DatabaseController {
      */
     public ArrayList<String> getHighscores(){
         Statement stmt;
-        String sqlQuery = "SELECT player_name, player_score, player_class FROM HIGHSCORE ORDER BY player_score DESC";
+        String sqlQuery = "SELECT player_name, player_score, player_class FROM Highscore ORDER BY player_score DESC";
         ArrayList<String> returnedList = new ArrayList<>();
         try {
             stmt = conn.createStatement();
@@ -101,7 +105,7 @@ public class DatabaseController {
         String player_name = data.getPlayer().getName();
         String player_class = data.getPlayer().findClass();
         PreparedStatement stmt;
-        String sqlUpdate = "INSERT INTO HIGHSCORE (player_name, player_score, player_class) VALUES (?, ?, ?)";
+        String sqlUpdate = "INSERT INTO Highscore (player_name, player_score, player_class) VALUES (?, ?, ?)";
         try {
             stmt = conn.prepareStatement(sqlUpdate);
             stmt.setString(1, player_name);
