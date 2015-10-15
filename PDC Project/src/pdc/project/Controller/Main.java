@@ -39,7 +39,8 @@ public class Main {
         
         // Creates the board and starts the CUI version of the game
         data.setBoard(new Board());
-        CUIController.startGame();
+        CUIController cui = new CUIController();
+        cui.startGame();
                         
         GameBoardGUI GUI1 = new GameBoardGUI();
         GUI1.show();

@@ -286,8 +286,12 @@ public class Combat {
             enemyDamageCalc(enemy, player);           
         }
         if(player.getHealth() > 0){
-            System.out.println("Your health is now " + player.getHealth() + "\nEnter any key to continue: ");  
-            scan.nextLine();
+            System.out.println("Your health is now " + player.getHealth());  
+            try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
             selectClassCombat(enemy, player, defensiveCount, dotCount);
         }
         else

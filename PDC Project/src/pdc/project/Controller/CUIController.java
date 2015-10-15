@@ -18,7 +18,7 @@ public class CUIController {
     /**
      * Starts the game and keeps it running until the player quits or finishes the game.
      */
-    public static void startGame(){
+    public void startGame(){
         System.out.println("THE AMAZING ADVENTURE");
         System.out.println("---------------------");
         
@@ -47,7 +47,7 @@ public class CUIController {
      * Tile[3] = Tile to the left of current position. 
      * @param reachableTiles Takes the current reachable tiles in an array.
      */
-    public static void move(Tile[] reachableTiles){
+    public void move(Tile[] reachableTiles){
         boolean moveChosen = false;
         
         while(!moveChosen){
@@ -222,7 +222,7 @@ public class CUIController {
      * Checks what Tile the player is currently on and executes the correct sequence
      * for that Tile.
      */
-    private static void checkCurrentTile(){
+    private void checkCurrentTile(){
         int x = data.getBoard().getPosition()[0];
         int y = data.getBoard().getPosition()[1];
         Tile tile = data.getBoard().getBoard()[x][y];
@@ -338,7 +338,7 @@ public class CUIController {
     /**
      * Rewards the player for finishing the game and gives him/her the option to play again
      */
-    public static void finishGame(){
+    public void finishGame(){
         data.getPlayer().bossReward();
         System.out.println("You have completed the game! Well done!");
         data.getPlayer().getCurrentStats();
