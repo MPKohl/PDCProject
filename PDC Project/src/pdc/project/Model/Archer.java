@@ -13,6 +13,10 @@ public class Archer extends Player {
         super(damage,name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance, defensive, dot);
     } 
         
+    /**
+     * Returns the class of the player as a PlayerClass enumeration.
+     * @return PlayerClass enumeration
+     */
     @Override
     public PlayerClass findClass() {
         return PlayerClass.ARCHER;

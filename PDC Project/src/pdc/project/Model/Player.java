@@ -49,7 +49,10 @@ public abstract class Player {
         //inventory.add(new Item(ItemType.TWOHANDEDWEAPON));
     }        
     
-    //Methods
+    /**
+     * Returns the class of the player as a PlayerClass enumeration.
+     * @return PlayerClass enumeration
+     */
     public PlayerClass findClass(){
         return PlayerClass.NONE;
     }
