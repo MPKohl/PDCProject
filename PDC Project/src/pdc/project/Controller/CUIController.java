@@ -39,7 +39,7 @@ public class CUIController {
         boolean gameIsRunning = true;
         while(gameIsRunning){
             move(data.getBoard().reachableTiles());
-            data.getPlayer().getCurrentStats();
+            printCurrentStats();
             data.getBoard().printBoard();
         }
     }
@@ -237,6 +237,10 @@ public class CUIController {
             }
     }
     
+    private void printCurrentStats(){
+        System.out.println("\nHealth: " + data.getPlayer().getHealth() + " Level: " + data.getPlayer().getLvl() +  " exp: " + data.getPlayer().getExp() + " Score: " + data.getPlayer().getScore());
+    }
+    
     /**
      * Deletes all highscores.
      */
@@ -398,7 +402,7 @@ public class CUIController {
     public void finishGame(){
         data.getPlayer().bossReward();
         System.out.println("You have completed the game! Well done!");
-        data.getPlayer().getCurrentStats();
+        printCurrentStats();
         data.getPlayer().timerReward(startTime);
         
         saveHighscore();

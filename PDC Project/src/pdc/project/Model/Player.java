@@ -133,12 +133,21 @@ public abstract class Player {
         System.out.println("Item equipped!");
     }
     
+    /**
+     * Checks whether the Player should level up at current experience. 
+     * If this is the case the Player levels up and experience is set to 0.
+     */
     public void isLvlUp(){
          if (this.getExp() == 100){
              this.setLvl(getLvl() + 1);
              setExp(0);
          }
     }
+    
+    /**
+     * Gives the Player the chosen amount of experience points.
+     * @param exp int representation of experience points to add
+     */
     public void giveExp(int exp){
         this.setExp(this.getExp() + exp);
         if (this.getExp() >= 100){
@@ -146,36 +155,65 @@ public abstract class Player {
             this.setLvl(this.getLvl() + 1);
         }
     }
+    
+    /**
+     * Rewards the Player after defeating the final boss.
+     */
     public void bossReward(){
         setScore(getScore() + 100);
         giveExp(50);
     }
     
+    /**
+     * Rewards the Player after finishing the game based on time spent. 
+     * The faster the better.
+     * Faster than 4 minutes = 1.5 * score 
+     * Faster than 6 minutes = 1.35 * score 
+     * Faster than 10 minutes = 1.1 * score
+     * @param startTime int[3] where [0] is hours, [1] minutes and [2] seconds 
+     */
     public void timerReward(int[] startTime){
         DataHolder data = DataHolder.getInstance();
         int[] finishTime = data.getTimer().getCurrentTime();
         int[] finalTime = new int[3];
+        
         for(int i = 0; i > 3; i++){
             finalTime[i] = finishTime[i] - startTime[i]; 
         }
+        
+        // If the player used less than 4 minutes to complete the game,
+        // add 50% to the score
         if(finalTime[0] == 0 && finalTime[1] < 4){
-            setScore(getScore() + getScore() * 0.5);
+            setScore(getScore() * 1.5);
         }
+        
+        // If the player used between 4 and 6 minutes to complete the game,
+        // add 35% to the score
         else if(finalTime[0] == 0 && finalTime[1] < 6){
-            setScore(getScore() + getScore() * 0.35);
+            setScore(getScore() * 1.35);
         }
+        
+        // If the player used between 6 and 10 minutes to complete the game,
+        // add 10% to the score
         else if(finalTime[0] == 0 && finalTime[1] < 10){
             setScore(getScore() + getScore() * 0.15);
         }
-            
     }
     
+    /**
+     * Rewards the player with experience, score points and an item after combat 
+     * The rewarded Item is random, but weighted towards the items eligible 
+     * for the Players class.
+     * @return the Item rewarded
+     */
     public Item enemyReward(){
         Random r = new Random();
         Item item = null;
+        int roll = 0;
+        
         giveExp(15);
         setScore(getScore() + 20);
-        int roll = 0;
+        
         if (this.findClass()== PlayerClass.WARRIOR)
             roll = randWarrior(r);
         else if (this.findClass()== PlayerClass.ARCHER)
@@ -193,12 +231,25 @@ public abstract class Player {
             case 6: item = new Item(ItemType.TWOHANDEDWEAPON); break;
         }
         getInventory().add(item);
+        
         return item;
     }
+    
+    /**
+     * Random rolls for Warrior items.
+     * @param r Random object
+     * @return int random int between 0 and 6
+     */
     private int randWarrior(Random r){
         int roll = r.nextInt(7);
         return roll;
     } 
+    
+    /**
+     * Random rolls for Archer items. Weighted towards items eligible for Archers.
+     * @param r Random object
+     * @return int random int between 0 and 6
+     */
     private int randArcher(Random r){
         int roll = r.nextInt(40);
         if (roll < 10)
@@ -207,25 +258,35 @@ public abstract class Player {
             return 1;
         else if (roll < 30)
             return 2;
-        roll = r.nextInt(7);
+        else {
+            roll = r.nextInt(7);
         return roll;
+        }
     }
+    
+    /**
+     * Random rolls for Wizard items. Weighted towards items eligible for Wizards.
+     * @param r Random object
+     * @return int random int between 0 and 6
+     */
     private int randWizard(Random r){
         int roll = r.nextInt(10);
         if (roll < 7)
             return 1;
-        roll = r.nextInt(7);
-        return roll;
+        else {
+            roll = r.nextInt(7);
+            return roll;
+        }
     } 
     
+    /**
+     * Rewards the Player with experience, score points and full health after 
+     * a correct guess in a Challenge.
+     */
     public void challengeReward() {
         setHealth(100);
         giveExp(15);
         setScore(getScore() + 20);
-    }
-    
-    public void getCurrentStats(){
-        System.out.println("\nHealth: " + this.getHealth() + " Level: " + this.getLvl() +  " exp: " + this.getExp() + " Score: " + this.getScore());
     }
 
     /**
