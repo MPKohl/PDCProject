@@ -19,10 +19,13 @@ public class CUIController {
      * Starts the game and keeps it running until the player quits or finishes the game.
      */
     public void startGame(){
+        //Creates the gameboard
+        data.setBoard(new Board());
+        
         System.out.println("THE AMAZING ADVENTURE");
         System.out.println("---------------------");
         
-        // Initialises the player nad saves it in the singleton
+        // Initialises the player and saves it in the singleton
         data.setPlayer(playerDetails());
         
         System.out.println("\nWelcome " + data.getPlayer().getName() + " the "+ data.getPlayer().findClass()
@@ -320,19 +323,23 @@ public class CUIController {
     /**
      * Gives the player the option to play again.
      */
-    public static void playAgain(){
+    public void playAgain(){
         boolean correctInput = false;
+        
+        System.out.println("Would you like to play again? (y/n)");
+        
         while(!correctInput){
             String input = scan.nextLine();
             input = input.trim();
             if(input.equalsIgnoreCase("y") || input.equalsIgnoreCase("yes")){
-                //play again
+                // Play again
+                startGame();
                 correctInput=true;
             } else if(input.equalsIgnoreCase("n") || input.equalsIgnoreCase("no")){
                 System.exit(0);
             }
             else
-                System.out.println("Sorry I did not recognise that command");
+                System.out.println("Please choose either y for yes or n for no.");
         }
     }
     
@@ -344,8 +351,10 @@ public class CUIController {
         System.out.println("You have completed the game! Well done!");
         data.getPlayer().getCurrentStats();
         data.getPlayer().timerReward(startTime);
+        
         saveHighscore();
-        System.out.println("Would you like to play again? (y/n)");
+        
+        // Gives the player the option to play again
         playAgain();        
     }
     

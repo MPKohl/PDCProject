@@ -64,7 +64,8 @@ public class CUIControllerTest {
     @Test
     public void testPlayAgain() {
         System.out.println("playAgain");
-        CUIController.playAgain();
+        CUIController cuiController = new CUIController();
+        cuiController.playAgain();
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
