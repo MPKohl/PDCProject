@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.Scanner;
 import pdc.project.Model.Enemy;
 import pdc.project.Model.Item;
+import pdc.project.Model.ItemSlot;
 import pdc.project.Model.ItemType;
 import pdc.project.Model.Player;
 import pdc.project.Model.PlayerClass;
@@ -321,7 +322,7 @@ public class Combat {
             totalDamage += bleedCalc(enemy);
         }
         
-        HashMap<Integer, Item> equipped = player.getEquipped();
+        HashMap<ItemSlot, Item> equipped = player.getEquipped();
         double addedDmg = 0;
         if(equipped != null){
             for (Item item : equipped.values()) {
@@ -343,7 +344,7 @@ public class Combat {
             totalDamage = enemy.getDamageHigh();  
         
 
-        HashMap<Integer, Item> equipped = player.getEquipped();
+        HashMap<ItemSlot, Item> equipped = player.getEquipped();
         double dmgReduction = 0;
         if (equipped != null){
             for (Item item : equipped.values()) {

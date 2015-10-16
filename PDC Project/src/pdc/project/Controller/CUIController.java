@@ -1,9 +1,11 @@
 package pdc.project.Controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.List;
 import pdc.project.Model.*;
 import java.util.Scanner;
 /**
@@ -22,14 +24,14 @@ public class CUIController {
         //Creates the gameboard
         data.setBoard(new Board());
         
-        System.out.println("THE AMAZING ADVENTURE");
-        System.out.println("---------------------");
+        System.out.println("\n---------------------------" + 
+                           "\n-- THE AMAZING ADVENTURE --" + 
+                           "\n---------------------------");
         
         // Initialises the player and saves it in the singleton
         data.setPlayer(playerDetails());
         
-        System.out.println("\nWelcome " + data.getPlayer().getName() + " the "+ data.getPlayer().findClass()
-        + " to the best RPG ever!");
+        System.out.println("\nWelcome " + data.getPlayer().getName() + " to the best RPG ever!");
         System.out.println("Type 'help' to get help.\n");
         
         data.getBoard().printBoard();
@@ -111,9 +113,9 @@ public class CUIController {
                 System.exit(0);
                 
             } else if (answer.equalsIgnoreCase("i")){
-                data.getPlayer().showInventory();
+                printInventory();
             } else if (answer.equalsIgnoreCase("e")){
-                data.getPlayer().showEquippedItems();             
+                printEquippedItems();             
             } else if (answer.equalsIgnoreCase("equip")){
                 equipItem(scan);
             } else if (answer.equalsIgnoreCase("cmds")){
@@ -189,6 +191,53 @@ public class CUIController {
     }
     
     /**
+     * Prints out the Player's inventory as a numbered list.
+     */
+    private void printInventory(){
+        if (data.getPlayer().getInventory().isEmpty()){
+            System.out.println("Inventory is empty.");
+        }
+        try {
+            printOutItemList(data.getPlayer().getInventory());
+        } catch (NullPointerException e) {
+            System.out.println("Inventory is empty.");
+        }
+    }
+    
+    /**
+     * Prints out the Player's equipment as numbered list.
+     */
+    public void printEquippedItems(){
+        if (data.getPlayer().getEquipped().isEmpty()){
+            System.out.println("No items equipped.");
+        }
+        try {
+            printOutItemList(data.getPlayer().getEquipped().values());
+        } catch (NullPointerException e) {
+            System.out.println("No items equipped.");
+        }
+    }
+    
+    /**
+     * Prints out the given Collection of Items.
+     * @param list Collection<Item> of Items
+     */
+    private void printOutItemList(Collection<Item> list){
+        int i = 1;
+        for (Item item : list) {
+                System.out.print(i + ". " + item.getName());
+                // If Item is a piece of armour, print it's name and damage reduction
+                if (item.getItemType() == ItemType.CLOTHARMOUR || item.getItemType() == ItemType.LEATHERARMOUR || item.getItemType() == ItemType.PLATEARMOUR || item.getItemType() == ItemType.SHIELD)
+                    System.out.println(" - Damage reduction: " + item.getDmgReduction() + "%");
+                
+                // If Item is a weapon, print it's name and damage increase
+                else if (item.getItemType() == ItemType.BOW || item.getItemType() == ItemType.ONEHANDEDWEAPON || item.getItemType() == ItemType.TWOHANDEDWEAPON)
+                    System.out.println(" - Damage increase: " + item.getDmg() + "%");
+                i++;
+            }
+    }
+    
+    /**
      * Deletes all highscores.
      */
     private static void clearHighscores(){
@@ -201,9 +250,9 @@ public class CUIController {
      * item to equip by writing the corresponding number.
      * @param scan Scanner that scans for user input
      */
-    private static void equipItem(Scanner scan){
+    private void equipItem(Scanner scan){
         // Prints the inventory
-        data.getPlayer().showInventory();
+        printInventory();
         if (!data.getPlayer().getInventory().isEmpty()){
             System.out.println("\nType in the number of the item you want to equip:");
         

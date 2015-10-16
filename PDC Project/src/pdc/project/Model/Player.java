@@ -67,59 +67,18 @@ public abstract class Player {
     public PlayerClass findClass(){
         return PlayerClass.NONE;
     }
-
-    /**
-     * 
-     */
-    public void showInventory(){
-        int i = 1;
-        if (getInventory().isEmpty()){
-            System.out.println("Inventory is empty.");
-        }
-        try {
-            for (Item item : getInventory()) {
-                System.out.print(i + ". " + item.getName());
-                if (item.getItemType() == ItemType.CLOTHARMOUR || item.getItemType() == ItemType.LEATHERARMOUR || item.getItemType() == ItemType.PLATEARMOUR || item.getItemType() == ItemType.SHIELD)
-                    System.out.println(" - Damage reduction: " + item.getDmgReduction() + "%");
-                else if (item.getItemType() == ItemType.BOW || item.getItemType() == ItemType.ONEHANDEDWEAPON || item.getItemType() == ItemType.TWOHANDEDWEAPON)
-                    System.out.println(" - Damage increase: " + item.getDmg() + "%");
-                i++;
-            }
-        } catch (NullPointerException e) {
-            System.out.println("Inventory is empty.");
-        }
-    }
-    
-    public void showEquippedItems(){
-        int i = 1;
-        if (equipped.isEmpty()){
-            System.out.println("No items equipped.");
-        }
-        try {
-            for (Item item : equipped.values()) {
-                System.out.print(i + ". " + item.getName());
-                if (item.getItemType() == ItemType.CLOTHARMOUR || item.getItemType() == ItemType.LEATHERARMOUR || item.getItemType() == ItemType.PLATEARMOUR || item.getItemType() == ItemType.SHIELD)
-                    System.out.println(" - Damage reduction: " + item.getDmgReduction() + "%");
-                else if (item.getItemType() == ItemType.BOW || item.getItemType() == ItemType.ONEHANDEDWEAPON || item.getItemType() == ItemType.TWOHANDEDWEAPON)
-                    System.out.println(" - Damage increase: " + item.getDmg() + "%");
-                i++;
-            }
-        } catch (NullPointerException e) {
-            System.out.println("No items equipped.");
-        }
-    }
     
     public void equipItem(int invSlot){
         Item itemToEquip = getInventory().get(invSlot-1);
         ItemType itemToEquipType = itemToEquip.getItemType();
         ItemSlot itemToEquipSlot = itemToEquip.getItemSlot();
         
-        if (findClass().equals("Wizard") && itemToEquipType != ItemType.CLOTHARMOUR){
+        if (findClass() == PlayerClass.WIZARD && itemToEquipType != ItemType.CLOTHARMOUR){
             System.out.println("You are not eligible to equip that item.");
             return;
         }
         
-        else if (findClass().equals("Archer") && (itemToEquipType != ItemType.CLOTHARMOUR || itemToEquipType != ItemType.LEATHERARMOUR || itemToEquipType != ItemType.BOW)){
+        else if (findClass() == PlayerClass.ARCHER && (itemToEquipType != ItemType.CLOTHARMOUR || itemToEquipType != ItemType.LEATHERARMOUR || itemToEquipType != ItemType.BOW)){
             System.out.println("You are not eligible to equip that item.");
             return;
         }
@@ -173,7 +132,7 @@ public abstract class Player {
     public double getScore() {
         return score;
     }
-    public HashMap getEquipped() {
+    public HashMap<ItemSlot, Item> getEquipped() {
         return equipped;
     }
     public double getHitChance() {
@@ -259,11 +218,11 @@ public abstract class Player {
         giveExp(15);
         score += 20;
         int roll = 0;
-        if (this.findClass().equals("Warrior"))
+        if (this.findClass()== PlayerClass.WARRIOR)
             roll = randWarrior(r);
-        else if (this.findClass().equals("Archer"))
+        else if (this.findClass()== PlayerClass.ARCHER)
             roll = randArcher(r);
-        else if (this.findClass().equals("Wizard"))
+        else if (this.findClass()== PlayerClass.WIZARD)
             roll = randWizard(r);
 
         switch (roll){
