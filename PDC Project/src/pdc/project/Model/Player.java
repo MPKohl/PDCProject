@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 /**
- * Super class for the player.
+ * Super class for the player. Contains name, stats, inventory and equipment.
  */
 public abstract class Player {
     private String name = "";
@@ -21,9 +21,27 @@ public abstract class Player {
     private int lvl;
     private boolean defensive;
     private boolean dot;
-    //Construcotrs.
+    
+    /**
+     * Empty constructor for Player.
+     */
     public Player() {}
     
+    /**
+     * Main constructor that sets all fields for the player.
+     * @param damage int value representing damage
+     * @param name String name
+     * @param health int value representing health
+     * @param exp int value representing experience
+     * @param inventory ArrayList<Item> representing inventory
+     * @param score double value representing score
+     * @param equipped HashMap<ItemSlot, Item> representing equipped Items
+     * @param hitChance double value representing chance to hit in percent
+     * @param critChance double value representing chance to hit a critical strike in percent
+     * @param dodgeChance double value representing chance to dodge an attack in percent
+     * @param defensive boolean true if Player is in defensive stance
+     * @param dot boolean true if damage over time spell is active
+     */
     public Player(int damage, String name, int health, int exp, ArrayList inventory,
             double score, HashMap equipped, double hitChance, double critChance, 
             double dodgeChance, boolean defensive, boolean dot) {
@@ -40,13 +58,6 @@ public abstract class Player {
         this.lvl = 1;
         defensive = false;
         dot = false;
-        //inventory.add(new Item(ItemType.CLOTHARMOUR));
-        //inventory.add(new Item(ItemType.LEATHERARMOUR));
-        //inventory.add(new Item(ItemType.PLATEARMOUR));
-        //inventory.add(new Item(ItemType.BOW));
-        //inventory.add(new Item(ItemType.ONEHANDEDWEAPON));
-        //inventory.add(new Item(ItemType.SHIELD));
-        //inventory.add(new Item(ItemType.TWOHANDEDWEAPON));
     }        
     
     /**
@@ -57,7 +68,9 @@ public abstract class Player {
         return PlayerClass.NONE;
     }
 
-    
+    /**
+     * 
+     */
     public void showInventory(){
         int i = 1;
         if (getInventory().isEmpty()){
