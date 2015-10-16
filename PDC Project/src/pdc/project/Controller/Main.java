@@ -24,6 +24,7 @@ public class Main {
         
         GameTimer gameTimer = new GameTimer();
         gameTimer.startThread();
+        data.setTimer(gameTimer);
         try {
             Thread.sleep(0);
         } catch (InterruptedException ex) {
