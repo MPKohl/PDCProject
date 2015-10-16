@@ -164,7 +164,7 @@ public class CUIController {
                          + "\nThroughout your travels your player will run into spooky monsters"
                          + "\nIf you manage to defeat these monsters you will be rewarded with a random item, updated score and experiecnce points."
                          + "\n'X' on the map is a blocked square, you cannot move into these squares."
-                         + "\n'X' Remember to equip items after combat!"
+                         + "\nRemember to equip items after combat!"
                          + "\nHave fun!\n");
     }
     
@@ -258,7 +258,7 @@ public class CUIController {
         
             try {
                 int input = scan.nextInt();
-                data.getPlayer().equipItem(input);
+                data.getPlayer().equipItem(input, true);
                 scan.nextLine();
             } catch (InputMismatchException | NullPointerException e){
                 System.out.println("\nWrong input.");

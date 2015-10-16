@@ -68,18 +68,33 @@ public abstract class Player {
         return PlayerClass.NONE;
     }
     
-    public void equipItem(int invSlot){
+    /**
+     * Moves the chosen item (by ArrayList index + 1) from the inventory list to 
+     * the equipment HashMap. If an item of that ItemSlot enumeration is already 
+     * in the HashMap, replace it and move that Item to the inventory.
+     * @param invSlot ArrayList index in inventory + 1
+     * @param gameIsCUIVersion true if the game is played through the CUI, false if GUI
+     */
+    public void equipItem(int invSlot, boolean gameIsCUIVersion){
         Item itemToEquip = getInventory().get(invSlot-1);
         ItemType itemToEquipType = itemToEquip.getItemType();
         ItemSlot itemToEquipSlot = itemToEquip.getItemSlot();
         
         if (findClass() == PlayerClass.WIZARD && itemToEquipType != ItemType.CLOTHARMOUR){
-            System.out.println("You are not eligible to equip that item.");
+            if (gameIsCUIVersion){
+                System.out.println("You are not eligible to equip that item.");
+            } else {
+                // **** SHANON INSERT YOUR CODE FOR THE GUI VERSION HERE ****
+            }
             return;
         }
         
         else if (findClass() == PlayerClass.ARCHER && (itemToEquipType != ItemType.CLOTHARMOUR || itemToEquipType != ItemType.LEATHERARMOUR || itemToEquipType != ItemType.BOW)){
-            System.out.println("You are not eligible to equip that item.");
+            if (gameIsCUIVersion){
+                System.out.println("You are not eligible to equip that item.");
+            } else {
+                // **** SHANON INSERT YOUR CODE FOR THE GUI VERSION HERE ****
+            }
             return;
         }
                 
@@ -87,109 +102,52 @@ public abstract class Player {
                
         //Remove both mainhand and offhand if twohandedweapon or bow is equipped
         if (itemToEquipType == ItemType.BOW || itemToEquipType == ItemType.TWOHANDEDWEAPON){
-            if (equipped.containsKey(ItemSlot.OFFHAND)){
-                getInventory().add(equipped.get(ItemSlot.OFFHAND));
-                equipped.remove(ItemSlot.OFFHAND);
+            if (getEquipped().containsKey(ItemSlot.OFFHAND)){
+                getInventory().add(getEquipped().get(ItemSlot.OFFHAND));
+                getEquipped().remove(ItemSlot.OFFHAND);
             }
-            if (equipped.containsKey(ItemSlot.MAINHAND)){
-                getInventory().add(equipped.get(ItemSlot.MAINHAND));
-                equipped.remove(ItemSlot.MAINHAND);
+            if (getEquipped().containsKey(ItemSlot.MAINHAND)){
+                getInventory().add(getEquipped().get(ItemSlot.MAINHAND));
+                getEquipped().remove(ItemSlot.MAINHAND);
             }
         }
         
         //Remove weapon from mainhand if it is 2 handed when equipping a shield
         else if (itemToEquipType == ItemType.SHIELD){
-            if (equipped.containsKey(ItemSlot.MAINHAND)){
-                if (equipped.get(ItemSlot.MAINHAND).getItemType() == ItemType.TWOHANDEDWEAPON){
-                    getInventory().add(equipped.get(ItemSlot.MAINHAND));
-                    equipped.remove(ItemSlot.MAINHAND);
+            if (getEquipped().containsKey(ItemSlot.MAINHAND)){
+                if (getEquipped().get(ItemSlot.MAINHAND).getItemType() == ItemType.TWOHANDEDWEAPON){
+                    getInventory().add(getEquipped().get(ItemSlot.MAINHAND));
+                    getEquipped().remove(ItemSlot.MAINHAND);
                 }
             }
         }
         
         //If an item is already equipped in that slot, remove it and put it in inventory
-        else if (equipped.containsKey(itemToEquipSlot)){
-            getInventory().add(equipped.get(itemToEquipSlot));
-            equipped.remove(itemToEquipSlot);
+        else if (getEquipped().containsKey(itemToEquipSlot)){
+            getInventory().add(getEquipped().get(itemToEquipSlot));
+            getEquipped().remove(itemToEquipSlot);
         }
         
-        equipped.put(itemToEquipSlot, itemToEquip);
+        getEquipped().put(itemToEquipSlot, itemToEquip);
         
         System.out.println("Item equipped!");
     }
     
-    
-    //getters and setters
-    public String getName() {
-        return name;
-    }
-    public int getHealth() {
-        return health;
-    }
-    public int getExp() {
-        return exp;
-    }
-    public double getScore() {
-        return score;
-    }
-    public HashMap<ItemSlot, Item> getEquipped() {
-        return equipped;
-    }
-    public double getHitChance() {
-        return hitChance;
-    }
-    public double getCritChance() {
-        return critChance;
-    }
-    public double getDodgeChance() {
-        return dodgeChance;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setHealth(int health) {
-        this.health = health;
-    }
-    public void setExp(int exp) {
-        this.exp = exp;
-    }
-    public void setScore(double score) {
-        this.score = score;
-    }
-    public void setEquipped(HashMap equipped) {
-        this.equipped = equipped;
-    }
-    public void setCritChance(double critChance) {
-        this.critChance = critChance;
-    }
-    public void setHitChance(double hitChance) {
-        this.hitChance = hitChance;
-    }
-    public void setDodgeChance(double dodgeChance) {
-        this.dodgeChance = dodgeChance;
-    }
-    public int getLvl() {
-        return lvl;
-    }
-    public void setLvl(int lvl){
-        this.lvl = lvl;
-    }
-    
     public void isLvlUp(){
-         if (this.exp == 100){
-             this.lvl = lvl + 1;
-             exp = 0;
+         if (this.getExp() == 100){
+             this.setLvl(getLvl() + 1);
+             setExp(0);
          }
     }
     public void giveExp(int exp){
-        this.exp += exp;
-        if (this.exp >= 100){
-            this.exp= this.exp - 100;
-            this.lvl +=1;
+        this.setExp(this.getExp() + exp);
+        if (this.getExp() >= 100){
+            this.setExp(this.getExp() - 100);
+            this.setLvl(this.getLvl() + 1);
         }
     }
     public void bossReward(){
-        score +=100;
+        setScore(getScore() + 100);
         giveExp(50);
     }
     
@@ -201,13 +159,13 @@ public abstract class Player {
             finalTime[i] = finishTime[i] - startTime[i]; 
         }
         if(finalTime[0] == 0 && finalTime[1] < 4){
-            score = score + score * 0.5;
+            setScore(getScore() + getScore() * 0.5);
         }
         else if(finalTime[0] == 0 && finalTime[1] < 6){
-            score = score + score * 0.35;
+            setScore(getScore() + getScore() * 0.35);
         }
         else if(finalTime[0] == 0 && finalTime[1] < 10){
-            score = score + score * 0.15;
+            setScore(getScore() + getScore() * 0.15);
         }
             
     }
@@ -216,7 +174,7 @@ public abstract class Player {
         Random r = new Random();
         Item item = null;
         giveExp(15);
-        score += 20;
+        setScore(getScore() + 20);
         int roll = 0;
         if (this.findClass()== PlayerClass.WARRIOR)
             roll = randWarrior(r);
@@ -234,7 +192,7 @@ public abstract class Player {
             case 5: item = new Item(ItemType.SHIELD); break;
             case 6: item = new Item(ItemType.TWOHANDEDWEAPON); break;
         }
-        inventory.add(item);
+        getInventory().add(item);
         return item;
     }
     private int randWarrior(Random r){
@@ -261,9 +219,9 @@ public abstract class Player {
     } 
     
     public void challengeReward() {
-        health = 100;
+        setHealth(100);
         giveExp(15);
-        score += 20;
+        setScore(getScore() + 20);
     }
     
     public void getCurrentStats(){
@@ -301,7 +259,7 @@ public abstract class Player {
     //Getters and setters for attack booleans (SED)
     
     public boolean getDefensive(){
-        return defensive;
+        return isDefensive();
     }
     
     public void setDefensive(boolean defensive){
@@ -309,11 +267,150 @@ public abstract class Player {
     }
     
     public boolean getDot(){
-        return dot;
+        return isDot();
     }
     
     public void setDot(boolean dot){
         this.dot = dot;
     }
- 
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return the health
+     */
+    public int getHealth() {
+        return health;
+    }
+
+    /**
+     * @param health the health to set
+     */
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    /**
+     * @return the exp
+     */
+    public int getExp() {
+        return exp;
+    }
+
+    /**
+     * @param exp the exp to set
+     */
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    /**
+     * @return the score
+     */
+    public double getScore() {
+        return score;
+    }
+
+    /**
+     * @param score the score to set
+     */
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    /**
+     * @return the equipped
+     */
+    public HashMap<ItemSlot, Item> getEquipped() {
+        return equipped;
+    }
+
+    /**
+     * @param equipped the equipped to set
+     */
+    public void setEquipped(HashMap<ItemSlot, Item> equipped) {
+        this.equipped = equipped;
+    }
+
+    /**
+     * @return the hitChance
+     */
+    public double getHitChance() {
+        return hitChance;
+    }
+
+    /**
+     * @param hitChance the hitChance to set
+     */
+    public void setHitChance(double hitChance) {
+        this.hitChance = hitChance;
+    }
+
+    /**
+     * @return the critChance
+     */
+    public double getCritChance() {
+        return critChance;
+    }
+
+    /**
+     * @param critChance the critChance to set
+     */
+    public void setCritChance(double critChance) {
+        this.critChance = critChance;
+    }
+
+    /**
+     * @return the dodgeChance
+     */
+    public double getDodgeChance() {
+        return dodgeChance;
+    }
+
+    /**
+     * @param dodgeChance the dodgeChance to set
+     */
+    public void setDodgeChance(double dodgeChance) {
+        this.dodgeChance = dodgeChance;
+    }
+
+    /**
+     * @return the lvl
+     */
+    public int getLvl() {
+        return lvl;
+    }
+
+    /**
+     * @param lvl the lvl to set
+     */
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
+    }
+
+    /**
+     * @return the defensive
+     */
+    public boolean isDefensive() {
+        return defensive;
+    }
+
+    /**
+     * @return the dot
+     */
+    public boolean isDot() {
+        return dot;
+    } 
 }
