@@ -126,7 +126,7 @@ public class Combat {
                 }
                 
                 if(enemy.getEnemyHealth() > 0){
-                    System.out.println(enemy.getEnemyName()+" is now "+enemy.getEnemyHealth()+".");
+                    System.out.println(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
                     enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                 }
                 else {
@@ -170,7 +170,7 @@ public class Combat {
                 }
                 
                 if(enemy.getEnemyHealth() > 0){
-                    System.out.println(enemy.getEnemyName()+" is now "+enemy.getEnemyHealth()+".");
+                    System.out.println(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
                     enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                 }
                 else {
