@@ -12,7 +12,7 @@ public abstract class Tile {
         
     }
     //Visited - boolean
-    private boolean isVisited(){
+    public boolean isVisited(){
         return isVisited;
     }
     

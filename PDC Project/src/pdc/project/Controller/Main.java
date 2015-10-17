@@ -29,7 +29,7 @@ public class Main {
             Thread.currentThread().interrupt();
         }
         int[] curTime = gameTimer.getCurrentTime();
-        //gameTimer.printCurrentTime(curTime);
+        gameTimer.printCurrentTime(curTime);
         
         
         
@@ -38,10 +38,10 @@ public class Main {
         CUIController cuiController = new CUIController();
         data.setPlayer(cuiController.playerDetails());
         data.getBoard().printBoard();
-        CUI.startGame(cuiController, data.getBoard(), data.getPlayer());
+        //CUI.startGame(cuiController, data.getBoard(), data.getPlayer());
         
         
-        GameBoardGUI GUI1 = new GameBoardGUI();
+        GameBoardGUI GUI1 = new GameBoardGUI(data);
         GUI1.show();
     }      
 }
