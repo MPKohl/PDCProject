@@ -1,7 +1,7 @@
 package pdc.project.Model;
 
 /**
- * 
+ * Simple class for Challenges output text.
  */
 public abstract class TextOutput {
     private String text;

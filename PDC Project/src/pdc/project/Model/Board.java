@@ -10,6 +10,10 @@ public class Board {
     //Player position
     private int[] position = new int[2];
     
+    /**
+     * Constructor that creates the default board of 60 Tiles with the player at 
+     * position x = 2, y = 11
+     */
     public Board(){
         position[0] = 2;
         position[1] = 11;
@@ -22,7 +26,7 @@ public class Board {
         board[4][11] = new EmptyTile();
         
         board[0][10] = new Blocked();
-        board[1][10] = new Enemy(1,10);
+        board[1][10] = new Enemy(1,10, false);
         board[2][10] = new EmptyTile();
         board[3][10] = challengeFactory.getRandomChallenge();
         board[4][10] = new Blocked();
@@ -34,7 +38,7 @@ public class Board {
         board[4][9] = challengeFactory.getRandomChallenge();
         
         board[0][8] = new Blocked();
-        board[1][8] = new Enemy(1,8);
+        board[1][8] = new Enemy(1,8, false);
         board[2][8] = new EmptyTile();
         board[3][8] = new Blocked();
         board[4][8] = new EmptyTile();
@@ -42,7 +46,7 @@ public class Board {
         board[0][7] = challengeFactory.getRandomChallenge();
         board[1][7] = new EmptyTile();
         board[2][7] = new EmptyTile();
-        board[3][7] = new Enemy(3,7);
+        board[3][7] = new Enemy(3,7, false);
         board[4][7] = new EmptyTile();
         
         board[0][6] = new Blocked();
@@ -54,17 +58,17 @@ public class Board {
         board[0][5] = challengeFactory.getRandomChallenge();
         board[1][5] = new Blocked();
         board[2][5] = new EmptyTile();
-        board[3][5] = new Enemy(3,5);
+        board[3][5] = new Enemy(3,5, false);
         board[4][5] = new EmptyTile();
         
         board[0][4] = new EmptyTile();
         board[1][4] = new Blocked();
-        board[2][4] = new Enemy(2,4);
+        board[2][4] = new Enemy(2,4, false);
         board[3][4] = new Blocked();
         board[4][4] = challengeFactory.getRandomChallenge();
         
         board[0][3] = new EmptyTile();
-        board[1][3] = new Enemy(1,3);
+        board[1][3] = new Enemy(1,3, false);
         board[2][3] = new EmptyTile();
         board[3][3] = new EmptyTile();
         board[4][3] = new Blocked();
@@ -78,7 +82,7 @@ public class Board {
         board[0][1] = new Blocked();
         board[1][1] = new Blocked();
         board[2][1] = new Blocked();
-        board[3][1] = new Enemy(3,1);
+        board[3][1] = new Enemy(3,1, false);
         board[4][1] = new Blocked();
         
         board[0][0] = new Blocked();
@@ -88,14 +92,32 @@ public class Board {
         board[4][0] = challengeFactory.getRandomChallenge();
     }
     
+    /**
+     * Changes the position of the player to a new coordinate and marks the 
+     * previous Tile as visited.
+     * @param newX new X coordinate
+     * @param newY new Y coordinate
+     */
     public void changePosition(int newX, int newY){
         getBoard()[position[0]][position[1]].visit();
         position[0] = newX;
         position[1] = newY;
     }
+    
+    /**
+     * Returns the position of the player in an int[] where [1] is the 
+     * x coordinate and [2] is the y coordinate.
+     * @return int[] with current x and y coordinates.
+     */
     public int[] getPosition(){
         return position;
     }
+    
+    /**
+     * Sets the position of the player with an int[] where [1] is the 
+     * x coordinate and [2] is the y coordinate.
+     * @param position int[] with new x and y coordinates.
+     */
     public void setPosition(int[] position){
         this.position = position;
     }

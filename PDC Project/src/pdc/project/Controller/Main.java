@@ -20,28 +20,31 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DataHolderSingleton data = DataHolderSingleton.getInstance();
+        DataHolder data = DataHolder.getInstance();
+        
         GameTimer gameTimer = new GameTimer();
         gameTimer.startThread();
+        data.setTimer(gameTimer);
         try {
-        Thread.sleep(0);
+            Thread.sleep(0);
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
+        
         int[] curTime = gameTimer.getCurrentTime();
         gameTimer.printCurrentTime(curTime);
         
+        // Initiates the database
+        data.getDbController().openConnection();
+        data.getDbController().createTable();
         
-        
-        
-        data.setBoard(new Board());
-        CUIController cuiController = new CUIController();
-        data.setPlayer(cuiController.playerDetails());
-        data.getBoard().printBoard();
-        //CUI.startGame(cuiController, data.getBoard(), data.getPlayer());
-        
-        
-        GameBoardGUI GUI1 = new GameBoardGUI(data);
+        // Creates the board and starts the CUI version of the game
+        CUIController cui = new CUIController();
+        cui.startGame();
+                        
+        GameBoardGUI GUI1 = new GameBoardGUI();
         GUI1.show();
+        
+        data.getDbController().closeConnection();
     }      
 }

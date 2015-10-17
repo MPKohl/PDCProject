@@ -1,6 +1,7 @@
 package pdc.project.Model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Class for challenge tiles. Extends Tile. 
@@ -13,15 +14,25 @@ public class Challenge extends Tile {
     private CorrectAnswer correctAnswer;
     private ArrayList<WrongAnswer> wrongAnswers = new ArrayList<>();
     
+    /**
+     * Constructor that sets the question, correct and wrong answer for the challenge.
+     * @param question Question object with the question to ask
+     * @param correct CorrectAnswer object of the correct answer
+     * @param wrong WrongAnswer[] of the wrong answers
+     */
     public Challenge(Question question, CorrectAnswer correct, WrongAnswer[] wrong){
         setType(TileType.CHALLENGE);
         this.question = question;
         this.correctAnswer = correct;
         
-        for (int i = 0 ; i < wrong.length ; i++)
-            this.wrongAnswers.add(wrong[i]);
+        this.wrongAnswers.addAll(Arrays.asList(wrong));
     }
     
+    /**
+     * Returns an array of TextOutput objects with the question at [0], the 
+     * correct answer at [1] and the wrong answers from [2] and on.
+     * @return TextOutput[] of question, correct answer and wrong answers in that order
+     */
     public TextOutput[] getChallenge(){
         
         TextOutput[] array = new TextOutput[2 + getWrongAnswers().size()];
@@ -34,8 +45,6 @@ public class Challenge extends Tile {
         return array;
     }
     
-    //Timer
-
     /**
      * @return the question
      */

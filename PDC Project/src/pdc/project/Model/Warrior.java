@@ -3,22 +3,23 @@ package pdc.project.Model;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Subclass of Player, defines the type of class as Warrior.
+ */
 public class Warrior extends Player {
     public Warrior(int damage, String name, int health, int exp, ArrayList inventory,
-            int score, HashMap equipped, double hitChance, double critChance, 
-            double dodgeChance) {
+            double score, HashMap equipped, double hitChance, double critChance, 
+            double dodgeChance, boolean defensive, boolean dot) {
             
-        super(damage,name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance);
-        health = 100;
-        damage = 20;
-        exp = 0;
-        hitChance = 90;
-        critChance = 17;
-        dodgeChance = 10;    
+        super(damage,name,health,exp,inventory,score,equipped,hitChance,critChance,dodgeChance,defensive,dot);   
     }
     
+    /**
+     * Returns the class of the player as a PlayerClass enumeration.
+     * @return PlayerClass enumeration
+     */
     @Override
-    public String findClass() {
-        return "Warrior";
+    public PlayerClass findClass() {
+        return PlayerClass.WARRIOR;
     }
 }
