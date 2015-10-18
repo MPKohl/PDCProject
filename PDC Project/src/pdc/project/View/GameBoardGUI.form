@@ -129,9 +129,10 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="testPanel" min="-2" pref="400" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="pnlChallenge" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
                               <Component id="btnLeft" min="-2" pref="50" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -142,17 +143,9 @@
                                       <Component id="btnRight" min="-2" pref="50" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="pnlChallenge" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Component id="jScrollPane1" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="jScrollPane1" pref="365" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -167,7 +160,7 @@
                   <Group type="102" attributes="0">
                       <Component id="jScrollPane1" min="-2" pref="189" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="pnlChallenge" min="-2" max="-2" attributes="0"/>
+                      <Component id="pnlChallenge" min="-2" pref="209" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnUp" min="-2" pref="41" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -181,7 +174,7 @@
                   </Group>
                   <Component id="testPanel" min="-2" pref="483" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="52" max="32767" attributes="0"/>
+              <EmptySpace pref="55" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="label1" min="-2" max="-2" attributes="0"/>
                   <Component id="label2" min="-2" max="-2" attributes="0"/>
@@ -222,6 +215,9 @@
           <Image iconType="2" name="C:\Users\shanon\Desktop\PictureForPDC\buttonRight.jpg"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRightActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnUp">
       <Properties>
@@ -229,6 +225,9 @@
           <Image iconType="2" name="C:\Users\shanon\Desktop\PictureForPDC\buttonUp.jpg"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnLeft">
       <Properties>
@@ -236,6 +235,9 @@
           <Image iconType="2" name="C:\Users\shanon\Desktop\PictureForPDC\buttonLeft.jpg"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLeftActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDown">
       <Properties>
@@ -243,6 +245,9 @@
           <Image iconType="2" name="C:\Users\shanon\Desktop\PictureForPDC\buttonDown.jpg"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDownActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="testPanel">
 
@@ -268,17 +273,9 @@
     </Container>
     <Container class="javax.swing.JPanel" name="pnlChallenge">
 
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="210" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="200" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+        <Property name="columns" type="int" value="3"/>
+        <Property name="rows" type="int" value="3"/>
       </Layout>
     </Container>
   </SubComponents>

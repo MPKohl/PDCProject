@@ -35,16 +35,13 @@ public class Main {
         gameTimer.printCurrentTime(curTime);
         
         // Initiates the database
-        data.getDbController().openConnection();
-        data.getDbController().createTable();
-        
+//        data.getDbController().openConnection();
+//        data.getDbController().createTable();
+//        
         // Creates the board and starts the CUI version of the game
         CUIController cui = new CUIController();
         cui.startGame();
-                        
-        GameBoardGUI GUI1 = new GameBoardGUI();
-        GUI1.show();
         
-        data.getDbController().closeConnection();
+//        data.getDbController().closeConnection();
     }      
 }

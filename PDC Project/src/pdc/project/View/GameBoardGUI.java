@@ -5,7 +5,13 @@
  */
 package pdc.project.View;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import javax.swing.*;
 import javax.imageio.*;
 import pdc.project.Model.*;
@@ -15,11 +21,18 @@ import pdc.project.Controller.*;
  * @author shanon
  */
 public class GameBoardGUI extends javax.swing.JFrame {
-    static DataHolderSingleton data;
+    public static DataHolder data;
+    int[] position;
+    int[] startTime;
+    boolean moveUp    =    false;
+    boolean moveDown  =    false;
+    boolean moveRight =    false;
+    boolean moveLeft  =    false;
+    
     /**
      * Creates new form GameBoardGUI
      */
-    public GameBoardGUI(DataHolderSingleton data) {
+    public GameBoardGUI(DataHolder data) {
         initComponents();
         this.data = data;
     }
@@ -75,12 +88,32 @@ public class GameBoardGUI extends javax.swing.JFrame {
         barHealth.setForeground(new java.awt.Color(255, 0, 0));
 
         btnRight.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonRight.jpg")); // NOI18N
+        btnRight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRightActionPerformed(evt);
+            }
+        });
 
         btnUp.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonUp.jpg")); // NOI18N
+        btnUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpActionPerformed(evt);
+            }
+        });
 
         btnLeft.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonLeft.jpg")); // NOI18N
+        btnLeft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLeftActionPerformed(evt);
+            }
+        });
 
         btnDown.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonDown.jpg")); // NOI18N
+        btnDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDownActionPerformed(evt);
+            }
+        });
 
         testPanel.setLayout(new java.awt.GridLayout(12, 5));
 
@@ -88,16 +121,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
         txtChallenge.setRows(5);
         jScrollPane1.setViewportView(txtChallenge);
 
-        javax.swing.GroupLayout pnlChallengeLayout = new javax.swing.GroupLayout(pnlChallenge);
-        pnlChallenge.setLayout(pnlChallengeLayout);
-        pnlChallengeLayout.setHorizontalGroup(
-            pnlChallengeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 210, Short.MAX_VALUE)
-        );
-        pnlChallengeLayout.setVerticalGroup(
-            pnlChallengeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
+        pnlChallenge.setLayout(new java.awt.GridLayout(3, 3));
 
         jMenu1.setText("Menu");
         jMenu1.add(jSeparator1);
@@ -181,9 +205,10 @@ public class GameBoardGUI extends javax.swing.JFrame {
                             .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(testPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlChallenge, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(94, 94, 94)
                                 .addComponent(btnLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,14 +216,9 @@ public class GameBoardGUI extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(btnDown, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(pnlChallenge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jScrollPane1))))))
+                                        .addComponent(btnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -208,7 +228,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlChallenge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlChallenge, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnUp, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -218,7 +238,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
                                 .addComponent(btnLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnDown, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(testPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -268,6 +288,46 @@ public class GameBoardGUI extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_formWindowOpened
 
+    private void btnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpActionPerformed
+        move(data.getBoard().reachableTiles());
+        if (moveUp == true){
+            data.getBoard().changePosition(position[0], position[1]-1);
+            checkCurrentTile();
+            printGUIBoard();
+            moveUp = false;
+        }
+    }//GEN-LAST:event_btnUpActionPerformed
+
+    private void btnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownActionPerformed
+        move(data.getBoard().reachableTiles());
+        if (moveDown == true){
+            data.getBoard().changePosition(position[0], position[1]+1);
+            checkCurrentTile();
+            printGUIBoard();
+            moveDown = false; //reset
+        }
+    }//GEN-LAST:event_btnDownActionPerformed
+
+    private void btnLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeftActionPerformed
+        move(data.getBoard().reachableTiles());
+        if (moveLeft == true){
+            data.getBoard().changePosition(position[0]-1, position[1]);
+            checkCurrentTile();
+            printGUIBoard();
+            moveLeft = false; //reset
+        }
+    }//GEN-LAST:event_btnLeftActionPerformed
+
+    private void btnRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRightActionPerformed
+        move(data.getBoard().reachableTiles());
+        if (moveRight == true){
+            data.getBoard().changePosition(position[0]+1, position[1]);
+            checkCurrentTile();
+            printGUIBoard();
+            moveRight = false;  //resets move.
+        }
+    }//GEN-LAST:event_btnRightActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -306,18 +366,19 @@ public class GameBoardGUI extends javax.swing.JFrame {
         //element in the 2demensional array and adding the appropriate picture 
         //to
         public void printGUIBoard() {
+        testPanel.removeAll();
         for (int i = 0 ; i < data.getBoard().getBoard()[0].length; i++){
             for (int j = 0 ;j<data.getBoard().getBoard().length; j++){
                 if (data.getBoard().getPosition()[0] == j && data.getBoard().getPosition()[1] == i) {
-                    if (data.getPlayer().findClass().contains("Warrior")) {
+                    if (data.getPlayer().findClass() == PlayerClass.WARRIOR) {
                         JLabel picWarrior = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonWarrior.jpg"));
                         testPanel.add(picWarrior);
                     }
-                    if (data.getPlayer().findClass().contains("Archer")) {
+                    if (data.getPlayer().findClass() == PlayerClass.ARCHER) {
                         JLabel picArcher = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonArcher.jpg"));
                         testPanel.add(picArcher);
                     }
-                    if (data.getPlayer().findClass().contains("Wizard")) {
+                    if (data.getPlayer().findClass() == PlayerClass.WIZARD) {
                         JLabel picWizard = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonWizard.jpg"));
                         testPanel.add(picWizard);
                     }
@@ -340,7 +401,116 @@ public class GameBoardGUI extends javax.swing.JFrame {
                 }
             }
         }
+        testPanel.repaint();
+        testPanel.revalidate();
+    }
+        
+        
+    private void checkCurrentTile(){
+        int x = data.getBoard().getPosition()[0];
+        int y = data.getBoard().getPosition()[1];
+        Tile tile = data.getBoard().getBoard()[x][y];
+        
+        // If the Tile is a challenge, execute the challenge
+        if (tile.getType() == TileType.CHALLENGE){
+            poseChallenge(x, y);
         }
+        
+        // If the Tile is an enemy, execute the combat sequence
+//        else if(tile.getType() == TileType.ENEMY){
+//            Enemy enemy = (Enemy) data.getBoard().getBoard()[x][y];
+//
+//            Combat.combatStart(enemy, data.getPlayer());
+//            
+//            // Inserts an empty Tile after combat is done
+//            data.getBoard().getBoard()[x][y] = new EmptyTile();
+//            
+//            Item itemRewarded = data.getPlayer().enemyReward();
+//            System.out.println("\nAt your feet a " + itemRewarded.getName() + " appears! You pick it up and put it in your Inventory.");
+//        }
+        
+        // If the Tile is the final boss, execute combat sequence and end game afterwards
+        else if(tile.getType() == TileType.BOSS){
+            Boss enemy = (Boss) data.getBoard().getBoard()[x][y];
+            Combat.combatStart(enemy, data.getPlayer());
+            finishGame();
+        }
+    }
+    
+    public void move(Tile[] reachableTiles){
+        position = data.getBoard().getPosition();
+        if(!(reachableTiles[0].getType() == TileType.BLOCKED)){
+            moveUp=true;
+        }
+        if(!(reachableTiles[1].getType() == TileType.BLOCKED)){
+            moveDown=true;
+        }
+        if(!(reachableTiles[2].getType() == TileType.BLOCKED)){  
+            moveRight=true;
+        }
+        if(!(reachableTiles[3].getType() == TileType.BLOCKED)){
+            moveLeft=true;
+        }
+    }
+            
+    private void saveHighscore(){
+        if (data.getDbController().updateHighscores()){
+            txtChallenge.setText("Highscore saved succesfully.");
+        } else {
+            txtChallenge.setText("ERROR: Highscore not saved.");
+        }
+    }
+    public void finishGame(){
+        data.getPlayer().bossReward();
+        txtChallenge.setText("You have completed the game! Well done!");
+        data.getPlayer().timerReward(startTime);
+        saveHighscore();
+        //possible play again method.      
+    }
+    
+    private void poseChallenge(int x, int y){
+        pnlChallenge.removeAll();
+        final Challenge ch = (Challenge) data.getBoard().getBoard()[x][y];
+        
+        txtChallenge.setText("A wizard appears before you in a flash of smoke and poses you the following riddle:");
+        
+        // Prints the riddle
+        txtChallenge.setText(txtChallenge.getText() + "\n" + ch.getQuestion().getText());
+        
+        // Make a list of all possible answers and shuffle them
+        ArrayList<TextOutput> answers = new ArrayList<>();
+        answers.add(ch.getCorrectAnswer());
+        for (TextOutput t : ch.getWrongAnswers())
+            answers.add(t);
+        Collections.shuffle(answers);
+            
+        // Prints all the options with a number for each answer
+        for (TextOutput a : answers){
+            final JButton aButton = new JButton(a.getText());
+            aButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if(aButton.getText().contains(ch.getCorrectAnswer().toString())) {
+                        data.getPlayer().challengeReward();
+                        txtChallenge.setText("The wizard seems pleased with your answer and raises his arms over you before fading away.");
+                        txtChallenge.setText(txtChallenge.getText() + "You suddenly feel rejuvenated.");
+                    }
+                    else {
+                        txtChallenge.setText("The wizard shakes his head and dissapears with a *BANG*!");
+                    }
+                    pnlChallenge.removeAll();
+                    pnlChallenge.repaint();
+                    pnlChallenge.revalidate();
+                }
+            });
+            pnlChallenge.add(aButton);
+        }
+        //Empties the Tile so the Challenge can't be trigered again
+        data.getBoard().getBoard()[x][y] = new EmptyTile();
+        pnlChallenge.repaint();
+        pnlChallenge.revalidate();
+    }
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar barExp;
     private javax.swing.JProgressBar barHealth;

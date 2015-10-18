@@ -8,6 +8,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import pdc.project.Model.*;
 import java.util.Scanner;
+import pdc.project.View.GameBoardGUI;
 /**
  * The CUIController controls the game mechanics for the CUI version. 
  */
@@ -37,6 +38,8 @@ public class CUIController {
         data.getBoard().printBoard();
         
         boolean gameIsRunning = true;
+        GameBoardGUI GUI1 = new GameBoardGUI(data);
+        GUI1.show();
         while(gameIsRunning){
             move(data.getBoard().reachableTiles());
             printCurrentStats();
@@ -319,7 +322,7 @@ public class CUIController {
     private static void poseChallenge(int x, int y){
         Challenge ch = (Challenge) data.getBoard().getBoard()[x][y];
         
-        System.out.println("\nA wizard appears before you in a flash of smoke and poses you the following riddle:");
+        System.out.println("A wizard appears before you in a flash of smoke and poses you the following riddle:");
         
         // Prints the riddle
         System.out.println(ch.getQuestion().getText());
