@@ -91,24 +91,28 @@ public class GameBoardGUI extends javax.swing.JFrame {
 
         barHealth.setForeground(new java.awt.Color(255, 0, 0));
 
+        btnRight.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonRight.jpg")); // NOI18N
         btnRight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRightActionPerformed(evt);
             }
         });
 
+        btnUp.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonUp.jpg")); // NOI18N
         btnUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpActionPerformed(evt);
             }
         });
 
+        btnLeft.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonLeft.jpg")); // NOI18N
         btnLeft.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLeftActionPerformed(evt);
             }
         });
 
+        btnDown.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonDown.jpg")); // NOI18N
         btnDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDownActionPerformed(evt);
@@ -174,6 +178,11 @@ public class GameBoardGUI extends javax.swing.JFrame {
         jMenu2.add(jMenuItem7);
 
         jMenuItem6.setText("Save Highscore");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
@@ -261,7 +270,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        ViewHighscores VH1 = new ViewHighscores();
+        ViewHighscores VH1 = new ViewHighscores(data);
         VH1.show();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
@@ -328,6 +337,10 @@ public class GameBoardGUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRightActionPerformed
 
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        data.getDbController().updateHighscores();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -371,32 +384,32 @@ public class GameBoardGUI extends javax.swing.JFrame {
             for (int j = 0 ;j<data.getBoard().getBoard().length; j++){
                 if (data.getBoard().getPosition()[0] == j && data.getBoard().getPosition()[1] == i) {
                     if (data.getPlayer().findClass() == PlayerClass.WARRIOR) {
-                        JLabel picWarrior = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonWarrior.jpg"));
+                        JLabel picWarrior = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonWarrior.jpg"));
                         testPanel.add(picWarrior);
                     }
                     if (data.getPlayer().findClass() == PlayerClass.ARCHER) {
-                        JLabel picArcher = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonArcher.jpg"));
+                        JLabel picArcher = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonArcher.jpg"));
                         testPanel.add(picArcher);
                     }
                     if (data.getPlayer().findClass() == PlayerClass.WIZARD) {
-                        JLabel picWizard = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonWizard.jpg"));
+                        JLabel picWizard = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonWizard.jpg"));
                         testPanel.add(picWizard);
                     }
                 }
                 else if (data.getBoard().getBoard()[j][i].isVisited()) {
-                    JLabel picDirt = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonDirt.jpg"));
+                    JLabel picDirt = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonDirt.jpg"));
                     testPanel.add(picDirt); //Dirt
                 }
                 else if (data.getBoard().getBoard()[j][i].getType() == TileType.BLOCKED) {
-                    JLabel picLava = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonLava.jpg"));
+                    JLabel picLava = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonLava.jpg"));
                     testPanel.add(picLava);
                 }
                 else if (data.getBoard().getBoard()[j][i].getType() == TileType.CHALLENGE) {
-                    JLabel picFairy = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonFairy.jpg"));
+                    JLabel picFairy = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonFairy.jpg"));
                     testPanel.add(picFairy);//wizard tile
                 }
                 else {
-                    JLabel picGraass = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonGreenGrass.jpg"));
+                    JLabel picGraass = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonGreenGrass.jpg"));
                     testPanel.add(picGraass);//grass
                 }
             }

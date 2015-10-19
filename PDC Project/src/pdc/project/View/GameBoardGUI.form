@@ -73,6 +73,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save Highscore"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem6ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -210,21 +213,41 @@
     <Component class="javax.swing.JProgressBar" name="barExp">
     </Component>
     <Component class="javax.swing.JButton" name="btnRight">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="2" name="C:\Users\shanon\Desktop\PictureForPDC\buttonRight.jpg"/>
+        </Property>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRightActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnUp">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="2" name="C:\Users\shanon\Desktop\PictureForPDC\buttonUp.jpg"/>
+        </Property>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnLeft">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="2" name="C:\Users\shanon\Desktop\PictureForPDC\buttonLeft.jpg"/>
+        </Property>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLeftActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnDown">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="2" name="C:\Users\shanon\Desktop\PictureForPDC\buttonDown.jpg"/>
+        </Property>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDownActionPerformed"/>
       </Events>
