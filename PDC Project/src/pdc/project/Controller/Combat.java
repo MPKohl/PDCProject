@@ -104,7 +104,7 @@ public class Combat {
     
         boolean correctInput = false;
         while (!correctInput){
-            System.out.println("1. Sword strike\n2: Bleeding strike\n3: Defensive stance");
+            System.out.println("1. Piercing Shot\n2: Poison Shot\n3: Agile stance");
             try{               
                 int command = scan.nextInt();
                 scan.nextLine();
@@ -195,7 +195,7 @@ public class Combat {
 
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            //System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
             System.out.println("Your attack has missed the enemy.");
@@ -208,7 +208,7 @@ public class Combat {
     public static void archerCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            //System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
             System.out.println("Your attack has missed the enemy.");
@@ -221,7 +221,7 @@ public class Combat {
     public static void wizardCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            //System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
             System.out.println("Your attack has missed the enemy.");
@@ -229,6 +229,8 @@ public class Combat {
         dotUpdate(player, dotCount);
         defenseUpdate(player, defensiveCount);
     }
+    
+
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     

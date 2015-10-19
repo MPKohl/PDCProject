@@ -10,12 +10,15 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.InputMismatchException;
+import java.util.Random;
 import java.util.Scanner;
 import javax.swing.*;
 import javax.imageio.*;
 import pdc.project.Model.*;
 import pdc.project.Controller.*;
+
 /**
  *
  * @author shanon
@@ -87,28 +90,24 @@ public class GameBoardGUI extends javax.swing.JFrame {
 
         barHealth.setForeground(new java.awt.Color(255, 0, 0));
 
-        btnRight.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonRight.jpg")); // NOI18N
         btnRight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRightActionPerformed(evt);
             }
         });
 
-        btnUp.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonUp.jpg")); // NOI18N
         btnUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpActionPerformed(evt);
             }
         });
 
-        btnLeft.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonLeft.jpg")); // NOI18N
         btnLeft.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLeftActionPerformed(evt);
             }
         });
 
-        btnDown.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonDown.jpg")); // NOI18N
         btnDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDownActionPerformed(evt);
@@ -371,32 +370,32 @@ public class GameBoardGUI extends javax.swing.JFrame {
             for (int j = 0 ;j<data.getBoard().getBoard().length; j++){
                 if (data.getBoard().getPosition()[0] == j && data.getBoard().getPosition()[1] == i) {
                     if (data.getPlayer().findClass() == PlayerClass.WARRIOR) {
-                        JLabel picWarrior = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonWarrior.jpg"));
+                        JLabel picWarrior = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonWarrior.jpg"));
                         testPanel.add(picWarrior);
                     }
                     if (data.getPlayer().findClass() == PlayerClass.ARCHER) {
-                        JLabel picArcher = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonArcher.jpg"));
+                        JLabel picArcher = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonArcher.jpg"));
                         testPanel.add(picArcher);
                     }
                     if (data.getPlayer().findClass() == PlayerClass.WIZARD) {
-                        JLabel picWizard = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonWizard.jpg"));
+                        JLabel picWizard = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonWizard.jpg"));
                         testPanel.add(picWizard);
                     }
                 }
                 else if (data.getBoard().getBoard()[j][i].isVisited()) {
-                    JLabel picDirt = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonDirt.jpg"));
+                    JLabel picDirt = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonDirt.jpg"));
                     testPanel.add(picDirt); //Dirt
                 }
                 else if (data.getBoard().getBoard()[j][i].getType() == TileType.BLOCKED) {
-                    JLabel picLava = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonLava.jpg"));
+                    JLabel picLava = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonLava.jpg"));
                     testPanel.add(picLava);
                 }
                 else if (data.getBoard().getBoard()[j][i].getType() == TileType.CHALLENGE) {
-                    JLabel picFairy = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonFairy.jpg"));
+                    JLabel picFairy = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonFairy.jpg"));
                     testPanel.add(picFairy);//wizard tile
                 }
                 else {
-                    JLabel picGraass = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonGreenGrass.jpg"));
+                    JLabel picGraass = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Facestep\\Desktop\\PictureForPDC\\buttonGreenGrass.jpg"));
                     testPanel.add(picGraass);//grass
                 }
             }
@@ -417,17 +416,16 @@ public class GameBoardGUI extends javax.swing.JFrame {
         }
         
         // If the Tile is an enemy, execute the combat sequence
-//        else if(tile.getType() == TileType.ENEMY){
-//            Enemy enemy = (Enemy) data.getBoard().getBoard()[x][y];
-//
-//            Combat.combatStart(enemy, data.getPlayer());
-//            
-//            // Inserts an empty Tile after combat is done
-//            data.getBoard().getBoard()[x][y] = new EmptyTile();
-//            
-//            Item itemRewarded = data.getPlayer().enemyReward();
-//            System.out.println("\nAt your feet a " + itemRewarded.getName() + " appears! You pick it up and put it in your Inventory.");
-//        }
+        else if(tile.getType() == TileType.ENEMY){
+            Enemy enemy = (Enemy) data.getBoard().getBoard()[x][y];
+            combatStart(enemy, data.getPlayer());
+                      
+            // Inserts an empty Tile after combat is done
+            data.getBoard().getBoard()[x][y] = new EmptyTile();
+            
+            Item itemRewarded = data.getPlayer().enemyReward();
+            System.out.println("\nAt your feet a " + itemRewarded.getName() + " appears! You pick it up and put it in your Inventory.");
+        }
         
         // If the Tile is the final boss, execute combat sequence and end game afterwards
         else if(tile.getType() == TileType.BOSS){
@@ -509,6 +507,560 @@ public class GameBoardGUI extends javax.swing.JFrame {
         pnlChallenge.repaint();
         pnlChallenge.revalidate();
     }
+    
+//        private void btnUpMouseClicked(java.awt.event.MouseEvent evt) {                                   
+//        // TODO add your handling code here:
+//    }   
+//        
+////        btnRight.addActionListener(new java.awt.event.ActionListener() {
+////            public void actionPerformed(java.awt.event.ActionEvent evt) {
+////                btnRightActionPerformed(evt);
+////            }
+////        });
+    
+    //GUI Combat changes by SED
+    //GUI Combat changes by SED
+       public void combatStart(Enemy enemy, Player player){
+        
+
+        int defensiveCount = 0;
+        int dotCount = 0;
+
+        txtChallenge.setText("\n"+enemy.getEnemyName()+" approaches, prepare for battle: ");
+        txtChallenge.setText("\nEnemy: " + enemy.getEnemyName() + "\nEnemy health: " + enemy.getEnemyHealth() + "\n");
+        txtChallenge.setText("Player health: " + player.getHealth());
+
+        selectClassCombat(enemy, player, defensiveCount, dotCount);
+    }
+    
+    //Method to check class of player and choose appropriate attack phase
+    public void selectClassCombat(Enemy enemy, Player player, int defensiveCount, int dotCount){
+
+        if(data.getPlayer().findClass() == PlayerClass.WARRIOR){   
+            warriorAttackPhase(enemy, player, defensiveCount, dotCount);
+        }
+        else if(data.getPlayer().findClass() == PlayerClass.ARCHER){
+            archerAttackPhase(enemy, player, defensiveCount, dotCount);
+        }
+        else if(data.getPlayer().findClass() == PlayerClass.WIZARD){
+            wizardAttackPhase(enemy, player, defensiveCount, dotCount);
+        }
+    }
+  
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //CLASS ATTACK PHASES//
+    
+    //Warrior attack phase method   
+    public void warriorAttackPhase(final Enemy enemy, final Player player, final int defensiveCount, final int dotCount){
+                                   
+            final JButton swordStrikeButton = new JButton("Sword Strike");
+            swordStrikeButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    warriorCalcution(enemy, player, defensiveCount, dotCount);
+                    pnlChallenge.removeAll();
+                    pnlChallenge.repaint();
+                    pnlChallenge.revalidate();
+                }
+            });
+            pnlChallenge.add(swordStrikeButton);
+            
+            final JButton bleedingStrikeButton = new JButton("Bleeding Strike");
+            bleedingStrikeButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setDotCount(dotCount);
+                    int damage = bleedCalc(enemy);
+                    enemyHealthReduction(enemy, damage);
+                    pnlChallenge.removeAll();
+                    pnlChallenge.repaint();
+                    pnlChallenge.revalidate();
+                }
+            });
+            pnlChallenge.add(bleedingStrikeButton);
+            
+            final JButton defensiveStanceButton = new JButton("Defensive Stance");
+            defensiveStanceButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    player.setDefensive(true);
+                    setDefensiveCount(defensiveCount);
+                    pnlChallenge.removeAll();
+                    pnlChallenge.repaint();
+                    pnlChallenge.revalidate();
+                }
+            });
+            pnlChallenge.add(defensiveStanceButton);
+                                                          
+                defenseUpdate(player, defensiveCount);
+                dotUpdate(player, dotCount);
+                
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+
+                }
+
+    }
+        
+    //Archer attack phase method   
+    public void archerAttackPhase(final Enemy enemy, final Player player, final int defensiveCount, final int dotCount){ 
+                                   
+            final JButton piercingShotButton = new JButton("Piercing Shot");
+            piercingShotButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    archerCalculation(enemy, player, defensiveCount, dotCount);
+                    pnlChallenge.removeAll();
+                    pnlChallenge.repaint();
+                    pnlChallenge.revalidate();
+                }
+            });
+            pnlChallenge.add(piercingShotButton);
+            
+            final JButton poisonShotButton = new JButton("Poison Shot");
+            poisonShotButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setDotCount(dotCount);
+                    int damage = poisonShotCalc(enemy, player);
+                    enemyHealthReduction(enemy, damage);
+                    pnlChallenge.removeAll();
+                    pnlChallenge.repaint();
+                    pnlChallenge.revalidate();
+                }
+            });
+            pnlChallenge.add(poisonShotButton);
+            
+            final JButton agileStanceButton = new JButton("Agile Stance");
+            agileStanceButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    player.setDefensive(true);
+                    setDefensiveCount(defensiveCount);
+                    pnlChallenge.removeAll();
+                    pnlChallenge.repaint();
+                    pnlChallenge.revalidate();
+                }
+            });
+            pnlChallenge.add(agileStanceButton);
+                
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                }
+
+        
+    }
+     
+    //Wizard attack phase method    
+    public void wizardAttackPhase(final Enemy enemy, final Player player, final int defensiveCount, final int dotCount){
+                        
+            final JButton darkMissileButton = new JButton("Dark Missile");
+            darkMissileButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    wizardCalculation(enemy, player, defensiveCount, dotCount);
+                    pnlChallenge.removeAll();
+                    pnlChallenge.repaint();
+                    pnlChallenge.revalidate();
+                }
+            });
+            pnlChallenge.add(darkMissileButton);
+            
+            final JButton soulLeechButton = new JButton("Soul Leech");
+            soulLeechButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setDotCount(dotCount);
+                    int damage = soulLeechCalc(enemy, player);
+                    enemyHealthReduction(enemy, damage);
+                    pnlChallenge.removeAll();
+                    pnlChallenge.repaint();
+                    pnlChallenge.revalidate();
+                }
+            });
+            pnlChallenge.add(soulLeechButton);
+            
+            final JButton bloodShieldButton = new JButton("Blood Shield");
+            bloodShieldButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    player.setDefensive(true);
+                    setDefensiveCount(defensiveCount);
+                    pnlChallenge.removeAll();
+                    pnlChallenge.repaint();
+                    pnlChallenge.revalidate();
+                }
+            });
+            pnlChallenge.add(bloodShieldButton);
+       
+            defenseUpdate(player, defensiveCount);
+            dotUpdate(player, dotCount);
+            
+            if(enemy.getEnemyHealth() > 0){
+                txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+            }
+            else {
+                txtChallenge.setText(enemy.getEnemyName() + " has been defeated");
+
+            }
+
+    }
+    
+    public void setDotCount(int dotCount){
+        dotCount = 3;
+    }
+    
+    public void setDefensiveCount(int defensiveCount){
+        defensiveCount = 2;
+    }
+      
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //CLASS ATTACK PHASE CALCULATIONS//
+    
+    //Warrior attack phase calculations
+    
+    public void warriorCalcution(Enemy enemy, Player player, int defensiveCount, int dotCount){
+
+        if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
+            playerDamageCalc(enemy, player);
+            txtChallenge.setText(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+        }
+        else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
+            txtChallenge.setText("Your attack has missed the enemy.");
+        }
+        dotUpdate(player, dotCount);
+        defenseUpdate(player, defensiveCount);
+    }
+    
+    //Archer attack phase calculations
+    public void archerCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
+        if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
+            playerDamageCalc(enemy, player);
+            txtChallenge.setText(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+        }
+        else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
+            txtChallenge.setText("Your attack has missed the enemy.");
+        }  
+        dotUpdate(player, dotCount);
+        defenseUpdate(player, defensiveCount);
+    }
+    
+    //Wizard attack phase calculations
+    public void wizardCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
+        if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
+            playerDamageCalc(enemy, player);
+            txtChallenge.setText(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+        }
+        else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
+            txtChallenge.setText("Your attack has missed the enemy.");
+        }  
+        dotUpdate(player, dotCount);
+        defenseUpdate(player, defensiveCount);
+    }
+    
+
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //CALCULATION METHODS// 
+    
+    //Update dot and dot counter   
+    public void dotUpdate(Player player, int dotCount){
+        if(player.getDot()){
+            dotCount --;
+            if(dotCount == 0){
+                player.setDot(false);
+            }
+        }
+    }
+    
+    //Update defense and defense counter    
+    public void defenseUpdate(Player player, int defenseCount){
+        if(player.getDefensive()){
+            defenseCount --;
+            if(defenseCount == 0){
+                player.setDefensive(false);
+            }
+        }
+    }
+    
+    //Bleeding strike calculation    
+    public int bleedCalc(Enemy enemy){
+        int bleedDamage = (enemy.getEnemyHealth() / 100 * 10);
+        return bleedDamage;
+    }
+    
+    //Soul leech effects calculation   
+    public int soulLeechCalc(Enemy enemy, Player player){
+        int soulLeechDamage = player.getDamage() / 100 * 25;
+        return soulLeechDamage;
+    }
+    
+    //Poision shot effect calculation    
+    public int poisonShotCalc(Enemy enemy, Player player){
+        int poisonDamage = player.getDamage() / 100 * 10;
+        enemy.setChanceToDodge(enemy.getChanceToDodge() - (enemy.getChanceToDodge() / 100 * 5));
+        enemy.setChanceToHit(enemy.getChanceToHit() - (enemy.getChanceToHit() / 100 * 5));
+        return poisonDamage;
+    }
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //ENEMY ATTACK PHASE//
+       
+    //Enemy attack phase   
+    public void enemyAttackPhase(Enemy enemy, Player player, int defensiveCount, int dotCount){
+        //System.out.println("The enemy attacks...");
+
+        if((!playerDodgeCalc(player)) && (enemyHitCalc(enemy))){
+            enemyDamageCalc(enemy, player);           
+        }
+        if(player.getHealth() > 0){
+            txtChallenge.setText("Your health is now " + player.getHealth());  
+            try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+            selectClassCombat(enemy, player, defensiveCount, dotCount);
+        }
+        else
+            quit();            
+    }
+    
+    /////////////////////////////////////////////////////////////////////////////////
+    
+    //DAMAGE CALCULATION METHODS//
+        
+    //Player damage calculation   
+    public void playerDamageCalc(Enemy enemy, Player player){
+        int totalDamage;
+        if(playerCritCalc(player)){
+            totalDamage = player.getDamage() + ((player.getDamage() / 100) * 25);
+        }
+        else    
+            totalDamage = player.getDamage();
+        
+        if((player.getDot()) && (player.findClass() == PlayerClass.ARCHER)){
+            totalDamage += poisonShotCalc(enemy, player);
+        }
+        else if(player.getDot() && (player.findClass() == PlayerClass.WIZARD)){
+            totalDamage += soulLeechCalc(enemy, player);
+        }
+        else if(player.getDot() && (player.findClass() == PlayerClass.WARRIOR)){
+            totalDamage += bleedCalc(enemy);
+        }
+        
+        HashMap<ItemSlot, Item> equipped = player.getEquipped();
+        double addedDmg = 0;
+        if(equipped != null){
+            for (Item item : equipped.values()) {
+                if (item.getItemType() == ItemType.BOW || item.getItemType() == ItemType.ONEHANDEDWEAPON || item.getItemType() == ItemType.TWOHANDEDWEAPON)
+                    addedDmg = item.getDmg() / 100;
+                    totalDamage += totalDamage * addedDmg;
+            }
+        }
+        enemyHealthReduction(enemy, totalDamage); 
+    }
+       
+    //Enemy damage calculation
+    public void enemyDamageCalc(Enemy enemy, Player player){
+        int totalDamage;
+        if(enemyCritCalc(enemy)){
+            totalDamage = enemy.getDamageHigh() + ((enemy.getDamageHigh() / 100) * 25);
+        }
+        else    
+            totalDamage = enemy.getDamageHigh();  
+        
+
+        HashMap<ItemSlot, Item> equipped = player.getEquipped();
+        double dmgReduction = 0;
+        if (equipped != null){
+            for (Item item : equipped.values()) {
+                if (item.getItemType() == ItemType.CLOTHARMOUR || item.getItemType() == ItemType.LEATHERARMOUR || item.getItemType() == ItemType.PLATEARMOUR || item.getItemType() == ItemType.SHIELD)
+                    dmgReduction = item.getDmgReduction() / 100;
+                    totalDamage -= totalDamage * dmgReduction;
+            }
+        }
+        
+        playerHealthReduction(player, totalDamage);
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////////
+    
+    //HEALTH REDUCTION METHODS//
+    
+    //Enemy health reduction method
+    public Enemy enemyHealthReduction(Enemy enemy, int totalDamage){
+        enemy.setEnemyHealth(enemy.getEnemyHealth() - totalDamage);
+        return enemy;
+    }
+    
+    //Player health reduction method
+    public Player playerHealthReduction(Player player, int totalDamage){
+        player.setHealth(player.getHealth() - totalDamage);
+        return player;
+    }
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    
+    // CALCULATIONS FOR PLAYER CHANCES //
+    
+    //Player dodge chance calculation 
+    public boolean playerDodgeCalc(Player player){
+        
+        if(player.findClass() == PlayerClass.WARRIOR){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R == 1;        
+        }
+        if(player.findClass() == PlayerClass.ARCHER){
+            if(player.getDefensive()){
+                Random r = new Random();
+                int Low = 1;
+                int High = 10;
+                int R = r.nextInt(High-Low) + Low;
+                
+                return R <= 5;
+            }
+            else{
+                Random r = new Random();
+                int Low = 1;
+                int High = 10;
+                int R = r.nextInt(High-Low) + Low;
+
+                return R <= 3; 
+            }
+        }
+        if(player.findClass() == PlayerClass.WIZARD){
+            Random r = new Random();
+            int Low = 1;
+            int High = 20;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R == 1; 
+        }       
+        return false;
+    }
+    
+    //Player critical hit chance calculation  
+    public boolean playerCritCalc(Player player){
+        
+        if(player.findClass() == PlayerClass.WARRIOR){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R == 1 || R == 2;        
+        }
+        if(player.findClass() == PlayerClass.ARCHER){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R == 1 || R == 2 || R == 3;            
+        }
+        if(player.findClass() == PlayerClass.WIZARD){
+            Random r = new Random();
+            int Low = 1;
+            int High = 20;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R == 1 || R == 2; 
+        }       
+        return false;       
+    }
+    
+    // Player hit chance calculation    
+    public boolean playerHitCalc(Player player){
+        if(player.findClass() == PlayerClass.WARRIOR){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R != 1;        
+        }
+        if(player.findClass() == PlayerClass.ARCHER){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R != 1 || R != 2;            
+        }
+        if(player.findClass() == PlayerClass.WIZARD){
+            Random r = new Random();
+            int Low = 1;
+            int High = 20;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R != 1; 
+        }       
+        return false;         
+    } 
+    
+    //CALCULATIONS FOR ENEMY CHANCES//
+    
+    //Enemy dodge chance calculation    
+    public boolean enemyDodgeCalc(Enemy enemy){
+        if(enemy.getStun() == false){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+
+            return R == 1;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    //Enemy critical hit chance calculation   
+    public boolean enemyCritCalc(Enemy enemy){
+        Random r = new Random();
+        int Low = 1;
+        int High = 10;
+        int R = r.nextInt(High-Low) + Low;
+        
+        return R == 1;        
+    }
+    
+    // Enemy hit chance calculation
+    public boolean enemyHitCalc(Enemy enemy){
+        if(enemy.getStun() == false){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+
+            return R != 1 || R != 2 || R != 3;  
+        }
+        else{
+            return false;
+        }
+    }  
+    
+    /////////////////////////////////////////////////////////////////////////////////////
+    
+    // Game over method when player dies
+    public void quit(){
+        Scanner scan = new Scanner(System.in);
+        System.out.println("GAME OVER\nPress any key to exit: ");
+        scan.nextLine();
+        System.exit(0);
+    }
+    
+
+    
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

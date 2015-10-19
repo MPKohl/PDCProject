@@ -23,6 +23,7 @@ public class CUIController {
      */
     public void startGame(){
         //Creates the gameboard
+        int gameType = 0;
         data.setBoard(new Board());
         
         System.out.println("\n---------------------------" + 
@@ -34,16 +35,39 @@ public class CUIController {
         
         System.out.println("\nWelcome " + data.getPlayer().getName() + " to the best RPG ever!");
         System.out.println("Type 'help' to get help.\n");
+               
+
+        System.out.println("Please select which game type you would like to play: ");
+        System.out.println("1. GUI\n2. CUI");
+        boolean correctInput = false;
+        while(!correctInput){
+            try{
+                gameType = scan.nextInt();
+                if (gameType == 1 || gameType == 2){
+                    scan.nextLine();
+                } else {
+                    System.out.println("Please choose either 1 or 2.");
+                }
+                correctInput = true;
+            } catch(InputMismatchException e){
+                System.out.println("Please choose either 1 or 2.");
+                scan.next();
+            }
+        }
         
-        data.getBoard().printBoard();
+        if(gameType == 1){
+            GameBoardGUI GUI1 = new GameBoardGUI(data);
+            GUI1.show();       
+        }
+        else if(gameType == 2){
         
-        boolean gameIsRunning = true;
-        GameBoardGUI GUI1 = new GameBoardGUI(data);
-        GUI1.show();
-        while(gameIsRunning){
-            move(data.getBoard().reachableTiles());
-            printCurrentStats();
             data.getBoard().printBoard();
+            boolean gameIsRunning = true;
+            while(gameIsRunning){
+                move(data.getBoard().reachableTiles());
+                printCurrentStats();
+                data.getBoard().printBoard();
+            }
         }
     }
     
