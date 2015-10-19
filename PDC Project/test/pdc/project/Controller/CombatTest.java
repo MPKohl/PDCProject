@@ -39,33 +39,33 @@ public class CombatTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of combatStart method, of class Combat.
-     */
-    @Test
-    public void testCombatStart() {
-        System.out.println("combatStart");
-        Enemy enemy = null;
-        Player player = null;
-        Combat.combatStart(enemy, player);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of selectClassCombat method, of class Combat.
-     */
-    @Test
-    public void testSelectClassCombat() {
-        System.out.println("selectClassCombat");
-        Enemy enemy = null;
-        Player player = null;
-        int defensiveCount = 0;
-        int dotCount = 0;
-        Combat.selectClassCombat(enemy, player, defensiveCount, dotCount);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+//    /**
+//     * Test of combatStart method, of class Combat.
+//     */
+//    @Test
+//    public void testCombatStart() {
+//        System.out.println("combatStart");
+//        Enemy enemy = null;
+//        Player player = null;
+//        Combat.combatStart(enemy, player);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of selectClassCombat method, of class Combat.
+//     */
+//    @Test
+//    public void testSelectClassCombat() {
+//        System.out.println("selectClassCombat");
+//        Enemy enemy = null;
+//        Player player = null;
+//        int defensiveCount = 0;
+//        int dotCount = 0;
+//        Combat.selectClassCombat(enemy, player, defensiveCount, dotCount);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 
     /**
      * Test of warriorAttackPhase method, of class Combat.
