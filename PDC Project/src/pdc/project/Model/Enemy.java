@@ -27,7 +27,12 @@ public class Enemy extends Tile{
         chooseStats(difficulty);
         this.stun = false;
     }
-    
+    /**
+     * Choose stats is a method that determines what a difficulty is by changing
+     * the enemies statistics.
+     * @param difficulty a string containing either easy, medium or hard taken
+     * by the method of chooseDifficulty()
+     */
     public void chooseStats(String difficulty) {
         Random random = new Random();
         if (difficulty.equals("easy")) {
@@ -58,7 +63,13 @@ public class Enemy extends Tile{
             enemyHealth = 100;
         }
     }
-    
+    /**
+     * the chooseDifficulty method splits the play grid into three
+     * it then determines what difficulty of the enemies
+     * @param xLoc the x location of the player
+     * @param yLoc the y location of the player
+     * @param gameBoardSize the size of the gameboard
+     */
     public void chooseDifficulty(int xLoc, int yLoc, int gameBoardSize) {
         int divideResult = 0;
         divideResult = (int)gameBoardSize/3;
@@ -75,16 +86,12 @@ public class Enemy extends Tile{
             setDifficulty("hard"); //can fight no more than 1 monster with no heal.
         }
     }
-    public void randEasy() {
-        
-    }
-    public void randMedium() {
-        
-    }
-    public void randHard() {
-        
-    }
-    
+    /**
+     * the randomizeName method randomizes the name of an enemy
+     * by taking a random string from an array of prefixes
+     * and then taking a random string form an array of suffixes
+     * 
+     */
     public void randomizeName(){
         Random random = new Random();
                 
@@ -145,20 +152,6 @@ public class Enemy extends Tile{
     public void setEnemyHealth(int enemyHealth) {
         this.enemyHealth = enemyHealth;
     }
-
-    /**
-     * @return the damageLow
-     */
-//    public int getDamageLow() {
-//        return damageLow;
-//    }
-
-    /**
-     * @param damageLow the damageLow to set
-     */
-//    public void setDamageLow(int damageLow) {
-//        this.damageLow = damageLow;
-//    }
 
     /**
      * @return the damageHigh
