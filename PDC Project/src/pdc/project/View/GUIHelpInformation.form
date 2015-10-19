@@ -36,8 +36,12 @@
                       <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="161" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="162" max="-2" attributes="0"/>
+                      <Component id="jToggleButton1" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="33" max="32767" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -48,7 +52,9 @@
               <Component id="jLabel1" min="-2" pref="17" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="284" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jToggleButton1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="24" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,6 +71,7 @@
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
+            <Property name="text" type="java.lang.String" value="MOVE:&#xa;Use the directional arrow buttons to move the player: LEFT, RIGHT, UP, DOWN.&#xa;&#xa;TILE TYPES:&#xa;There are four types of tiles on the map: EMPTY, ENEMY, BLOCKED, CHALLENGE.&#xa;&#xa;EMPTY TILES:&#xa;These tiles appear as plain grass and can be accessed by the player, no event will happen on these tiles.&#xa;&#xa;ENEMY TILES:&#xa;These tiles appear as plain grass, the enemy is hidden and will not be revealed till the tile is navigated to. &#xa;&#xa;BLOCKED TILES:&#xa;These tiles appear as lava and cannot be accessed by the player.&#xa;&#xa;CHALLENGE TILES:&#xa;These tiles appear as a fairy and will prompt a riddle that must be answered by the player. Correct answers will provide experience and rejuvanated health.&#xa;&#xa;PLAYER:&#xa;The player will appear as an archer, warrior, or wizard sprite on the map.&#xa;&#xa;HEALTH BAR:&#xa;Displays the player health in red at bottom of the screen.&#xa;&#xa;ExPERIENCE BAR:&#xa;Displays the player experience at bottom of the screen.&#xa;&#xa;AIM OF GAME:&#xa;To complete challenges, fight enemies and find the boss on the map.&#xa;&#xa;&#xa;"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -76,6 +83,14 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Welcome to Help"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JToggleButton" name="jToggleButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Close"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButton1ActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

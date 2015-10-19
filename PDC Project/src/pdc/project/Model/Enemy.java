@@ -26,6 +26,20 @@ public class Enemy extends Tile{
         chooseStats(difficulty);
         this.stun = false;
     }
+    
+    public Enemy(String name, int health, int damageHigh, int chanceToHit, int chanceToCrit, int chanceToDodge, int expYield, Item itemYield, String difficulty, boolean stun){
+        enemyName = name;
+        enemyHealth = health;
+        this.damageHigh = damageHigh;
+        this.chanceToHit = chanceToHit;
+        this.chanceToCrit = chanceToCrit;
+        this.chanceToDodge = chanceToDodge;
+        this.expYield = expYield;
+        this.itemYield = itemYield;
+        this.difficulty = difficulty;
+        this.stun = stun;
+        setType(TileType.BOSS);
+    }
     /**
      * chooseStats is a method that determines what a difficulty is by changing
      * the enemies statistics.

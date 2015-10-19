@@ -31,6 +31,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
     boolean moveDown  =    false;
     boolean moveRight =    false;
     boolean moveLeft  =    false;
+    boolean canMove   =    true;
     
     /**
      * Creates new form GameBoardGUI
@@ -289,7 +290,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
 
     private void btnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpActionPerformed
         move(data.getBoard().reachableTiles());
-        if (moveUp == true){
+        if (moveUp == true && canMove == true){
             data.getBoard().changePosition(position[0], position[1]-1);
             checkCurrentTile();
             printGUIBoard();
@@ -299,7 +300,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
 
     private void btnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownActionPerformed
         move(data.getBoard().reachableTiles());
-        if (moveDown == true){
+        if (moveDown == true && canMove == true){
             data.getBoard().changePosition(position[0], position[1]+1);
             checkCurrentTile();
             printGUIBoard();
@@ -309,7 +310,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
 
     private void btnLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeftActionPerformed
         move(data.getBoard().reachableTiles());
-        if (moveLeft == true){
+        if (moveLeft == true && canMove == true){
             data.getBoard().changePosition(position[0]-1, position[1]);
             checkCurrentTile();
             printGUIBoard();
@@ -319,7 +320,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
 
     private void btnRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRightActionPerformed
         move(data.getBoard().reachableTiles());
-        if (moveRight == true){
+        if (moveRight == true && canMove == true){
             data.getBoard().changePosition(position[0]+1, position[1]);
             checkCurrentTile();
             printGUIBoard();
@@ -412,26 +413,29 @@ public class GameBoardGUI extends javax.swing.JFrame {
         
         // If the Tile is a challenge, execute the challenge
         if (tile.getType() == TileType.CHALLENGE){
+            canMove = false;
             poseChallenge(x, y);
         }
         
         // If the Tile is an enemy, execute the combat sequence
         else if(tile.getType() == TileType.ENEMY){
+            canMove = false;
             Enemy enemy = (Enemy) data.getBoard().getBoard()[x][y];
             combatStart(enemy, data.getPlayer());
-                      
+            
             // Inserts an empty Tile after combat is done
             data.getBoard().getBoard()[x][y] = new EmptyTile();
             
             Item itemRewarded = data.getPlayer().enemyReward();
             System.out.println("\nAt your feet a " + itemRewarded.getName() + " appears! You pick it up and put it in your Inventory.");
+            barExp.setValue(data.getPlayer().getExp());
         }
         
         // If the Tile is the final boss, execute combat sequence and end game afterwards
         else if(tile.getType() == TileType.BOSS){
-            Boss enemy = (Boss) data.getBoard().getBoard()[x][y];
-            Combat.combatStart(enemy, data.getPlayer());
-            finishGame();
+            Enemy barryBoss = (Boss) data.getBoard().getBoard()[x][y];
+            combatStart(barryBoss, data.getPlayer());
+
         }
     }
     
@@ -463,6 +467,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
         txtChallenge.setText("You have completed the game! Well done!");
         data.getPlayer().timerReward(startTime);
         saveHighscore();
+        this.dispose();
         //possible play again method.      
     }
     
@@ -491,6 +496,8 @@ public class GameBoardGUI extends javax.swing.JFrame {
                         data.getPlayer().challengeReward();
                         txtChallenge.setText("The wizard seems pleased with your answer and raises his arms over you before fading away.");
                         txtChallenge.setText(txtChallenge.getText() + "You suddenly feel rejuvenated.");
+                        barHealth.setValue(data.getPlayer().getHealth());
+                        barExp.setValue(data.getPlayer().getExp());
                     }
                     else {
                         txtChallenge.setText("The wizard shakes his head and dissapears with a *BANG*!");
@@ -498,6 +505,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
                     pnlChallenge.removeAll();
                     pnlChallenge.repaint();
                     pnlChallenge.revalidate();
+                    canMove = true;
                 }
             });
             pnlChallenge.add(aButton);
@@ -508,17 +516,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
         pnlChallenge.revalidate();
     }
     
-//        private void btnUpMouseClicked(java.awt.event.MouseEvent evt) {                                   
-//        // TODO add your handling code here:
-//    }   
-//        
-////        btnRight.addActionListener(new java.awt.event.ActionListener() {
-////            public void actionPerformed(java.awt.event.ActionEvent evt) {
-////                btnRightActionPerformed(evt);
-////            }
-////        });
-    
-    //GUI Combat changes by SED
+
     //GUI Combat changes by SED
        public void combatStart(Enemy enemy, Player player){
         
@@ -549,6 +547,15 @@ public class GameBoardGUI extends javax.swing.JFrame {
   
     ////////////////////////////////////////////////////////////////////////////////////////////////
     
+    public void updatePanel(){
+        pnlChallenge.repaint();
+        pnlChallenge.revalidate();
+    }
+    public void removePanel(){
+        pnlChallenge.removeAll();
+        updatePanel();
+    }
+    
     //CLASS ATTACK PHASES//
     
     //Warrior attack phase method   
@@ -558,9 +565,20 @@ public class GameBoardGUI extends javax.swing.JFrame {
             swordStrikeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     warriorCalcution(enemy, player, defensiveCount, dotCount);
-                    pnlChallenge.removeAll();
-                    pnlChallenge.repaint();
-                    pnlChallenge.revalidate();
+                    removePanel();
+                defenseUpdate(player, defensiveCount);
+                dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                    if(enemy.getEnemyName().contains("Martini")){
+                        finishGame();
+                    }
+                }
                 }
             });
             pnlChallenge.add(swordStrikeButton);
@@ -571,9 +589,20 @@ public class GameBoardGUI extends javax.swing.JFrame {
                     setDotCount(dotCount);
                     int damage = bleedCalc(enemy);
                     enemyHealthReduction(enemy, damage);
-                    pnlChallenge.removeAll();
-                    pnlChallenge.repaint();
-                    pnlChallenge.revalidate();
+                removePanel();
+                defenseUpdate(player, defensiveCount);
+                dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    if(enemy.getEnemyName().contains("Martini")){
+                        finishGame();
+                    }
+                    canMove = true;
+                }
                 }
             });
             pnlChallenge.add(bleedingStrikeButton);
@@ -583,24 +612,25 @@ public class GameBoardGUI extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) {
                     player.setDefensive(true);
                     setDefensiveCount(defensiveCount);
-                    pnlChallenge.removeAll();
-                    pnlChallenge.repaint();
-                    pnlChallenge.revalidate();
-                }
-            });
-            pnlChallenge.add(defensiveStanceButton);
-                                                          
+                    removePanel();
                 defenseUpdate(player, defensiveCount);
                 dotUpdate(player, dotCount);
-                
                 if(enemy.getEnemyHealth() > 0){
                     txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
                     enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                 }
                 else {
                     txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
-
+                    canMove = true;
+                    if(enemy.getEnemyName().contains("Martini")){
+                        finishGame();
+                    }
                 }
+                }
+            });
+            pnlChallenge.add(defensiveStanceButton);
+                                                          
+
 
     }
         
@@ -610,10 +640,22 @@ public class GameBoardGUI extends javax.swing.JFrame {
             final JButton piercingShotButton = new JButton("Piercing Shot");
             piercingShotButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    archerCalculation(enemy, player, defensiveCount, dotCount);
-                    pnlChallenge.removeAll();
-                    pnlChallenge.repaint();
-                    pnlChallenge.revalidate();
+                    archerCalculation(enemy, player, defensiveCount, dotCount); 
+                    removePanel();
+                defenseUpdate(player, defensiveCount);
+                dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(txtChallenge.getText() + "\n" + enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                    if(enemy.getEnemyName().contains("Martini")){
+                        finishGame();
+                    }
+                }
+
                 }
             });
             pnlChallenge.add(piercingShotButton);
@@ -624,9 +666,22 @@ public class GameBoardGUI extends javax.swing.JFrame {
                     setDotCount(dotCount);
                     int damage = poisonShotCalc(enemy, player);
                     enemyHealthReduction(enemy, damage);
-                    pnlChallenge.removeAll();
-                    pnlChallenge.repaint();
-                    pnlChallenge.revalidate();
+                    removePanel();
+                defenseUpdate(player, defensiveCount);
+                dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                    if(enemy.getEnemyName().contains("Martini")){
+                        finishGame();
+                    }
+                }
+
+
                 }
             });
             pnlChallenge.add(poisonShotButton);
@@ -636,21 +691,26 @@ public class GameBoardGUI extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) {
                     player.setDefensive(true);
                     setDefensiveCount(defensiveCount);
-                    pnlChallenge.removeAll();
-                    pnlChallenge.repaint();
-                    pnlChallenge.revalidate();
-                }
-            });
-            pnlChallenge.add(agileStanceButton);
-                
+                    removePanel();
+                defenseUpdate(player, defensiveCount);
+                dotUpdate(player, dotCount);
                 if(enemy.getEnemyHealth() > 0){
                     txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
                     enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                 }
                 else {
                     txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                    if(enemy.getEnemyName().contains("Martini")){
+                        finishGame();
+                    }
                 }
 
+
+                }
+            });
+            pnlChallenge.add(agileStanceButton);
+                
         
     }
      
@@ -661,9 +721,18 @@ public class GameBoardGUI extends javax.swing.JFrame {
             darkMissileButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     wizardCalculation(enemy, player, defensiveCount, dotCount);
-                    pnlChallenge.removeAll();
-                    pnlChallenge.repaint();
-                    pnlChallenge.revalidate();
+                    removePanel();
+                    defenseUpdate(player, defensiveCount);
+                    dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                }
+
                 }
             });
             pnlChallenge.add(darkMissileButton);
@@ -674,9 +743,18 @@ public class GameBoardGUI extends javax.swing.JFrame {
                     setDotCount(dotCount);
                     int damage = soulLeechCalc(enemy, player);
                     enemyHealthReduction(enemy, damage);
-                    pnlChallenge.removeAll();
-                    pnlChallenge.repaint();
-                    pnlChallenge.revalidate();
+                    removePanel();
+                    defenseUpdate(player, defensiveCount);
+                    dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                }
+
                 }
             });
             pnlChallenge.add(soulLeechButton);
@@ -686,24 +764,25 @@ public class GameBoardGUI extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) {
                     player.setDefensive(true);
                     setDefensiveCount(defensiveCount);
-                    pnlChallenge.removeAll();
-                    pnlChallenge.repaint();
-                    pnlChallenge.revalidate();
+                    removePanel();
+                    defenseUpdate(player, defensiveCount);
+                    dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                }
+
                 }
             });
             pnlChallenge.add(bloodShieldButton);
        
-            defenseUpdate(player, defensiveCount);
-            dotUpdate(player, dotCount);
-            
-            if(enemy.getEnemyHealth() > 0){
-                txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
-                enemyAttackPhase(enemy, player, defensiveCount, dotCount);
-            }
-            else {
-                txtChallenge.setText(enemy.getEnemyName() + " has been defeated");
 
-            }
+            
+
 
     }
     
@@ -725,10 +804,10 @@ public class GameBoardGUI extends javax.swing.JFrame {
 
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            txtChallenge.setText(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            txtChallenge.setText(txtChallenge.getText() + "\n" + enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
-            txtChallenge.setText("Your attack has missed the enemy.");
+            txtChallenge.setText(txtChallenge.getText() + "\nYour attack has missed the enemy.");
         }
         dotUpdate(player, dotCount);
         defenseUpdate(player, defensiveCount);
@@ -738,10 +817,10 @@ public class GameBoardGUI extends javax.swing.JFrame {
     public void archerCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            txtChallenge.setText(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            txtChallenge.setText(txtChallenge.getText() + "\n" + enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
-            txtChallenge.setText("Your attack has missed the enemy.");
+            txtChallenge.setText(txtChallenge.getText() + "\nYour attack has missed the enemy.");
         }  
         dotUpdate(player, dotCount);
         defenseUpdate(player, defensiveCount);
@@ -751,10 +830,10 @@ public class GameBoardGUI extends javax.swing.JFrame {
     public void wizardCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            txtChallenge.setText(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            txtChallenge.setText(txtChallenge.getText() + "\n" + enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
-            txtChallenge.setText("Your attack has missed the enemy.");
+            txtChallenge.setText(txtChallenge.getText() + "\nYour attack has missed the enemy.");
         }  
         dotUpdate(player, dotCount);
         defenseUpdate(player, defensiveCount);
@@ -818,7 +897,8 @@ public class GameBoardGUI extends javax.swing.JFrame {
             enemyDamageCalc(enemy, player);           
         }
         if(player.getHealth() > 0){
-            txtChallenge.setText("Your health is now " + player.getHealth());  
+//            txtChallenge.setText(txtChallenge.getText() + "\n" + "Your health is now " + player.getHealth());  
+            barHealth.setValue(player.getHealth());
             try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
@@ -1053,10 +1133,10 @@ public class GameBoardGUI extends javax.swing.JFrame {
     
     // Game over method when player dies
     public void quit(){
-        Scanner scan = new Scanner(System.in);
-        System.out.println("GAME OVER\nPress any key to exit: ");
-        scan.nextLine();
-        System.exit(0);
+
+        txtChallenge.setText("GAME OVER");
+
+        this.dispose();
     }
     
 
