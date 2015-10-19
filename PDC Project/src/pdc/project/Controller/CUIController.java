@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import pdc.project.Model.*;
 import java.util.Scanner;
+import pdc.project.View.GameBoardGUI;
 /**
  * The CUIController controls the game mechanics for the CUI version. 
  */
@@ -21,6 +22,7 @@ public class CUIController {
      */
     public void startGame(){
         //Creates the gameboard
+        int gameType = 0;
         data.setBoard(new Board());
         
         System.out.println("\n---------------------------" + 
@@ -32,14 +34,39 @@ public class CUIController {
         
         System.out.println("\nWelcome " + data.getPlayer().getName() + " to the best RPG ever!");
         System.out.println("Type 'help' to get help.\n");
+               
+
+        System.out.println("Please select which game type you would like to play: ");
+        System.out.println("1. GUI\n2. CUI");
+        boolean correctInput = false;
+        while(!correctInput){
+            try{
+                gameType = scan.nextInt();
+                if (gameType == 1 || gameType == 2){
+                    scan.nextLine();
+                } else {
+                    System.out.println("Please choose either 1 or 2.");
+                }
+                correctInput = true;
+            } catch(InputMismatchException e){
+                System.out.println("Please choose either 1 or 2.");
+                scan.next();
+            }
+        }
         
-        data.getBoard().printBoard();
+        if(gameType == 1){
+            GameBoardGUI GUI1 = new GameBoardGUI(data);
+            GUI1.show();       
+        }
+        else if(gameType == 2){
         
-        boolean gameIsRunning = true;
-        while(gameIsRunning){
-            move(data.getBoard().reachableTiles());
-            printCurrentStats();
             data.getBoard().printBoard();
+            boolean gameIsRunning = true;
+            while(gameIsRunning){
+                move(data.getBoard().reachableTiles());
+                printCurrentStats();
+                data.getBoard().printBoard();
+            }
         }
     }
     
@@ -318,7 +345,7 @@ public class CUIController {
     private static void poseChallenge(int x, int y){
         Challenge ch = (Challenge) data.getBoard().getBoard()[x][y];
         
-        System.out.println("\nA wizard appears before you in a flash of smoke and poses you the following riddle:");
+        System.out.println("A wizard appears before you in a flash of smoke and poses you the following riddle:");
         
         // Prints the riddle
         System.out.println(ch.getQuestion().getText());

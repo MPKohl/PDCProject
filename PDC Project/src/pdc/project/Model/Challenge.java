@@ -65,6 +65,10 @@ public class Challenge extends Tile {
     public CorrectAnswer getCorrectAnswer() {
         return correctAnswer;
     }
+    
+    public String getStringAnswer() {
+        return correctAnswer.toString();
+    }
 
     /**
      * @param correctAnswer the correctAnswer to set

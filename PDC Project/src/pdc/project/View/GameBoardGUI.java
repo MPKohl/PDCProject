@@ -5,21 +5,38 @@
  */
 package pdc.project.View;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.InputMismatchException;
+import java.util.Random;
+import java.util.Scanner;
 import javax.swing.*;
 import javax.imageio.*;
 import pdc.project.Model.*;
 import pdc.project.Controller.*;
+
 /**
  *
  * @author shanon
  */
 public class GameBoardGUI extends javax.swing.JFrame {
-    static DataHolderSingleton data;
+    public static DataHolder data;
+    int[] position;
+    int[] startTime;
+    boolean moveUp    =    false;
+    boolean moveDown  =    false;
+    boolean moveRight =    false;
+    boolean moveLeft  =    false;
+    boolean canMove   =    true;
+    
     /**
      * Creates new form GameBoardGUI
      */
-    public GameBoardGUI(DataHolderSingleton data) {
+    public GameBoardGUI(DataHolder data) {
         initComponents();
         this.data = data;
     }
@@ -75,12 +92,32 @@ public class GameBoardGUI extends javax.swing.JFrame {
         barHealth.setForeground(new java.awt.Color(255, 0, 0));
 
         btnRight.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonRight.jpg")); // NOI18N
+        btnRight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRightActionPerformed(evt);
+            }
+        });
 
         btnUp.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonUp.jpg")); // NOI18N
+        btnUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpActionPerformed(evt);
+            }
+        });
 
         btnLeft.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonLeft.jpg")); // NOI18N
+        btnLeft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLeftActionPerformed(evt);
+            }
+        });
 
         btnDown.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonDown.jpg")); // NOI18N
+        btnDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDownActionPerformed(evt);
+            }
+        });
 
         testPanel.setLayout(new java.awt.GridLayout(12, 5));
 
@@ -88,16 +125,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
         txtChallenge.setRows(5);
         jScrollPane1.setViewportView(txtChallenge);
 
-        javax.swing.GroupLayout pnlChallengeLayout = new javax.swing.GroupLayout(pnlChallenge);
-        pnlChallenge.setLayout(pnlChallengeLayout);
-        pnlChallengeLayout.setHorizontalGroup(
-            pnlChallengeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 210, Short.MAX_VALUE)
-        );
-        pnlChallengeLayout.setVerticalGroup(
-            pnlChallengeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
-        );
+        pnlChallenge.setLayout(new java.awt.GridLayout(3, 3));
 
         jMenu1.setText("Menu");
         jMenu1.add(jSeparator1);
@@ -150,6 +178,11 @@ public class GameBoardGUI extends javax.swing.JFrame {
         jMenu2.add(jMenuItem7);
 
         jMenuItem6.setText("Save Highscore");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem6);
 
         jMenuBar1.add(jMenu2);
@@ -181,9 +214,10 @@ public class GameBoardGUI extends javax.swing.JFrame {
                             .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(testPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlChallenge, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(94, 94, 94)
                                 .addComponent(btnLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,14 +225,9 @@ public class GameBoardGUI extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(btnDown, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(pnlChallenge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(jScrollPane1))))))
+                                        .addComponent(btnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -208,7 +237,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlChallenge, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pnlChallenge, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnUp, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -218,7 +247,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
                                 .addComponent(btnLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnDown, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(testPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -241,7 +270,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        ViewHighscores VH1 = new ViewHighscores();
+        ViewHighscores VH1 = new ViewHighscores(data);
         VH1.show();
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
@@ -267,6 +296,50 @@ public class GameBoardGUI extends javax.swing.JFrame {
         Thread.currentThread().interrupt();
     }
     }//GEN-LAST:event_formWindowOpened
+
+    private void btnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpActionPerformed
+        move(data.getBoard().reachableTiles());
+        if (moveUp == true && canMove == true){
+            data.getBoard().changePosition(position[0], position[1]-1);
+            checkCurrentTile();
+            printGUIBoard();
+            moveUp = false;
+        }
+    }//GEN-LAST:event_btnUpActionPerformed
+
+    private void btnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownActionPerformed
+        move(data.getBoard().reachableTiles());
+        if (moveDown == true && canMove == true){
+            data.getBoard().changePosition(position[0], position[1]+1);
+            checkCurrentTile();
+            printGUIBoard();
+            moveDown = false; //reset
+        }
+    }//GEN-LAST:event_btnDownActionPerformed
+
+    private void btnLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLeftActionPerformed
+        move(data.getBoard().reachableTiles());
+        if (moveLeft == true && canMove == true){
+            data.getBoard().changePosition(position[0]-1, position[1]);
+            checkCurrentTile();
+            printGUIBoard();
+            moveLeft = false; //reset
+        }
+    }//GEN-LAST:event_btnLeftActionPerformed
+
+    private void btnRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRightActionPerformed
+        move(data.getBoard().reachableTiles());
+        if (moveRight == true && canMove == true){
+            data.getBoard().changePosition(position[0]+1, position[1]);
+            checkCurrentTile();
+            printGUIBoard();
+            moveRight = false;  //resets move.
+        }
+    }//GEN-LAST:event_btnRightActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        data.getDbController().updateHighscores();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,41 +379,783 @@ public class GameBoardGUI extends javax.swing.JFrame {
         //element in the 2demensional array and adding the appropriate picture 
         //to
         public void printGUIBoard() {
+        testPanel.removeAll();
         for (int i = 0 ; i < data.getBoard().getBoard()[0].length; i++){
             for (int j = 0 ;j<data.getBoard().getBoard().length; j++){
                 if (data.getBoard().getPosition()[0] == j && data.getBoard().getPosition()[1] == i) {
-                    if (data.getPlayer().findClass().contains("Warrior")) {
-                        JLabel picWarrior = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonWarrior.jpg"));
+                    if (data.getPlayer().findClass() == PlayerClass.WARRIOR) {
+                        JLabel picWarrior = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonWarrior.jpg"));
                         testPanel.add(picWarrior);
                     }
-                    if (data.getPlayer().findClass().contains("Archer")) {
-                        JLabel picArcher = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonArcher.jpg"));
+                    if (data.getPlayer().findClass() == PlayerClass.ARCHER) {
+                        JLabel picArcher = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonArcher.jpg"));
                         testPanel.add(picArcher);
                     }
-                    if (data.getPlayer().findClass().contains("Wizard")) {
-                        JLabel picWizard = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonWizard.jpg"));
+                    if (data.getPlayer().findClass() == PlayerClass.WIZARD) {
+                        JLabel picWizard = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonWizard.jpg"));
                         testPanel.add(picWizard);
                     }
                 }
                 else if (data.getBoard().getBoard()[j][i].isVisited()) {
-                    JLabel picDirt = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonDirt.jpg"));
+                    JLabel picDirt = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonDirt.jpg"));
                     testPanel.add(picDirt); //Dirt
                 }
                 else if (data.getBoard().getBoard()[j][i].getType() == TileType.BLOCKED) {
-                    JLabel picLava = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonLava.jpg"));
+                    JLabel picLava = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonLava.jpg"));
                     testPanel.add(picLava);
                 }
                 else if (data.getBoard().getBoard()[j][i].getType() == TileType.CHALLENGE) {
-                    JLabel picFairy = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonFairy.jpg"));
+                    JLabel picFairy = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonFairy.jpg"));
                     testPanel.add(picFairy);//wizard tile
                 }
                 else {
-                    JLabel picGraass = new JLabel(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonGreenGrass.jpg"));
+                    JLabel picGraass = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonGreenGrass.jpg"));
                     testPanel.add(picGraass);//grass
                 }
             }
         }
+        testPanel.repaint();
+        testPanel.revalidate();
+    }
+        
+        
+    private void checkCurrentTile(){
+        int x = data.getBoard().getPosition()[0];
+        int y = data.getBoard().getPosition()[1];
+        Tile tile = data.getBoard().getBoard()[x][y];
+        
+        // If the Tile is a challenge, execute the challenge
+        if (tile.getType() == TileType.CHALLENGE){
+            canMove = false;
+            poseChallenge(x, y);
         }
+        
+        // If the Tile is an enemy, execute the combat sequence
+        else if(tile.getType() == TileType.ENEMY){
+            canMove = false;
+            Enemy enemy = (Enemy) data.getBoard().getBoard()[x][y];
+            combatStart(enemy, data.getPlayer());
+            
+            // Inserts an empty Tile after combat is done
+            data.getBoard().getBoard()[x][y] = new EmptyTile();
+            
+            Item itemRewarded = data.getPlayer().enemyReward();
+            System.out.println("\nAt your feet a " + itemRewarded.getName() + " appears! You pick it up and put it in your Inventory.");
+            barExp.setValue(data.getPlayer().getExp());
+        }
+        
+        // If the Tile is the final boss, execute combat sequence and end game afterwards
+        else if(tile.getType() == TileType.BOSS){
+            Enemy barryBoss = (Boss) data.getBoard().getBoard()[x][y];
+            combatStart(barryBoss, data.getPlayer());
+
+        }
+    }
+    
+    public void move(Tile[] reachableTiles){
+        position = data.getBoard().getPosition();
+        if(!(reachableTiles[0].getType() == TileType.BLOCKED)){
+            moveUp=true;
+        }
+        if(!(reachableTiles[1].getType() == TileType.BLOCKED)){
+            moveDown=true;
+        }
+        if(!(reachableTiles[2].getType() == TileType.BLOCKED)){  
+            moveRight=true;
+        }
+        if(!(reachableTiles[3].getType() == TileType.BLOCKED)){
+            moveLeft=true;
+        }
+    }
+            
+    private void saveHighscore(){
+        if (data.getDbController().updateHighscores()){
+            txtChallenge.setText("Highscore saved succesfully.");
+        } else {
+            txtChallenge.setText("ERROR: Highscore not saved.");
+        }
+    }
+    public void finishGame(){
+        data.getPlayer().bossReward();
+        txtChallenge.setText("You have completed the game! Well done!");
+        data.getPlayer().timerReward(startTime);
+        saveHighscore();
+        this.dispose();
+        //possible play again method.      
+    }
+    
+    private void poseChallenge(int x, int y){
+        pnlChallenge.removeAll();
+        final Challenge ch = (Challenge) data.getBoard().getBoard()[x][y];
+        
+        txtChallenge.setText("A wizard appears before you in a flash of smoke and poses you the following riddle:");
+        
+        // Prints the riddle
+        txtChallenge.setText(txtChallenge.getText() + "\n" + ch.getQuestion().getText());
+        
+        // Make a list of all possible answers and shuffle them
+        ArrayList<TextOutput> answers = new ArrayList<>();
+        answers.add(ch.getCorrectAnswer());
+        for (TextOutput t : ch.getWrongAnswers())
+            answers.add(t);
+        Collections.shuffle(answers);
+            
+        // Prints all the options with a number for each answer
+        for (TextOutput a : answers){
+            final JButton aButton = new JButton(a.getText());
+            aButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if(aButton.getText().contains(ch.getCorrectAnswer().toString())) {
+                        data.getPlayer().challengeReward();
+                        txtChallenge.setText("The wizard seems pleased with your answer and raises his arms over you before fading away.");
+                        txtChallenge.setText(txtChallenge.getText() + "You suddenly feel rejuvenated.");
+                        barHealth.setValue(data.getPlayer().getHealth());
+                        barExp.setValue(data.getPlayer().getExp());
+                    }
+                    else {
+                        txtChallenge.setText("The wizard shakes his head and dissapears with a *BANG*!");
+                    }
+                    pnlChallenge.removeAll();
+                    pnlChallenge.repaint();
+                    pnlChallenge.revalidate();
+                    canMove = true;
+                }
+            });
+            pnlChallenge.add(aButton);
+        }
+        //Empties the Tile so the Challenge can't be trigered again
+        data.getBoard().getBoard()[x][y] = new EmptyTile();
+        pnlChallenge.repaint();
+        pnlChallenge.revalidate();
+    }
+    
+
+    //GUI Combat changes by SED
+       public void combatStart(Enemy enemy, Player player){
+        
+
+        int defensiveCount = 0;
+        int dotCount = 0;
+
+        txtChallenge.setText("\n"+enemy.getEnemyName()+" approaches, prepare for battle: ");
+        txtChallenge.setText("\nEnemy: " + enemy.getEnemyName() + "\nEnemy health: " + enemy.getEnemyHealth() + "\n");
+        txtChallenge.setText("Player health: " + player.getHealth());
+
+        selectClassCombat(enemy, player, defensiveCount, dotCount);
+    }
+    
+    //Method to check class of player and choose appropriate attack phase
+    public void selectClassCombat(Enemy enemy, Player player, int defensiveCount, int dotCount){
+
+        if(data.getPlayer().findClass() == PlayerClass.WARRIOR){   
+            warriorAttackPhase(enemy, player, defensiveCount, dotCount);
+        }
+        else if(data.getPlayer().findClass() == PlayerClass.ARCHER){
+            archerAttackPhase(enemy, player, defensiveCount, dotCount);
+        }
+        else if(data.getPlayer().findClass() == PlayerClass.WIZARD){
+            wizardAttackPhase(enemy, player, defensiveCount, dotCount);
+        }
+    }
+  
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    public void updatePanel(){
+        pnlChallenge.repaint();
+        pnlChallenge.revalidate();
+    }
+    public void removePanel(){
+        pnlChallenge.removeAll();
+        updatePanel();
+    }
+    
+    //CLASS ATTACK PHASES//
+    
+    //Warrior attack phase method   
+    public void warriorAttackPhase(final Enemy enemy, final Player player, final int defensiveCount, final int dotCount){
+                                   
+            final JButton swordStrikeButton = new JButton("Sword Strike");
+            swordStrikeButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    warriorCalcution(enemy, player, defensiveCount, dotCount);
+                    removePanel();
+                defenseUpdate(player, defensiveCount);
+                dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                    if(enemy.getEnemyName().contains("Martini")){
+                        finishGame();
+                    }
+                }
+                }
+            });
+            pnlChallenge.add(swordStrikeButton);
+            
+            final JButton bleedingStrikeButton = new JButton("Bleeding Strike");
+            bleedingStrikeButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setDotCount(dotCount);
+                    int damage = bleedCalc(enemy);
+                    enemyHealthReduction(enemy, damage);
+                removePanel();
+                defenseUpdate(player, defensiveCount);
+                dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    if(enemy.getEnemyName().contains("Martini")){
+                        finishGame();
+                    }
+                    canMove = true;
+                }
+                }
+            });
+            pnlChallenge.add(bleedingStrikeButton);
+            
+            final JButton defensiveStanceButton = new JButton("Defensive Stance");
+            defensiveStanceButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    player.setDefensive(true);
+                    setDefensiveCount(defensiveCount);
+                    removePanel();
+                defenseUpdate(player, defensiveCount);
+                dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                    if(enemy.getEnemyName().contains("Martini")){
+                        finishGame();
+                    }
+                }
+                }
+            });
+            pnlChallenge.add(defensiveStanceButton);
+                                                          
+
+
+    }
+        
+    //Archer attack phase method   
+    public void archerAttackPhase(final Enemy enemy, final Player player, final int defensiveCount, final int dotCount){ 
+                                   
+            final JButton piercingShotButton = new JButton("Piercing Shot");
+            piercingShotButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    archerCalculation(enemy, player, defensiveCount, dotCount); 
+                    removePanel();
+                defenseUpdate(player, defensiveCount);
+                dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(txtChallenge.getText() + "\n" + enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                    if(enemy.getEnemyName().contains("Martini")){
+                        finishGame();
+                    }
+                }
+
+                }
+            });
+            pnlChallenge.add(piercingShotButton);
+            
+            final JButton poisonShotButton = new JButton("Poison Shot");
+            poisonShotButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setDotCount(dotCount);
+                    int damage = poisonShotCalc(enemy, player);
+                    enemyHealthReduction(enemy, damage);
+                    removePanel();
+                defenseUpdate(player, defensiveCount);
+                dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                    if(enemy.getEnemyName().contains("Martini")){
+                        finishGame();
+                    }
+                }
+
+
+                }
+            });
+            pnlChallenge.add(poisonShotButton);
+            
+            final JButton agileStanceButton = new JButton("Agile Stance");
+            agileStanceButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    player.setDefensive(true);
+                    setDefensiveCount(defensiveCount);
+                    removePanel();
+                defenseUpdate(player, defensiveCount);
+                dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                    if(enemy.getEnemyName().contains("Martini")){
+                        finishGame();
+                    }
+                }
+
+
+                }
+            });
+            pnlChallenge.add(agileStanceButton);
+                
+        
+    }
+     
+    //Wizard attack phase method    
+    public void wizardAttackPhase(final Enemy enemy, final Player player, final int defensiveCount, final int dotCount){
+                        
+            final JButton darkMissileButton = new JButton("Dark Missile");
+            darkMissileButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    wizardCalculation(enemy, player, defensiveCount, dotCount);
+                    removePanel();
+                    defenseUpdate(player, defensiveCount);
+                    dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                }
+
+                }
+            });
+            pnlChallenge.add(darkMissileButton);
+            
+            final JButton soulLeechButton = new JButton("Soul Leech");
+            soulLeechButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setDotCount(dotCount);
+                    int damage = soulLeechCalc(enemy, player);
+                    enemyHealthReduction(enemy, damage);
+                    removePanel();
+                    defenseUpdate(player, defensiveCount);
+                    dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                }
+
+                }
+            });
+            pnlChallenge.add(soulLeechButton);
+            
+            final JButton bloodShieldButton = new JButton("Blood Shield");
+            bloodShieldButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    player.setDefensive(true);
+                    setDefensiveCount(defensiveCount);
+                    removePanel();
+                    defenseUpdate(player, defensiveCount);
+                    dotUpdate(player, dotCount);
+                if(enemy.getEnemyHealth() > 0){
+                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                }
+                else {
+                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
+                    canMove = true;
+                }
+
+                }
+            });
+            pnlChallenge.add(bloodShieldButton);
+       
+
+            
+
+
+    }
+    
+    public void setDotCount(int dotCount){
+        dotCount = 3;
+    }
+    
+    public void setDefensiveCount(int defensiveCount){
+        defensiveCount = 2;
+    }
+      
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //CLASS ATTACK PHASE CALCULATIONS//
+    
+    //Warrior attack phase calculations
+    
+    public void warriorCalcution(Enemy enemy, Player player, int defensiveCount, int dotCount){
+
+        if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
+            playerDamageCalc(enemy, player);
+            txtChallenge.setText(txtChallenge.getText() + "\n" + enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+        }
+        else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
+            txtChallenge.setText(txtChallenge.getText() + "\nYour attack has missed the enemy.");
+        }
+        dotUpdate(player, dotCount);
+        defenseUpdate(player, defensiveCount);
+    }
+    
+    //Archer attack phase calculations
+    public void archerCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
+        if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
+            playerDamageCalc(enemy, player);
+            txtChallenge.setText(txtChallenge.getText() + "\n" + enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+        }
+        else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
+            txtChallenge.setText(txtChallenge.getText() + "\nYour attack has missed the enemy.");
+        }  
+        dotUpdate(player, dotCount);
+        defenseUpdate(player, defensiveCount);
+    }
+    
+    //Wizard attack phase calculations
+    public void wizardCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
+        if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
+            playerDamageCalc(enemy, player);
+            txtChallenge.setText(txtChallenge.getText() + "\n" + enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+        }
+        else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
+            txtChallenge.setText(txtChallenge.getText() + "\nYour attack has missed the enemy.");
+        }  
+        dotUpdate(player, dotCount);
+        defenseUpdate(player, defensiveCount);
+    }
+    
+
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //CALCULATION METHODS// 
+    
+    //Update dot and dot counter   
+    public void dotUpdate(Player player, int dotCount){
+        if(player.getDot()){
+            dotCount --;
+            if(dotCount == 0){
+                player.setDot(false);
+            }
+        }
+    }
+    
+    //Update defense and defense counter    
+    public void defenseUpdate(Player player, int defenseCount){
+        if(player.getDefensive()){
+            defenseCount --;
+            if(defenseCount == 0){
+                player.setDefensive(false);
+            }
+        }
+    }
+    
+    //Bleeding strike calculation    
+    public int bleedCalc(Enemy enemy){
+        int bleedDamage = (enemy.getEnemyHealth() / 100 * 10);
+        return bleedDamage;
+    }
+    
+    //Soul leech effects calculation   
+    public int soulLeechCalc(Enemy enemy, Player player){
+        int soulLeechDamage = player.getDamage() / 100 * 25;
+        return soulLeechDamage;
+    }
+    
+    //Poision shot effect calculation    
+    public int poisonShotCalc(Enemy enemy, Player player){
+        int poisonDamage = player.getDamage() / 100 * 10;
+        enemy.setChanceToDodge(enemy.getChanceToDodge() - (enemy.getChanceToDodge() / 100 * 5));
+        enemy.setChanceToHit(enemy.getChanceToHit() - (enemy.getChanceToHit() / 100 * 5));
+        return poisonDamage;
+    }
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //ENEMY ATTACK PHASE//
+       
+    //Enemy attack phase   
+    public void enemyAttackPhase(Enemy enemy, Player player, int defensiveCount, int dotCount){
+        //System.out.println("The enemy attacks...");
+
+        if((!playerDodgeCalc(player)) && (enemyHitCalc(enemy))){
+            enemyDamageCalc(enemy, player);           
+        }
+        if(player.getHealth() > 0){
+//            txtChallenge.setText(txtChallenge.getText() + "\n" + "Your health is now " + player.getHealth());  
+            barHealth.setValue(player.getHealth());
+            try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+            selectClassCombat(enemy, player, defensiveCount, dotCount);
+        }
+        else
+            quit();            
+    }
+    
+    /////////////////////////////////////////////////////////////////////////////////
+    
+    //DAMAGE CALCULATION METHODS//
+        
+    //Player damage calculation   
+    public void playerDamageCalc(Enemy enemy, Player player){
+        int totalDamage;
+        if(playerCritCalc(player)){
+            totalDamage = player.getDamage() + ((player.getDamage() / 100) * 25);
+        }
+        else    
+            totalDamage = player.getDamage();
+        
+        if((player.getDot()) && (player.findClass() == PlayerClass.ARCHER)){
+            totalDamage += poisonShotCalc(enemy, player);
+        }
+        else if(player.getDot() && (player.findClass() == PlayerClass.WIZARD)){
+            totalDamage += soulLeechCalc(enemy, player);
+        }
+        else if(player.getDot() && (player.findClass() == PlayerClass.WARRIOR)){
+            totalDamage += bleedCalc(enemy);
+        }
+        
+        HashMap<ItemSlot, Item> equipped = player.getEquipped();
+        double addedDmg = 0;
+        if(equipped != null){
+            for (Item item : equipped.values()) {
+                if (item.getItemType() == ItemType.BOW || item.getItemType() == ItemType.ONEHANDEDWEAPON || item.getItemType() == ItemType.TWOHANDEDWEAPON)
+                    addedDmg = item.getDmg() / 100;
+                    totalDamage += totalDamage * addedDmg;
+            }
+        }
+        enemyHealthReduction(enemy, totalDamage); 
+    }
+       
+    //Enemy damage calculation
+    public void enemyDamageCalc(Enemy enemy, Player player){
+        int totalDamage;
+        if(enemyCritCalc(enemy)){
+            totalDamage = enemy.getDamageHigh() + ((enemy.getDamageHigh() / 100) * 25);
+        }
+        else    
+            totalDamage = enemy.getDamageHigh();  
+        
+
+        HashMap<ItemSlot, Item> equipped = player.getEquipped();
+        double dmgReduction = 0;
+        if (equipped != null){
+            for (Item item : equipped.values()) {
+                if (item.getItemType() == ItemType.CLOTHARMOUR || item.getItemType() == ItemType.LEATHERARMOUR || item.getItemType() == ItemType.PLATEARMOUR || item.getItemType() == ItemType.SHIELD)
+                    dmgReduction = item.getDmgReduction() / 100;
+                    totalDamage -= totalDamage * dmgReduction;
+            }
+        }
+        
+        playerHealthReduction(player, totalDamage);
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////////////
+    
+    //HEALTH REDUCTION METHODS//
+    
+    //Enemy health reduction method
+    public Enemy enemyHealthReduction(Enemy enemy, int totalDamage){
+        enemy.setEnemyHealth(enemy.getEnemyHealth() - totalDamage);
+        return enemy;
+    }
+    
+    //Player health reduction method
+    public Player playerHealthReduction(Player player, int totalDamage){
+        player.setHealth(player.getHealth() - totalDamage);
+        return player;
+    }
+    
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    
+    // CALCULATIONS FOR PLAYER CHANCES //
+    
+    //Player dodge chance calculation 
+    public boolean playerDodgeCalc(Player player){
+        
+        if(player.findClass() == PlayerClass.WARRIOR){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R == 1;        
+        }
+        if(player.findClass() == PlayerClass.ARCHER){
+            if(player.getDefensive()){
+                Random r = new Random();
+                int Low = 1;
+                int High = 10;
+                int R = r.nextInt(High-Low) + Low;
+                
+                return R <= 5;
+            }
+            else{
+                Random r = new Random();
+                int Low = 1;
+                int High = 10;
+                int R = r.nextInt(High-Low) + Low;
+
+                return R <= 3; 
+            }
+        }
+        if(player.findClass() == PlayerClass.WIZARD){
+            Random r = new Random();
+            int Low = 1;
+            int High = 20;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R == 1; 
+        }       
+        return false;
+    }
+    
+    //Player critical hit chance calculation  
+    public boolean playerCritCalc(Player player){
+        
+        if(player.findClass() == PlayerClass.WARRIOR){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R == 1 || R == 2;        
+        }
+        if(player.findClass() == PlayerClass.ARCHER){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R == 1 || R == 2 || R == 3;            
+        }
+        if(player.findClass() == PlayerClass.WIZARD){
+            Random r = new Random();
+            int Low = 1;
+            int High = 20;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R == 1 || R == 2; 
+        }       
+        return false;       
+    }
+    
+    // Player hit chance calculation    
+    public boolean playerHitCalc(Player player){
+        if(player.findClass() == PlayerClass.WARRIOR){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R != 1;        
+        }
+        if(player.findClass() == PlayerClass.ARCHER){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R != 1 || R != 2;            
+        }
+        if(player.findClass() == PlayerClass.WIZARD){
+            Random r = new Random();
+            int Low = 1;
+            int High = 20;
+            int R = r.nextInt(High-Low) + Low;
+        
+            return R != 1; 
+        }       
+        return false;         
+    } 
+    
+    //CALCULATIONS FOR ENEMY CHANCES//
+    
+    //Enemy dodge chance calculation    
+    public boolean enemyDodgeCalc(Enemy enemy){
+        if(enemy.getStun() == false){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+
+            return R == 1;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    //Enemy critical hit chance calculation   
+    public boolean enemyCritCalc(Enemy enemy){
+        Random r = new Random();
+        int Low = 1;
+        int High = 10;
+        int R = r.nextInt(High-Low) + Low;
+        
+        return R == 1;        
+    }
+    
+    // Enemy hit chance calculation
+    public boolean enemyHitCalc(Enemy enemy){
+        if(enemy.getStun() == false){
+            Random r = new Random();
+            int Low = 1;
+            int High = 10;
+            int R = r.nextInt(High-Low) + Low;
+
+            return R != 1 || R != 2 || R != 3;  
+        }
+        else{
+            return false;
+        }
+    }  
+    
+    /////////////////////////////////////////////////////////////////////////////////////
+    
+    // Game over method when player dies
+    public void quit(){
+
+        txtChallenge.setText("GAME OVER");
+
+        this.dispose();
+    }
+    
+
+    
+
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar barExp;
     private javax.swing.JProgressBar barHealth;

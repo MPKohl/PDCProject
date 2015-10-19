@@ -104,7 +104,7 @@ public class Combat {
     
         boolean correctInput = false;
         while (!correctInput){
-            System.out.println("1. Sword strike\n2: Bleeding strike\n3: Defensive stance");
+            System.out.println("1. Piercing Shot\n2: Poison Shot\n3: Agile stance");
             try{               
                 int command = scan.nextInt();
                 scan.nextLine();
@@ -229,6 +229,8 @@ public class Combat {
         dotUpdate(player, dotCount);
         defenseUpdate(player, defensiveCount);
     }
+    
+
     
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     

@@ -9,7 +9,6 @@ import java.util.Random;
 public class Enemy extends Tile{
     private String enemyName;
     private int enemyHealth;
-    //private int damageLow;
     private int damageHigh;
     private int chanceToHit;
     private int chanceToCrit;
@@ -23,15 +22,33 @@ public class Enemy extends Tile{
     public Enemy(int xLoc, int yLoc, boolean stun){
         setType(TileType.ENEMY);
         randomizeName();
-        chooseDifficulty(xLoc,yLoc,12);
+        chooseDifficulty(yLoc,12);
         chooseStats(difficulty);
         this.stun = false;
     }
     
+    public Enemy(String name, int health, int damageHigh, int chanceToHit, int chanceToCrit, int chanceToDodge, int expYield, Item itemYield, String difficulty, boolean stun){
+        enemyName = name;
+        enemyHealth = health;
+        this.damageHigh = damageHigh;
+        this.chanceToHit = chanceToHit;
+        this.chanceToCrit = chanceToCrit;
+        this.chanceToDodge = chanceToDodge;
+        this.expYield = expYield;
+        this.itemYield = itemYield;
+        this.difficulty = difficulty;
+        this.stun = stun;
+        setType(TileType.BOSS);
+    }
+    /**
+     * chooseStats is a method that determines what a difficulty is by changing
+     * the enemies statistics.
+     * @param difficulty a string containing either easy, medium or hard taken
+     * by the method of chooseDifficulty()
+     */
     public void chooseStats(String difficulty) {
         Random random = new Random();
         if (difficulty.equals("easy")) {
-            //damageLow = random.nextInt(5)+1;
             damageHigh = random.nextInt(15)+1;
             chanceToHit = 70;
             chanceToDodge = 10;
@@ -40,7 +57,6 @@ public class Enemy extends Tile{
             enemyHealth = 100;
         }
         if (difficulty.equals("medium")) {
-            //damageLow = random.nextInt(10)+1;
             damageHigh = random.nextInt(20)+1;
             chanceToHit = 70;
             chanceToDodge = 10;
@@ -49,7 +65,6 @@ public class Enemy extends Tile{
             enemyHealth = 100;
         }
         if (difficulty.equals("hard")) {
-            //damageLow = random.nextInt(15)+1;
             damageHigh = random.nextInt(25)+1;
             chanceToHit = 70;
             chanceToDodge = 10;
@@ -58,13 +73,17 @@ public class Enemy extends Tile{
             enemyHealth = 100;
         }
     }
-    
-    public void chooseDifficulty(int xLoc, int yLoc, int gameBoardSize) {
-        int divideResult = 0;
-        divideResult = (int)gameBoardSize/3;
-        int easy = 12 - divideResult; //==8
-        int medium = 12 - (divideResult*2); //==4
-        int hard = 12 - (divideResult*3); //==0
+    /**
+     * the chooseDifficulty method splits the play grid into three
+     * it then determines the difficulty of the enemy
+     * @param yLoc the y location of the player
+     * @param gameBoardSize the size of the game board
+     */
+    public void chooseDifficulty(int yLoc, int gameBoardSize) {
+        int divideResult = (int)gameBoardSize/3;
+        int easy = gameBoardSize - divideResult; //==8
+        int medium = gameBoardSize - (divideResult*2); //== 4
+        int hard = gameBoardSize - (divideResult*3 - 1); //== 1
         if (yLoc >= easy) {
             setDifficulty("easy"); //can fight 2 monsters with no heal
         }
@@ -75,19 +94,15 @@ public class Enemy extends Tile{
             setDifficulty("hard"); //can fight no more than 1 monster with no heal.
         }
     }
-    public void randEasy() {
-        
-    }
-    public void randMedium() {
-        
-    }
-    public void randHard() {
-        
-    }
-    
+    /**
+     * the randomizeName method randomizes the name of an enemy
+     * by taking a random string from an array of prefixes
+     * and then taking a random string form an array of suffixes
+     * 
+     */
     public void randomizeName(){
         Random random = new Random();
-                
+        
         String[] prefixes = new String[8];
         String[] suffixes = new String[8];
         
@@ -145,20 +160,6 @@ public class Enemy extends Tile{
     public void setEnemyHealth(int enemyHealth) {
         this.enemyHealth = enemyHealth;
     }
-
-    /**
-     * @return the damageLow
-     */
-//    public int getDamageLow() {
-//        return damageLow;
-//    }
-
-    /**
-     * @param damageLow the damageLow to set
-     */
-//    public void setDamageLow(int damageLow) {
-//        this.damageLow = damageLow;
-//    }
 
     /**
      * @return the damageHigh
