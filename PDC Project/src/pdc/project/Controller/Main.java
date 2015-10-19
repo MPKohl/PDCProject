@@ -37,7 +37,7 @@ public class Main {
         // Initiates the database
         data.getDbController().openConnection();
         data.getDbController().createTable();
-//        
+
         // Creates the board and starts the CUI version of the game
         CUIController cui = new CUIController();
         cui.startGame();
