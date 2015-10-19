@@ -42,8 +42,8 @@ public class Main {
         CUIController cui = new CUIController();
         cui.startGame();
                         
-        GameBoardGUI GUI1 = new GameBoardGUI();
-        GUI1.show();
+        //GameBoardGUI GUI1 = new GameBoardGUI();
+        //GUI1.show();
         
         data.getDbController().closeConnection();
     }      
