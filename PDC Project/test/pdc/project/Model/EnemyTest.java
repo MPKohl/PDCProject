@@ -76,7 +76,7 @@ public class EnemyTest {
         instance.chooseStats(instance.getDifficulty());
         Assert.assertTrue(instance.getDamageHigh() > 1 && instance.getDamageHigh() < 21);
         
-        instance.chooseDifficulty(8, gameBoardSize); // easy
+        instance.chooseDifficulty(9, gameBoardSize); // easy
         instance.chooseStats(instance.getDifficulty());
         Assert.assertTrue(instance.getDamageHigh() > 1 && instance.getDamageHigh() < 16);
     }

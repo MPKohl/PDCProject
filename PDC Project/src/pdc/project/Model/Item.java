@@ -157,11 +157,10 @@ public class Item {
             case TWOHANDEDWEAPON: prefix = randomTwoHandedWeaponPrefix(); break;
             case SHIELD: prefix = randomShieldPrefix(); break;
             case BOW: prefix = randomBowPrefix(); break;
-            default: prefix = "UNKOWN ITEM"; break;
+            default: prefix = "UNKNOWN ITEM"; break;
         }
         
         suffix = suffixes[random(8)];
-        
         name = prefix + " " + suffix;
     }
 
