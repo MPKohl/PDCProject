@@ -1,8 +1,7 @@
 package pdc.project.Model;
 
 /**
- *
- * @author MPKohl
+ * The game board.
  */
 public class Board {
     //Double sided array of tiles

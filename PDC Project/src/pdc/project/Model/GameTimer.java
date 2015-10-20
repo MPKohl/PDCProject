@@ -1,5 +1,5 @@
 package pdc.project.Model;
-import java.util.Timer;
+
 /**
  * Timer class for point calculation and challenge limitation.
  */

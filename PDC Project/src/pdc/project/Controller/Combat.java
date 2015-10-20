@@ -1,7 +1,5 @@
 package pdc.project.Controller;
 
-
-
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Random;
