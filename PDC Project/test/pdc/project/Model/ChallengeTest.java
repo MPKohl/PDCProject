@@ -1,54 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdc.project.Model;
 
-import java.util.ArrayList;
 import junit.framework.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
- *
- * @author Brendon
+ * Tests for Challenge class.
  */
 public class ChallengeTest {
     
     public ChallengeTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
     /**
      * Test of getChallenge method, of class Challenge.
      */
     @Test
     public void testGetChallenge() {
-        System.out.println("getChallenge");
-        ChallengeFactory factory = new ChallengeFactory();
-        Challenge instance = factory.getRandomChallenge();
-        TextOutput[] result = instance.getChallenge();
-        Assert.assertNotNull(result);
-
+        Question question = new Question("Question");
+        CorrectAnswer correct = new CorrectAnswer("Correct");
+        WrongAnswer wrong = new WrongAnswer("Wrong");
+        WrongAnswer[] wrongs = {wrong};
+        Challenge challenge = new Challenge(question, correct, wrongs);
+        
+        TextOutput[] array = challenge.getChallenge();
+        Assert.assertEquals("Question should be at index 0.", array[0], question);
+        Assert.assertEquals("Correct answer should be at index 1.", array[1], correct);
+        Assert.assertEquals("Wrong answer should be at index 2.", array[2], wrong);
     }
 }

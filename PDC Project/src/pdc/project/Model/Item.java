@@ -26,11 +26,11 @@ public class Item {
                 setItemSlot(ItemSlot.CHEST);
                 break;
             case LEATHERARMOUR:
-                setDmgReduction(random(10) + 10);
+                setDmgReduction(random(10) + 11);
                 setItemSlot(ItemSlot.CHEST);
                 break;
             case PLATEARMOUR:
-                setDmgReduction(random(10) + 20);
+                setDmgReduction(random(10) + 21);
                 setItemSlot(ItemSlot.CHEST);
                 break;
             case ONEHANDEDWEAPON:

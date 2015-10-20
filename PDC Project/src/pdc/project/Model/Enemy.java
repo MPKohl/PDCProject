@@ -13,8 +13,6 @@ public class Enemy extends Tile{
     private int chanceToHit;
     private int chanceToCrit;
     private int chanceToDodge;
-    private int expYield;
-    private Item itemYield;
     private String difficulty = "";
     private boolean stun;
     
@@ -27,15 +25,13 @@ public class Enemy extends Tile{
         this.stun = false;
     }
     
-    public Enemy(String name, int health, int damageHigh, int chanceToHit, int chanceToCrit, int chanceToDodge, int expYield, Item itemYield, String difficulty, boolean stun){
+    public Enemy(String name, int health, int damageHigh, int chanceToHit, int chanceToCrit, int chanceToDodge, String difficulty, boolean stun){
         enemyName = name;
         enemyHealth = health;
         this.damageHigh = damageHigh;
         this.chanceToHit = chanceToHit;
         this.chanceToCrit = chanceToCrit;
         this.chanceToDodge = chanceToDodge;
-        this.expYield = expYield;
-        this.itemYield = itemYield;
         this.difficulty = difficulty;
         this.stun = stun;
         setType(TileType.BOSS);
@@ -53,7 +49,6 @@ public class Enemy extends Tile{
             chanceToHit = 70;
             chanceToDodge = 10;
             chanceToCrit = 10;
-            expYield = 35;
             enemyHealth = 100;
         }
         if (difficulty.equals("medium")) {
@@ -61,7 +56,6 @@ public class Enemy extends Tile{
             chanceToHit = 70;
             chanceToDodge = 10;
             chanceToCrit = 10;
-            expYield = 35;
             enemyHealth = 100;
         }
         if (difficulty.equals("hard")) {
@@ -69,7 +63,6 @@ public class Enemy extends Tile{
             chanceToHit = 70;
             chanceToDodge = 10;
             chanceToCrit = 10;
-            expYield = 35;
             enemyHealth = 100;
         }
     }
@@ -83,14 +76,13 @@ public class Enemy extends Tile{
         int divideResult = (int)gameBoardSize/3;
         int easy = gameBoardSize - divideResult; //==8
         int medium = gameBoardSize - (divideResult*2); //== 4
-        int hard = gameBoardSize - (divideResult*3 - 1); //== 1
         if (yLoc >= easy) {
             setDifficulty("easy"); //can fight 2 monsters with no heal
         }
-        if (yLoc >= medium) {
+        else if (yLoc >= medium) {
             setDifficulty("medium"); //could need to heal, could not need
         }
-        if (yLoc >= hard) {
+        else {
             setDifficulty("hard"); //can fight no more than 1 monster with no heal.
         }
     }
@@ -217,36 +209,10 @@ public class Enemy extends Tile{
         this.chanceToDodge = chanceToDodge;
     }
 
-    /**
-     * @return the expYield
-     */
-    public int getExpYield() {
-        return expYield;
-    }
-
-    /**
-     * @param expYield the expYeild to set
-     */
-    public void setExpYield(int expYield) {
-        this.expYield = expYield;
-    }
-
-    /**
-     * @return the itemYield
-     */
-    public Item getItemYield() {
-        return itemYield;
-    }
-
-    /**
-     * @param itemYield the itemYield to set
-     */
-    public void setItemYield(Item itemYield) {
-        this.itemYield = itemYield;
-    }
     public void setDifficulty(String difficulty) {
         this.difficulty = difficulty;
     }
+    
     public String getDifficulty() {
         return difficulty;
     }

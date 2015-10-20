@@ -1,20 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdc.project.Model;
 
 import junit.framework.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- *
- * @author Brendon
+ * Tests the Enemy class.
  */
 public class EnemyTest {
     Enemy instance;
@@ -22,21 +13,9 @@ public class EnemyTest {
     public EnemyTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     public void setUp() {
         instance = new Enemy();
-    }
-    
-    @After
-    public void tearDown() {
     }
 
     /**
@@ -46,18 +25,17 @@ public class EnemyTest {
     public void testChooseStats() {
         System.out.println("chooseStats");
         instance.chooseStats("easy");
-        Assert.assertTrue(instance.getDamageHigh() > 1 && instance.getDamageHigh() < 16);
-        Assert.assertTrue(instance.getChanceToHit() == 70);
-        Assert.assertTrue(instance.getChanceToDodge() == 10);
-        Assert.assertTrue(instance.getChanceToCrit() == 10);
-        Assert.assertTrue(instance.getExpYield() == 35);
-        Assert.assertTrue(instance.getEnemyHealth() == 100);
+        Assert.assertTrue("Damage not in concordance with an easy Enemy.", instance.getDamageHigh() >= 1 && instance.getDamageHigh() <= 15);
+        Assert.assertTrue("Chance to hit is not 70%.", instance.getChanceToHit() == 70);
+        Assert.assertTrue("Chance to dodge is not 10%.", instance.getChanceToDodge() == 10);
+        Assert.assertTrue("Chance to crit is not 10%.", instance.getChanceToCrit() == 10);
+        Assert.assertTrue("Health is not 100.", instance.getEnemyHealth() == 100);
         
         instance.chooseStats("medium");
-        Assert.assertTrue(instance.getDamageHigh() > 1 && instance.getDamageHigh() < 21);
+        Assert.assertTrue("Damage not in concordance with a medium Enemy.", instance.getDamageHigh() >= 1 && instance.getDamageHigh() <= 20);
         
         instance.chooseStats("hard");
-        Assert.assertTrue(instance.getDamageHigh() > 1 && instance.getDamageHigh() < 26);
+        Assert.assertTrue("Damage not in concordance with a hard Enemy.", instance.getDamageHigh() >= 1 && instance.getDamageHigh() <= 25);
     }
 
     /**
@@ -70,15 +48,15 @@ public class EnemyTest {
         
         instance.chooseDifficulty(1, gameBoardSize); // hard
         instance.chooseStats(instance.getDifficulty());
-        Assert.assertTrue(instance.getDamageHigh() > 1 && instance.getDamageHigh() < 26);
+        Assert.assertTrue("Damage not in concordance with a hard Enemy.", instance.getDamageHigh() >= 1 && instance.getDamageHigh() <= 25);
        
         instance.chooseDifficulty(4, gameBoardSize); // medium
         instance.chooseStats(instance.getDifficulty());
-        Assert.assertTrue(instance.getDamageHigh() > 1 && instance.getDamageHigh() < 21);
+        Assert.assertTrue("Damage not in concordance with a medium Enemy.", instance.getDamageHigh() >= 1 && instance.getDamageHigh() <= 20);
         
         instance.chooseDifficulty(9, gameBoardSize); // easy
         instance.chooseStats(instance.getDifficulty());
-        Assert.assertTrue(instance.getDamageHigh() > 1 && instance.getDamageHigh() < 16);
+        Assert.assertTrue("Damage not in concordance with an easy Enemy.", instance.getDamageHigh() >= 1 && instance.getDamageHigh() <= 15);
     }
 
     /**
@@ -88,7 +66,7 @@ public class EnemyTest {
     public void testRandomizeName() {
         System.out.println("randomizeName");
         instance.randomizeName();
-        Assert.assertNotNull(instance.getEnemyName());
+        Assert.assertNotNull("Name not instantiated.", instance.getEnemyName());
     }
 
 }

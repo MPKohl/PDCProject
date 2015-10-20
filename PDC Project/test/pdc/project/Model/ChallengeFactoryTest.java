@@ -1,42 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdc.project.Model;
 
-import java.util.ArrayList;
 import junit.framework.Assert;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
- *
- * @author Brendon
+ * 
  */
 public class ChallengeFactoryTest {
     
     public ChallengeFactoryTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
     }
 
     /**
@@ -44,10 +16,17 @@ public class ChallengeFactoryTest {
      */
     @Test
     public void testGetRandomChallenge() {
-        System.out.println("getRandomChallenge");
         ChallengeFactory instance = new ChallengeFactory();
+        
+        Assert.assertEquals("Start size of ArrayList of unused challenges not 15.", 15, instance.getNewChallenges().size());
+        Assert.assertEquals("Start size of ArrayList of used challenges not 0.", 0, instance.getDoneChallenges().size());
+        
         Challenge result = instance.getRandomChallenge();
-        Assert.assertTrue(instance.getDoneChallenges().contains(result));
+        
+        Assert.assertEquals("Size of ArrayList of unused challenges after getting challenge not 14.", 14, instance.getNewChallenges().size());
+        Assert.assertEquals("Size of ArrayList of used challenges after getting challenge not 1.", 1, instance.getDoneChallenges().size());
+        Assert.assertTrue("Used challenge not moved to ArrayList of used challenges.", instance.getDoneChallenges().contains(result));
+        Assert.assertFalse("Used challenge not moved out of ArrayList of unused challenges.", instance.getNewChallenges().contains(result));
     }
 
     
