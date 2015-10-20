@@ -177,7 +177,7 @@ public class ChallengeFactory {
         
         newChallenges.add(challenge);
         
-        question = new Question("A spirited jig it dances bright, banishing all but darkest night.4"
+        question = new Question("A spirited jig it dances bright, banishing all but darkest night."
                 + " Give it food and it will live, give it water and it will die.");
         correctAnswer = new CorrectAnswer("Fire.");
         wrongAnswers = new WrongAnswer[7];
