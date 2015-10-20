@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
+import pdc.project.Model.DataHolder;
 import pdc.project.Model.Enemy;
 import pdc.project.Model.Item;
 import pdc.project.Model.ItemSlot;
@@ -525,6 +526,7 @@ public class Combat {
     // Game over method when player dies
     public static void quit(){
         Scanner scan = new Scanner(System.in);
+        DataHolder.getInstance().getDbController().updateHighscores();
         System.out.println("GAME OVER\nPress any key to exit: ");
         scan.nextLine();
         System.exit(0);
