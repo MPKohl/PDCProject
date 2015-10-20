@@ -25,7 +25,6 @@ public class DatabaseController {
         try{
             //Open a connection
             conn = DriverManager.getConnection(url, username, password); //Database credentials
-
         } catch(SQLException e){
             //Handle errors
             Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
@@ -62,6 +61,8 @@ public class DatabaseController {
             } else {
                 Logger.getLogger(DatabaseController.class.getName()).log(Level.SEVERE, null, e);
             }
+        } finally {
+            
         }
     }
     

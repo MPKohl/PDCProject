@@ -1,42 +1,33 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pdc.project.Model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.junit.After;
-import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author MPKohl
+ * Tests Warrior, Archer and Wizard. 
+ * These are all the subclasses of the abstract class Player.
  */
 public class PlayerTest {
+    
+    Warrior warrior;
+    Archer archer;
+    Wizard wizard;
     
     public PlayerTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+    /**
+     * Instantiates a new Warrior, Archer and Wizard before each test.
+     */
     @Before
     public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+        warrior = new Warrior(30, "test", 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
+        archer = new Archer(20, "test", 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 80.0, 10.0, 30.0, false, false);
+        wizard = new Wizard(30, "test", 100, 0, new ArrayList<Item>(), 0.0, new HashMap<ItemSlot, Item>(), 90.0, 20.0, 5.0, false, false);
     }
 
     /**
@@ -44,13 +35,19 @@ public class PlayerTest {
      */
     @Test
     public void testFindClass() {
-        System.out.println("findClass");
-        Player instance = new PlayerImpl();
-        PlayerClass expResult = null;
-        PlayerClass result = instance.findClass();
+        PlayerClass expResult = PlayerClass.WARRIOR;
+        PlayerClass result = warrior.findClass();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        
+        expResult = PlayerClass.ARCHER;
+        result = archer.findClass();
+        assertEquals(expResult, result);
+        
+        
+        expResult = PlayerClass.WIZARD;
+        result = wizard.findClass();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -58,13 +55,67 @@ public class PlayerTest {
      */
     @Test
     public void testEquipItem() {
-        System.out.println("equipItem");
-        int invSlot = 0;
-        boolean gameIsCUIVersion = false;
-        Player instance = new PlayerImpl();
-        instance.equipItem(invSlot, gameIsCUIVersion);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //Tests for Wizard
+        wizard.getInventory().add(new Item(ItemType.CLOTHARMOUR));
+        wizard.getInventory().add(new Item(ItemType.LEATHERARMOUR));
+        
+        //Attempt to equip the cloth armour. Should be possible.
+        wizard.equipItem(1, true);
+        
+        Assert.assertTrue("Equipped armour is not a CLOTHARMOUR.", wizard.getEquipped().get(ItemSlot.CHEST).getItemType() == ItemType.CLOTHARMOUR);
+        
+        //Attempt to equip the leather armour. Should not be possible.
+        wizard.equipItem(1, true);
+        
+        Assert.assertFalse("The LEATHERARMOUR was equipped.", wizard.getEquipped().get(ItemSlot.CHEST).getItemType() == ItemType.LEATHERARMOUR);
+        
+        
+        //Tests for Archer
+        archer.getInventory().add(new Item(ItemType.LEATHERARMOUR));
+        archer.getInventory().add(new Item(ItemType.BOW));
+        archer.getInventory().add(new Item(ItemType.PLATEARMOUR));
+        archer.getInventory().add(new Item(ItemType.CLOTHARMOUR));
+        
+        //Attempt to equip the leather armour and bow. Should be possible.
+        archer.equipItem(1, true);
+        archer.equipItem(1, true);
+        
+        Assert.assertTrue("Equipped armour is not a LEATHERARMOUR.", archer.getEquipped().get(ItemSlot.CHEST).getItemType() == ItemType.LEATHERARMOUR);
+        Assert.assertTrue("Equipped weapon is not a BOW.", archer.getEquipped().get(ItemSlot.MAINHAND).getItemType() == ItemType.BOW);
+               
+        //Attempt to equip the plate armour. Should not be possible.
+        archer.equipItem(1, true);
+        
+        Assert.assertFalse("The PLATEARMOUR was equipped.", archer.getEquipped().get(ItemSlot.CHEST).getItemType() == ItemType.PLATEARMOUR);
+        
+        //Attempt to equip the cloth armour. Should replace leather armour in equipment. Leather armour should be moved to inventory.
+        archer.equipItem(2, true);
+        
+        Assert.assertTrue("Equipped armour is not a CLOTHARMOUR.", archer.getEquipped().get(ItemSlot.CHEST).getItemType() == ItemType.CLOTHARMOUR);
+        Assert.assertTrue("Leather armour not moved to inventory.", archer.getInventory().get(1).getItemType() == ItemType.LEATHERARMOUR);
+        
+        
+        //Tests for Warrior
+        warrior.getInventory().add(new Item(ItemType.ONEHANDEDWEAPON));
+        warrior.getInventory().add(new Item(ItemType.SHIELD));
+        warrior.getInventory().add(new Item(ItemType.PLATEARMOUR));
+        warrior.getInventory().add(new Item(ItemType.TWOHANDEDWEAPON));
+        
+        //Attempt to equip the one handed weapon, sheild and plate armour. Should be possible.
+        warrior.equipItem(1, true);
+        warrior.equipItem(1, true);
+        warrior.equipItem(1, true);
+        
+        Assert.assertTrue("Equipped weapon not a ONEHANDEDWEAPON.", warrior.getEquipped().get(ItemSlot.MAINHAND).getItemType() == ItemType.ONEHANDEDWEAPON);
+        Assert.assertTrue("No SHIELD equipped.", warrior.getEquipped().get(ItemSlot.OFFHAND).getItemType() == ItemType.SHIELD);
+        Assert.assertTrue("Equipped armour not a PLATEARMOUR.", warrior.getEquipped().get(ItemSlot.CHEST).getItemType() == ItemType.PLATEARMOUR);
+        
+        //Attempt to equip the two handed weapon. Should replace shield and one handed weapon in equipment. Those two items should be moved to inventory.
+        warrior.equipItem(1, true);
+        
+        Assert.assertTrue("Equipped weapon not a TWOHANDEDWEAPON.", warrior.getEquipped().get(ItemSlot.MAINHAND).getItemType() == ItemType.TWOHANDEDWEAPON);
+        Assert.assertTrue("SHIELD not moved to inventory.", warrior.getInventory().get(0).getItemType() == ItemType.SHIELD);
+        Assert.assertTrue("ONEHANDEDWEAPON not moved to inventory.", warrior.getInventory().get(1).getItemType() == ItemType.ONEHANDEDWEAPON);
     }
 
     /**
@@ -72,11 +123,21 @@ public class PlayerTest {
      */
     @Test
     public void testIsLvlUp() {
-        System.out.println("isLvlUp");
-        Player instance = new PlayerImpl();
-        instance.isLvlUp();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        warrior.isLvlUp();
+        
+        Assert.assertEquals("Player is not level 1.", 1, warrior.getLvl());
+        
+        warrior.setExp(100);
+        
+        warrior.isLvlUp();
+        
+        Assert.assertEquals("Player is not level 2.", 2, warrior.getLvl());
+        
+        warrior.setExp(99);
+        
+        warrior.isLvlUp();
+        
+        Assert.assertEquals("Player is not level 2.", 2, warrior.getLvl());
     }
 
     /**
@@ -84,12 +145,25 @@ public class PlayerTest {
      */
     @Test
     public void testGiveExp() {
-        System.out.println("giveExp");
-        int exp = 0;
-        Player instance = new PlayerImpl();
-        instance.giveExp(exp);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        warrior.giveExp(99);
+        
+        Assert.assertEquals("Player is not level 1.", 1, warrior.getLvl());
+        Assert.assertEquals("Player does not have 99 exp.", 99, warrior.getExp());
+        
+        warrior.giveExp(1);
+        
+        Assert.assertEquals("Player is not level 2.", 2, warrior.getLvl());
+        Assert.assertEquals("Player does not have 0 exp after leveling up.", 0, warrior.getExp());
+        
+        warrior.giveExp(100);
+        
+        Assert.assertEquals("Player is not level 3.", 3, warrior.getLvl());
+        Assert.assertEquals("Player does not have 0 exp after leveling up.", 0, warrior.getExp());
+        
+        warrior.giveExp(150);
+        
+        Assert.assertEquals("Player is not level 4.", 4, warrior.getLvl());
+        Assert.assertEquals("Player does not have 50 exp after leveling up.", 50, warrior.getExp());
     }
 
     /**
@@ -97,24 +171,11 @@ public class PlayerTest {
      */
     @Test
     public void testBossReward() {
-        System.out.println("bossReward");
-        Player instance = new PlayerImpl();
-        instance.bossReward();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of timerReward method, of class Player.
-     */
-    @Test
-    public void testTimerReward() {
-        System.out.println("timerReward");
-        int[] startTime = null;
-        Player instance = new PlayerImpl();
-        instance.timerReward(startTime);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        warrior.bossReward();
+        
+        Assert.assertEquals("Player's experience is not 50.", 50, warrior.getExp());
+        
+        Assert.assertEquals("Player's score is not 100.", 100, warrior.getScore(), 0);
     }
 
     /**
@@ -122,13 +183,13 @@ public class PlayerTest {
      */
     @Test
     public void testEnemyReward() {
-        System.out.println("enemyReward");
-        Player instance = new PlayerImpl();
-        Item expResult = null;
-        Item result = instance.enemyReward();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        warrior.enemyReward();
+        
+        Assert.assertTrue("No item added to inventory.", warrior.getInventory().size() == 1);
+        
+        Assert.assertEquals("Player's experience is not 15.", 15, warrior.getExp());
+        
+        Assert.assertEquals("Player's score is not 20.", 20, warrior.getScore(), 0);
     }
 
     /**
@@ -136,393 +197,15 @@ public class PlayerTest {
      */
     @Test
     public void testChallengeReward() {
-        System.out.println("challengeReward");
-        Player instance = new PlayerImpl();
-        instance.challengeReward();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getDamage method, of class Player.
-     */
-    @Test
-    public void testGetDamage() {
-        System.out.println("getDamage");
-        Player instance = new PlayerImpl();
-        int expResult = 0;
-        int result = instance.getDamage();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setDamage method, of class Player.
-     */
-    @Test
-    public void testSetDamage() {
-        System.out.println("setDamage");
-        int damage = 0;
-        Player instance = new PlayerImpl();
-        instance.setDamage(damage);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getInventory method, of class Player.
-     */
-    @Test
-    public void testGetInventory() {
-        System.out.println("getInventory");
-        Player instance = new PlayerImpl();
-        ArrayList<Item> expResult = null;
-        ArrayList<Item> result = instance.getInventory();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setInventory method, of class Player.
-     */
-    @Test
-    public void testSetInventory() {
-        System.out.println("setInventory");
-        ArrayList<Item> inventory = null;
-        Player instance = new PlayerImpl();
-        instance.setInventory(inventory);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getDefensive method, of class Player.
-     */
-    @Test
-    public void testGetDefensive() {
-        System.out.println("getDefensive");
-        Player instance = new PlayerImpl();
-        boolean expResult = false;
-        boolean result = instance.getDefensive();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setDefensive method, of class Player.
-     */
-    @Test
-    public void testSetDefensive() {
-        System.out.println("setDefensive");
-        boolean defensive = false;
-        Player instance = new PlayerImpl();
-        instance.setDefensive(defensive);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getDot method, of class Player.
-     */
-    @Test
-    public void testGetDot() {
-        System.out.println("getDot");
-        Player instance = new PlayerImpl();
-        boolean expResult = false;
-        boolean result = instance.getDot();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setDot method, of class Player.
-     */
-    @Test
-    public void testSetDot() {
-        System.out.println("setDot");
-        boolean dot = false;
-        Player instance = new PlayerImpl();
-        instance.setDot(dot);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getName method, of class Player.
-     */
-    @Test
-    public void testGetName() {
-        System.out.println("getName");
-        Player instance = new PlayerImpl();
-        String expResult = "";
-        String result = instance.getName();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setName method, of class Player.
-     */
-    @Test
-    public void testSetName() {
-        System.out.println("setName");
-        String name = "";
-        Player instance = new PlayerImpl();
-        instance.setName(name);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getHealth method, of class Player.
-     */
-    @Test
-    public void testGetHealth() {
-        System.out.println("getHealth");
-        Player instance = new PlayerImpl();
-        int expResult = 0;
-        int result = instance.getHealth();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setHealth method, of class Player.
-     */
-    @Test
-    public void testSetHealth() {
-        System.out.println("setHealth");
-        int health = 0;
-        Player instance = new PlayerImpl();
-        instance.setHealth(health);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getExp method, of class Player.
-     */
-    @Test
-    public void testGetExp() {
-        System.out.println("getExp");
-        Player instance = new PlayerImpl();
-        int expResult = 0;
-        int result = instance.getExp();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setExp method, of class Player.
-     */
-    @Test
-    public void testSetExp() {
-        System.out.println("setExp");
-        int exp = 0;
-        Player instance = new PlayerImpl();
-        instance.setExp(exp);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getScore method, of class Player.
-     */
-    @Test
-    public void testGetScore() {
-        System.out.println("getScore");
-        Player instance = new PlayerImpl();
-        double expResult = 0.0;
-        double result = instance.getScore();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setScore method, of class Player.
-     */
-    @Test
-    public void testSetScore() {
-        System.out.println("setScore");
-        double score = 0.0;
-        Player instance = new PlayerImpl();
-        instance.setScore(score);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getEquipped method, of class Player.
-     */
-    @Test
-    public void testGetEquipped() {
-        System.out.println("getEquipped");
-        Player instance = new PlayerImpl();
-        HashMap<ItemSlot, Item> expResult = null;
-        HashMap<ItemSlot, Item> result = instance.getEquipped();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setEquipped method, of class Player.
-     */
-    @Test
-    public void testSetEquipped() {
-        System.out.println("setEquipped");
-        HashMap<ItemSlot, Item> equipped = null;
-        Player instance = new PlayerImpl();
-        instance.setEquipped(equipped);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getHitChance method, of class Player.
-     */
-    @Test
-    public void testGetHitChance() {
-        System.out.println("getHitChance");
-        Player instance = new PlayerImpl();
-        double expResult = 0.0;
-        double result = instance.getHitChance();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setHitChance method, of class Player.
-     */
-    @Test
-    public void testSetHitChance() {
-        System.out.println("setHitChance");
-        double hitChance = 0.0;
-        Player instance = new PlayerImpl();
-        instance.setHitChance(hitChance);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getCritChance method, of class Player.
-     */
-    @Test
-    public void testGetCritChance() {
-        System.out.println("getCritChance");
-        Player instance = new PlayerImpl();
-        double expResult = 0.0;
-        double result = instance.getCritChance();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setCritChance method, of class Player.
-     */
-    @Test
-    public void testSetCritChance() {
-        System.out.println("setCritChance");
-        double critChance = 0.0;
-        Player instance = new PlayerImpl();
-        instance.setCritChance(critChance);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getDodgeChance method, of class Player.
-     */
-    @Test
-    public void testGetDodgeChance() {
-        System.out.println("getDodgeChance");
-        Player instance = new PlayerImpl();
-        double expResult = 0.0;
-        double result = instance.getDodgeChance();
-        assertEquals(expResult, result, 0.0);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setDodgeChance method, of class Player.
-     */
-    @Test
-    public void testSetDodgeChance() {
-        System.out.println("setDodgeChance");
-        double dodgeChance = 0.0;
-        Player instance = new PlayerImpl();
-        instance.setDodgeChance(dodgeChance);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getLvl method, of class Player.
-     */
-    @Test
-    public void testGetLvl() {
-        System.out.println("getLvl");
-        Player instance = new PlayerImpl();
-        int expResult = 0;
-        int result = instance.getLvl();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setLvl method, of class Player.
-     */
-    @Test
-    public void testSetLvl() {
-        System.out.println("setLvl");
-        int lvl = 0;
-        Player instance = new PlayerImpl();
-        instance.setLvl(lvl);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isDefensive method, of class Player.
-     */
-    @Test
-    public void testIsDefensive() {
-        System.out.println("isDefensive");
-        Player instance = new PlayerImpl();
-        boolean expResult = false;
-        boolean result = instance.isDefensive();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of isDot method, of class Player.
-     */
-    @Test
-    public void testIsDot() {
-        System.out.println("isDot");
-        Player instance = new PlayerImpl();
-        boolean expResult = false;
-        boolean result = instance.isDot();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    public class PlayerImpl extends Player {
+        warrior.setHealth(50);
+        
+        warrior.challengeReward();
+        
+        Assert.assertEquals("Player's health is not 100.", 100, warrior.getHealth());
+        
+        Assert.assertEquals("Player's experience is not 15.", 15, warrior.getExp());
+        
+        Assert.assertEquals("Player's score is not 20.", 20, warrior.getScore(), 0);
     }
     
 }

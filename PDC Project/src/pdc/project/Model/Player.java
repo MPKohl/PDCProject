@@ -89,7 +89,7 @@ public abstract class Player {
             return;
         }
         
-        else if (findClass() == PlayerClass.ARCHER && (itemToEquipType != ItemType.CLOTHARMOUR || itemToEquipType != ItemType.LEATHERARMOUR || itemToEquipType != ItemType.BOW)){
+        else if (findClass() == PlayerClass.ARCHER && !(itemToEquipType == ItemType.CLOTHARMOUR || itemToEquipType == ItemType.LEATHERARMOUR || itemToEquipType == ItemType.BOW)){
             if (gameIsCUIVersion){
                 System.out.println("You are not eligible to equip that item.");
             } else {
