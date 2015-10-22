@@ -133,16 +133,6 @@ public abstract class Player {
         System.out.println("Item equipped!");
     }
     
-    /**
-     * Checks whether the Player should level up at current experience. 
-     * If this is the case the Player levels up and experience is set to 0.
-     */
-    public void isLvlUp(){
-         if (this.getExp() == 100){
-             this.setLvl(getLvl() + 1);
-             setExp(0);
-         }
-    }
     
     /**
      * Gives the Player the chosen amount of experience points.
@@ -153,6 +143,7 @@ public abstract class Player {
         if (this.getExp() >= 100){
             this.setExp(this.getExp() - 100);
             this.setLvl(this.getLvl() + 1);
+            System.out.println("\nWell done you have leveled up! You are now Level " + getLvl());
         }
     }
     
@@ -161,7 +152,7 @@ public abstract class Player {
      */
     public void bossReward(){
         setScore(getScore() + 100);
-        giveExp(50);
+        giveExp(90);
     }
     
     /**
@@ -211,7 +202,7 @@ public abstract class Player {
         Item item = null;
         int roll = 0;
         
-        giveExp(15);
+        giveExp(50);
         setScore(getScore() + 20);
         
         if (this.findClass()== PlayerClass.WARRIOR)
@@ -285,7 +276,7 @@ public abstract class Player {
      */
     public void challengeReward() {
         setHealth(100);
-        giveExp(15);
+        giveExp(75);
         setScore(getScore() + 20);
     }
 
