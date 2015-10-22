@@ -378,32 +378,32 @@ public class GameBoardGUI extends javax.swing.JFrame {
             for (int j = 0 ;j<data.getBoard().getBoard().length; j++){
                 if (data.getBoard().getPosition()[0] == j && data.getBoard().getPosition()[1] == i) {
                     if (data.getPlayer().findClass() == PlayerClass.WARRIOR) {
-                        JLabel picWarrior = new JLabel(new javax.swing.ImageIcon("/pdc/project/View/buttonWarrior.jpg"));
+                        JLabel picWarrior = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/pdc/project/View/buttonWarrior.jpg")));
                         testPanel.add(picWarrior);
                     }
                     if (data.getPlayer().findClass() == PlayerClass.ARCHER) {
-                        JLabel picArcher = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonArcher.jpg"));
+                        JLabel picArcher = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/pdc/project/View/buttonArcher.jp")));
                         testPanel.add(picArcher);
                     }
                     if (data.getPlayer().findClass() == PlayerClass.WIZARD) {
-                        JLabel picWizard = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonWizard.jpg"));
+                        JLabel picWizard = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/pdc/project/View/buttonWizard.jp")));
                         testPanel.add(picWizard);
                     }
                 }
                 else if (data.getBoard().getBoard()[j][i].isVisited()) {
-                    JLabel picDirt = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonDirt.jpg"));
+                    JLabel picDirt = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/pdc/project/View/buttonDirt.jpg")));
                     testPanel.add(picDirt); //Dirt
                 }
                 else if (data.getBoard().getBoard()[j][i].getType() == TileType.BLOCKED) {
-                    JLabel picLava = new JLabel(new javax.swing.ImageIcon("buttonLava.jpg"));
+                    JLabel picLava = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/pdc/project/View/buttonLava.jpg")));
                     testPanel.add(picLava);
                 }
                 else if (data.getBoard().getBoard()[j][i].getType() == TileType.CHALLENGE) {
-                    JLabel picFairy = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonFairy.jpg"));
+                    JLabel picFairy = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/pdc/project/View/buttonFairy.jpg")));
                     testPanel.add(picFairy);//wizard tile
                 }
                 else {
-                    JLabel picGraass = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonGreenGrass.jpg"));
+                    JLabel picGraass = new JLabel(new javax.swing.ImageIcon(getClass().getResource("/pdc/project/View/buttonGreenGrass.jpg")));
                     testPanel.add(picGraass);//grass
                 }
             }

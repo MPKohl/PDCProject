@@ -10,7 +10,7 @@ public class Boss extends Enemy {
      * Constructor for Boss. Sets all stats to preset values.
      */
     public Boss() {
-        super("Martini Lord of the Underworld", 500, 40, 50, 80, 10, "", false);
+        super("Martini Lord of the Underworld", 280, 40, 50, 80, 10, "", false);
         setType(TileType.BOSS);
     }
 }
