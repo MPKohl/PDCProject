@@ -181,21 +181,21 @@ public abstract class Player {
             finalTime[i] = finishTime[i] - startTime[i]; 
         }
         
-        // If the player used less than 4 minutes to complete the game,
+        // If the player used less than 2 minutes to complete the game,
         // add 50% to the score
-        if(finalTime[0] == 0 && finalTime[1] < 4){
+        if(finalTime[0] == 0 && finalTime[1] < 2){
             setScore(getScore() * 1.5);
         }
         
-        // If the player used between 4 and 6 minutes to complete the game,
+        // If the player used between 2 and 4 minutes to complete the game,
         // add 35% to the score
-        else if(finalTime[0] == 0 && finalTime[1] < 6){
+        else if(finalTime[0] == 0 && finalTime[1] < 4){
             setScore(getScore() * 1.35);
         }
         
-        // If the player used between 6 and 10 minutes to complete the game,
+        // If the player used between 4 and 6 minutes to complete the game,
         // add 10% to the score
-        else if(finalTime[0] == 0 && finalTime[1] < 10){
+        else if(finalTime[0] == 0 && finalTime[1] < 6){
             setScore(getScore() + getScore() * 0.15);
         }
     }
