@@ -4,20 +4,14 @@
  * and open the template in the editor.
  */
 package pdc.project.View;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.InputMismatchException;
 import java.util.Random;
-import java.util.Scanner;
 import javax.swing.*;
-import javax.imageio.*;
 import pdc.project.Model.*;
-import pdc.project.Controller.*;
 
 /**
  *
@@ -91,28 +85,28 @@ public class GameBoardGUI extends javax.swing.JFrame {
 
         barHealth.setForeground(new java.awt.Color(255, 0, 0));
 
-        btnRight.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonRight.jpg")); // NOI18N
+        btnRight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pdc/project/View/buttonRight.jpg"))); // NOI18N
         btnRight.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRightActionPerformed(evt);
             }
         });
 
-        btnUp.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonUp.jpg")); // NOI18N
+        btnUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pdc/project/View/buttonUp.jpg"))); // NOI18N
         btnUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpActionPerformed(evt);
             }
         });
 
-        btnLeft.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonLeft.jpg")); // NOI18N
+        btnLeft.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pdc/project/View/buttonLeft.jpg"))); // NOI18N
         btnLeft.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLeftActionPerformed(evt);
             }
         });
 
-        btnDown.setIcon(new javax.swing.ImageIcon("C:\\Users\\shanon\\Desktop\\PictureForPDC\\buttonDown.jpg")); // NOI18N
+        btnDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pdc/project/View/buttonDown.jpg"))); // NOI18N
         btnDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDownActionPerformed(evt);
@@ -384,7 +378,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
             for (int j = 0 ;j<data.getBoard().getBoard().length; j++){
                 if (data.getBoard().getPosition()[0] == j && data.getBoard().getPosition()[1] == i) {
                     if (data.getPlayer().findClass() == PlayerClass.WARRIOR) {
-                        JLabel picWarrior = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonWarrior.jpg"));
+                        JLabel picWarrior = new JLabel(new javax.swing.ImageIcon("/pdc/project/View/buttonWarrior.jpg"));
                         testPanel.add(picWarrior);
                     }
                     if (data.getPlayer().findClass() == PlayerClass.ARCHER) {
@@ -401,7 +395,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
                     testPanel.add(picDirt); //Dirt
                 }
                 else if (data.getBoard().getBoard()[j][i].getType() == TileType.BLOCKED) {
-                    JLabel picLava = new JLabel(new javax.swing.ImageIcon("C:\\Users\\Shanon\\Desktop\\PictureForPDC\\buttonLava.jpg"));
+                    JLabel picLava = new JLabel(new javax.swing.ImageIcon("buttonLava.jpg"));
                     testPanel.add(picLava);
                 }
                 else if (data.getBoard().getBoard()[j][i].getType() == TileType.CHALLENGE) {
