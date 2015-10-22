@@ -118,27 +118,7 @@ public class PlayerTest {
         Assert.assertTrue("ONEHANDEDWEAPON not moved to inventory.", warrior.getInventory().get(1).getItemType() == ItemType.ONEHANDEDWEAPON);
     }
 
-    /**
-     * Test of isLvlUp method, of class Player.
-     */
-    @Test
-    public void testIsLvlUp() {
-        warrior.isLvlUp();
-        
-        Assert.assertEquals("Player is not level 1.", 1, warrior.getLvl());
-        
-        warrior.setExp(100);
-        
-        warrior.isLvlUp();
-        
-        Assert.assertEquals("Player is not level 2.", 2, warrior.getLvl());
-        
-        warrior.setExp(99);
-        
-        warrior.isLvlUp();
-        
-        Assert.assertEquals("Player is not level 2.", 2, warrior.getLvl());
-    }
+
 
     /**
      * Test of giveExp method, of class Player.
