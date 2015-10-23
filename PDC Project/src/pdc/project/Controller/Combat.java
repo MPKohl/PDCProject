@@ -57,15 +57,18 @@ public class Combat {
         boolean correctInput = false;
         while (!correctInput){
             System.out.println("1. Sword strike\n2: Bleeding strike\n3: Defensive stance");
-            try{               
+            try{
+                scan.reset();
                 int command = scan.nextInt();
                 scan.nextLine();
                 
                 if(command == 1){
                     correctInput = true;
+                    System.out.println(player.getName() + " uses Sword Strike.\n");
                     warriorCalcution(enemy, player, defensiveCount, dotCount);
                 }
                 else if(command == 2){
+                    System.out.println(player.getName() + " used Bleeding Strike.\n");
                     correctInput = true;
                     player.setDot(true);
                     dotCount = 3;
@@ -73,27 +76,33 @@ public class Combat {
                     enemyHealthReduction(enemy, damage);
                 }
                 else if(command == 3){
+                    System.out.println(player.getName() + " used Defensive Stance.\n");
                     correctInput = true;
                     player.setDefensive(true);
                     defensiveCount = 2;                                      
                 }
+                else{
+                    System.out.println("Command not recognised. Please enter 1, 2 or 3.");
+                }
+                }catch(InputMismatchException e){
+                    System.out.println("Command not recognised. Please enter 1, 2 or 3.");
+                    scan.next();
+            }
+        }
                 
                 defenseUpdate(player, defensiveCount);
                 dotUpdate(player, dotCount);
                 
                 if(enemy.getEnemyHealth() > 0){
-                    System.out.println(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    System.out.println(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".\n");
                     enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                 }
                 else {
                     System.out.print(enemy.getEnemyName() + " has been defeated, enter any key to continue the adventure: ");
                     scan.next();
                 }
-            }catch(InputMismatchException e){
-                    System.out.println("Command not recognised.");
-                    scan.next();
-            }
-        }
+            
+        
     }
     
     //Archer attack phase method   
@@ -104,15 +113,18 @@ public class Combat {
         boolean correctInput = false;
         while (!correctInput){
             System.out.println("1. Piercing Shot\n2: Poison Shot\n3: Agile stance");
-            try{               
+            try{             
+                scan.reset();
                 int command = scan.nextInt();
                 scan.nextLine();
                 
                 if(command == 1){
+                    System.out.println(player.getName() + " uses Piercing Shot\n.");
                     correctInput = true;
                     archerCalculation(enemy, player, defensiveCount, dotCount);
                 }
                 else if(command == 2){
+                    System.out.println(player.getName() + " uses Poison Shot\n.");
                     correctInput = true;
                     player.setDot(true);
                     dotCount = 3;
@@ -120,24 +132,31 @@ public class Combat {
                     enemyHealthReduction(enemy, damage);
                 }
                 else if(command == 3){
+                    System.out.println(player.getName() + " uses Agile Stance\n.");
                     correctInput = true;
                     player.setDefensive(true);
                     defensiveCount = 2;                                      
                 }
                 
+                else{
+                    System.out.println("Command not recognised. Please enter 1, 2 or 3.");
+                }
+                }catch(InputMismatchException e){
+                    System.out.println("Command not recognised. Please enter 1, 2 or 3.");
+                    scan.next();
+            }
+        }
+                
                 if(enemy.getEnemyHealth() > 0){
-                    System.out.println(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    System.out.println(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".\n");
                     enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                 }
                 else {
                     System.out.print(enemy.getEnemyName() + " has been defeated, enter any key to continue the adventure: ");
                     scan.next();
                 }
-            }catch(InputMismatchException e){
-                    System.out.println("Command not recognised.");
-                    scan.next();
-            }
-        }
+            
+        
     }
      
     //Wizard attack phase method    
@@ -148,15 +167,18 @@ public class Combat {
         boolean correctInput = false;
         while (!correctInput){
             System.out.println("1. Dark Missile\n2: Soul Leech\n3: Blood Shield");
-            try{               
+            try{ 
+                scan.reset();
                 int command = scan.nextInt();
                 scan.nextLine();
                 
                 if(command == 1){
+                    System.out.println(player.getName() + " uses Dark Missile\n.");
                     correctInput = true;
                     wizardCalculation(enemy, player, defensiveCount, dotCount);
                 }
                 else if(command == 2){
+                    System.out.println(player.getName() + " uses Soul Leech\n.");
                     correctInput = true;
                     player.setDot(true);
                     dotCount = 3;
@@ -164,40 +186,55 @@ public class Combat {
                     enemyHealthReduction(enemy, damage);
                 }
                 else if(command == 3){
+                    System.out.println(player.getName() + " uses Blood Shield\n.");
                     correctInput = true;
                     player.setDefensive(true);
                     defensiveCount = 2;                                      
                 }
+                else{
+                    System.out.println("Command not recognised. Please enter 1, 2 or 3.");
+                }
+                }catch(InputMismatchException e){
+                    System.out.println("Command not recognised. Please enter 1, 2 or 3.");
+                    scan.next();
+            }
+        }
                 
                 if(enemy.getEnemyHealth() > 0){
-                    System.out.println(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
+                    System.out.println(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".\n");
                     enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                 }
                 else {
                     System.out.print(enemy.getEnemyName() + " has been defeated, enter any key to continue the adventure: ");
                     scan.next();
-                }
-            }catch(InputMismatchException e){
-                    System.out.println("Command not recognised.");
-                    scan.next();
-            }
-        }
+                }          
+        
     }
       
     /////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //CLASS ATTACK PHASE CALCULATIONS//
     
-    //Warrior attack phase calculations
-    
+    //Warrior attack phase calculations   
     public static void warriorCalcution(Enemy enemy, Player player, int defensiveCount, int dotCount){
+        
+        if(player.getDefensive()){
+            System.out.println("Defensive Stance is active.\n");
+        }
 
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            //System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            if(enemy.getStun()){
+                System.out.println("The enemy is stunned and cannot dodge.\n");
+            }
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
-            System.out.println("Your attack has missed the enemy.");
+            if(enemyDodgeCalc(enemy)){
+                System.out.println(enemy.getEnemyName() + " has dodged your attack.\n");
+            }
+            else if(!playerHitCalc(player)){
+                System.out.println("Your attack has missed.\n");
+            }
         }
         dotUpdate(player, dotCount);
         defenseUpdate(player, defensiveCount);
@@ -205,12 +242,21 @@ public class Combat {
     
     //Archer attack phase calculations
     public static void archerCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
+        
+        if(player.getDefensive()){
+            System.out.println("Agile Stance is active.\n");
+        }
+        
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            //System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
-            System.out.println("Your attack has missed the enemy.");
+            if(enemyDodgeCalc(enemy)){
+                System.out.println(enemy.getEnemyName() + " has dodged your attack.\n");
+            }
+            else if(!playerHitCalc(player)){
+                System.out.println("Your attack has missed.\n");
+            }
         }  
         dotUpdate(player, dotCount);
         defenseUpdate(player, defensiveCount);
@@ -218,19 +264,26 @@ public class Combat {
     
     //Wizard attack phase calculations
     public static void wizardCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
+        
+        if(player.getDefensive()){
+            System.out.println("Blood Shield is active.\n");
+        }
+                
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            //System.out.println(enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
-            System.out.println("Your attack has missed the enemy.");
+            if(enemyDodgeCalc(enemy)){
+                System.out.println(enemy.getEnemyName() + " has dodged your attack.\n");
+            }
+            else if(!playerHitCalc(player)){
+                System.out.println("Your attack has missed.\n");
+            }
         }  
         dotUpdate(player, dotCount);
         defenseUpdate(player, defensiveCount);
     }
-    
-
-    
+        
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
     
     //CALCULATION METHODS// 
@@ -238,6 +291,15 @@ public class Combat {
     //Update dot and dot counter   
     public static void dotUpdate(Player player, int dotCount){
         if(player.getDot()){
+            if((player.findClass() == PlayerClass.ARCHER)){
+                System.out.println("The enemy is poisoned.\n");
+            }
+            else if((player.findClass() == PlayerClass.WIZARD)){
+                System.out.println("The enemy is being soul leeched.\n");
+            }
+            else if((player.findClass() == PlayerClass.WARRIOR)){
+                System.out.println("The enemy is bleeding.\n");
+            }
             dotCount --;
             if(dotCount == 0){
                 player.setDot(false);
@@ -281,14 +343,24 @@ public class Combat {
        
     //Enemy attack phase   
     public static void enemyAttackPhase(Enemy enemy, Player player, int defensiveCount, int dotCount){
-        Scanner scan = new Scanner(System.in);
-        //System.out.println("The enemy attacks...");
+        System.out.println("The enemy attacks...\n");
 
         if((!playerDodgeCalc(player)) && (enemyHitCalc(enemy))){
             enemyDamageCalc(enemy, player);           
         }
+        else if((playerDodgeCalc(player)) || (!enemyHitCalc(enemy))){
+            if(enemy.getStun()){
+                System.out.println("The enemy is stunned and cannot attack.\n");
+            }
+            else if(playerDodgeCalc(player)){
+                System.out.println("You have dodged the enemy attack.\n");
+            }
+            else if(!enemyHitCalc(enemy)){
+                System.out.println("The attack misses.\n");
+            }
+        }
         if(player.getHealth() > 0){
-            System.out.println("Your health is now " + player.getHealth());  
+            System.out.println("Your health is now " + player.getHealth() + "\n");  
             try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
@@ -309,6 +381,7 @@ public class Combat {
         int totalDamage;
         if(playerCritCalc(player)){
             totalDamage = player.getDamage() + ((player.getDamage() / 100) * 25);
+            System.out.println("Critical Hit!\n");
         }
         else    
             totalDamage = player.getDamage();
@@ -340,11 +413,11 @@ public class Combat {
         int totalDamage;
         if(enemyCritCalc(enemy)){
             totalDamage = enemy.getDamageHigh() + ((enemy.getDamageHigh() / 100) * 25);
+            System.out.println("Critical Hit!\n");
         }
         else    
             totalDamage = enemy.getDamageHigh();  
         
-
         HashMap<ItemSlot, Item> equipped = player.getEquipped();
         double dmgReduction = 0;
         if (equipped != null){
@@ -353,8 +426,7 @@ public class Combat {
                     dmgReduction = item.getDmgReduction() / 100;
                     totalDamage -= totalDamage * dmgReduction;
             }
-        }
-        
+        }       
         playerHealthReduction(player, totalDamage);
     }
     

@@ -524,16 +524,17 @@ public class GameBoardGUI extends javax.swing.JFrame {
     }
     
 
-    //GUI Combat changes by SED
+        //START OF GUI COMBAT
+    
+    //Method to introduce enemy and start of battle
+    
        public void combatStart(Enemy enemy, Player player){
         
-
         int defensiveCount = 0;
         int dotCount = 0;
 
-        txtChallenge.setText("\n"+enemy.getEnemyName()+" approaches, prepare for battle: ");
-        txtChallenge.setText("\nEnemy: " + enemy.getEnemyName() + "\nEnemy health: " + enemy.getEnemyHealth() + "\n");
-        txtChallenge.setText("Player health: " + player.getHealth());
+        txtChallenge.append("\n"+enemy.getEnemyName()+" approaches, prepare for battle: ");
+        txtChallenge.append("\nEnemy: " + enemy.getEnemyName() + "\nEnemy health: " + enemy.getEnemyHealth() + "\n");
 
         selectClassCombat(enemy, player, defensiveCount, dotCount);
     }
@@ -551,8 +552,6 @@ public class GameBoardGUI extends javax.swing.JFrame {
             wizardAttackPhase(enemy, player, defensiveCount, dotCount);
         }
     }
-  
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     
     public void updatePanel(){
         pnlChallenge.repaint();
@@ -562,259 +561,256 @@ public class GameBoardGUI extends javax.swing.JFrame {
         pnlChallenge.removeAll();
         updatePanel();
     }
-    
-    //CLASS ATTACK PHASES//
-    
-    //Warrior attack phase method   
+     
+    //Warrior attack phase method for GUI with buttons for each skill  
     public void warriorAttackPhase(final Enemy enemy, final Player player, final int defensiveCount, final int dotCount){
-                                   
+                                      
+        //Sword Strike button
             final JButton swordStrikeButton = new JButton("Sword Strike");
             swordStrikeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    txtChallenge.append("\n" + player.getName() + " uses Sword Strike.\n");
                     warriorCalcution(enemy, player, defensiveCount, dotCount);
                     removePanel();
-                defenseUpdate(player, defensiveCount);
-                dotUpdate(player, dotCount);
-                if(enemy.getEnemyHealth() > 0){
-                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
-                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
-                }
-                else {
-                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
-                    canMove = true;
-                    if(enemy.getEnemyName().contains("Martini")){
-                        finishGame();
+                    defenseUpdate(player, defensiveCount);
+                    dotUpdate(player, dotCount);
+                    if(enemy.getEnemyHealth() > 0){
+                        enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                     }
-                }
+                    else {
+                        txtChallenge.append(enemy.getEnemyName() + " has been defeated.");
+                        canMove = true;
+                        if(enemy.getEnemyName().contains("Martini")){
+                            finishGame();
+                        }
+                    }
                 }
             });
             pnlChallenge.add(swordStrikeButton);
-            
+        
+        //Bleeding Strike button 
             final JButton bleedingStrikeButton = new JButton("Bleeding Strike");
             bleedingStrikeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    txtChallenge.append("\n" + player.getName() + " uses Bleeding Strike.\n");
                     setDotCount(dotCount);
                     int damage = bleedCalc(enemy);
                     enemyHealthReduction(enemy, damage);
-                removePanel();
-                defenseUpdate(player, defensiveCount);
-                dotUpdate(player, dotCount);
-                if(enemy.getEnemyHealth() > 0){
-                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
-                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
-                }
-                else {
-                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
-                    if(enemy.getEnemyName().contains("Martini")){
-                        finishGame();
+                    removePanel();
+                    defenseUpdate(player, defensiveCount);
+                    dotUpdate(player, dotCount);
+                    if(enemy.getEnemyHealth() > 0){
+                        enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                     }
-                    canMove = true;
-                }
+                    else {
+                        txtChallenge.append(enemy.getEnemyName() + " has been defeated.");
+                        if(enemy.getEnemyName().contains("Martini")){
+                            finishGame();
+                        }
+                        canMove = true;
+                    }
                 }
             });
             pnlChallenge.add(bleedingStrikeButton);
-            
+        
+        //Defensive Stance button
             final JButton defensiveStanceButton = new JButton("Defensive Stance");
             defensiveStanceButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    txtChallenge.append("\n" + player.getName() + " uses Defensive Stance.\n");
                     player.setDefensive(true);
                     setDefensiveCount(defensiveCount);
                     removePanel();
-                defenseUpdate(player, defensiveCount);
-                dotUpdate(player, dotCount);
-                if(enemy.getEnemyHealth() > 0){
-                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
-                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
-                }
-                else {
-                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
-                    canMove = true;
-                    if(enemy.getEnemyName().contains("Martini")){
-                        finishGame();
+                    defenseUpdate(player, defensiveCount);
+                    dotUpdate(player, dotCount);
+                    if(enemy.getEnemyHealth() > 0){
+                        enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                    }
+                    else {
+                        txtChallenge.append(enemy.getEnemyName() + " has been defeated.");
+                        canMove = true;
+                        if(enemy.getEnemyName().contains("Martini")){
+                            finishGame();
+                        }
                     }
                 }
-                }
             });
-            pnlChallenge.add(defensiveStanceButton);
-                                                          
-
-
+            pnlChallenge.add(defensiveStanceButton);                                                         
     }
         
-    //Archer attack phase method   
+    //Archer attack phase method for GUI with buttons for each skill   
     public void archerAttackPhase(final Enemy enemy, final Player player, final int defensiveCount, final int dotCount){ 
-                                   
+                   
+        //Piercing Shot button
             final JButton piercingShotButton = new JButton("Piercing Shot");
             piercingShotButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    txtChallenge.append("\n" + player.getName() + " uses Piercing Shot.\n");
                     archerCalculation(enemy, player, defensiveCount, dotCount); 
                     removePanel();
-                defenseUpdate(player, defensiveCount);
-                dotUpdate(player, dotCount);
-                if(enemy.getEnemyHealth() > 0){
-                    txtChallenge.setText(txtChallenge.getText() + "\n" + enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
-                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
-                }
-                else {
-                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
-                    canMove = true;
-                    if(enemy.getEnemyName().contains("Martini")){
-                        finishGame();
+                    defenseUpdate(player, defensiveCount);
+                    dotUpdate(player, dotCount);
+                    if(enemy.getEnemyHealth() > 0){
+                        enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                     }
-                }
-
+                    else {
+                        txtChallenge.append(enemy.getEnemyName() + " has been defeated.");
+                        canMove = true;
+                        if(enemy.getEnemyName().contains("Martini")){
+                            finishGame();
+                        }
+                    }
                 }
             });
             pnlChallenge.add(piercingShotButton);
             
+        //Poison Shot button
             final JButton poisonShotButton = new JButton("Poison Shot");
             poisonShotButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    txtChallenge.append("\n" + player.getName() + " uses Poison Shot.\n");
                     setDotCount(dotCount);
                     int damage = poisonShotCalc(enemy, player);
                     enemyHealthReduction(enemy, damage);
                     removePanel();
-                defenseUpdate(player, defensiveCount);
-                dotUpdate(player, dotCount);
-                if(enemy.getEnemyHealth() > 0){
-                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
-                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
-                }
-                else {
-                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
-                    canMove = true;
-                    if(enemy.getEnemyName().contains("Martini")){
-                        finishGame();
+                    defenseUpdate(player, defensiveCount);
+                    dotUpdate(player, dotCount);
+                    if(enemy.getEnemyHealth() > 0){
+                        enemyAttackPhase(enemy, player, defensiveCount, dotCount);
                     }
-                }
-
-
+                    else {
+                        txtChallenge.append(enemy.getEnemyName() + " has been defeated.");
+                        canMove = true;
+                        if(enemy.getEnemyName().contains("Martini")){
+                            finishGame();
+                        }
+                    }
                 }
             });
             pnlChallenge.add(poisonShotButton);
-            
+      
+        //Agile Stance button
             final JButton agileStanceButton = new JButton("Agile Stance");
             agileStanceButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    txtChallenge.append("\n" + player.getName() + " uses Agile Stance\n");
                     player.setDefensive(true);
                     setDefensiveCount(defensiveCount);
                     removePanel();
-                defenseUpdate(player, defensiveCount);
-                dotUpdate(player, dotCount);
-                if(enemy.getEnemyHealth() > 0){
-                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
-                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
-                }
-                else {
-                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
-                    canMove = true;
-                    if(enemy.getEnemyName().contains("Martini")){
-                        finishGame();
+                    defenseUpdate(player, defensiveCount);
+                    dotUpdate(player, dotCount);
+                    if(enemy.getEnemyHealth() > 0){
+                        enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                    }
+                    else {
+                        txtChallenge.append(enemy.getEnemyName() + " has been defeated.");
+                        canMove = true;
+                        if(enemy.getEnemyName().contains("Martini")){
+                            finishGame();
+                        }
                     }
                 }
-
-
-                }
             });
-            pnlChallenge.add(agileStanceButton);
-                
-        
+            pnlChallenge.add(agileStanceButton);                      
     }
      
-    //Wizard attack phase method    
+    //Wizard attack phase for GUI with buttons for each skill  
     public void wizardAttackPhase(final Enemy enemy, final Player player, final int defensiveCount, final int dotCount){
-                        
+            
+        //Dark Missile button
             final JButton darkMissileButton = new JButton("Dark Missile");
             darkMissileButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    txtChallenge.append("\n" + player.getName() + " uses Dark Missile\n");
                     wizardCalculation(enemy, player, defensiveCount, dotCount);
                     removePanel();
                     defenseUpdate(player, defensiveCount);
                     dotUpdate(player, dotCount);
-                if(enemy.getEnemyHealth() > 0){
-                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
-                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
-                }
-                else {
-                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
-                    canMove = true;
-                }
-
+                    if(enemy.getEnemyHealth() > 0){
+                        enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                    }
+                    else {
+                        txtChallenge.append(enemy.getEnemyName() + " has been defeated.");
+                        canMove = true;
+                    }
                 }
             });
             pnlChallenge.add(darkMissileButton);
-            
+       
+        //Soul Leech button
             final JButton soulLeechButton = new JButton("Soul Leech");
             soulLeechButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    txtChallenge.append("\n" + player.getName() + " uses Soul Leech.\n");
                     setDotCount(dotCount);
                     int damage = soulLeechCalc(enemy, player);
                     enemyHealthReduction(enemy, damage);
                     removePanel();
                     defenseUpdate(player, defensiveCount);
                     dotUpdate(player, dotCount);
-                if(enemy.getEnemyHealth() > 0){
-                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
-                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
-                }
-                else {
-                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
-                    canMove = true;
-                }
-
+                    if(enemy.getEnemyHealth() > 0){
+                        enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                    }
+                    else {
+                        txtChallenge.append(enemy.getEnemyName() + " has been defeated.");
+                        canMove = true;
+                    }
                 }
             });
             pnlChallenge.add(soulLeechButton);
-            
+    
+        //Blood Shield button
             final JButton bloodShieldButton = new JButton("Blood Shield");
             bloodShieldButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    txtChallenge.append("\n" + player.getName() + " uses Blood Shield.\n");
                     player.setDefensive(true);
                     setDefensiveCount(defensiveCount);
                     removePanel();
                     defenseUpdate(player, defensiveCount);
                     dotUpdate(player, dotCount);
-                if(enemy.getEnemyHealth() > 0){
-                    txtChallenge.setText(enemy.getEnemyName()+"'s health is now "+enemy.getEnemyHealth()+".");
-                    enemyAttackPhase(enemy, player, defensiveCount, dotCount);
-                }
-                else {
-                    txtChallenge.setText(enemy.getEnemyName() + " has been defeated.");
-                    canMove = true;
-                }
-
+                    if(enemy.getEnemyHealth() > 0){
+                        enemyAttackPhase(enemy, player, defensiveCount, dotCount);
+                    }
+                    else {
+                        txtChallenge.append(enemy.getEnemyName() + " has been defeated.");
+                        canMove = true;
+                    }
                 }
             });
-            pnlChallenge.add(bloodShieldButton);
-       
-
-            
-
-
+            pnlChallenge.add(bloodShieldButton);                 
     }
     
+    //Method to set the dotCount
     public void setDotCount(int dotCount){
         dotCount = 3;
     }
     
+    //Method to set the defensiveCount
     public void setDefensiveCount(int defensiveCount){
         defensiveCount = 2;
     }
-      
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //CLASS ATTACK PHASE CALCULATIONS//
-    
+         
     //Warrior attack phase calculations
     
     public void warriorCalcution(Enemy enemy, Player player, int defensiveCount, int dotCount){
-
+        if(player.getDefensive()){
+            txtChallenge.append("\nDefensive Stance is active.");
+        }
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            txtChallenge.setText(txtChallenge.getText() + "\n" + enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            if(enemy.getStun()){
+                txtChallenge.append("\nThe enemy is stunned and cannot dodge.");
+            }
+            txtChallenge.append("\n" + enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
-            txtChallenge.setText(txtChallenge.getText() + "\nYour attack has missed the enemy.");
+            if(enemyDodgeCalc(enemy)){
+                txtChallenge.append("\n" + enemy.getEnemyName() + " has dodged your attack.");
+            }
+            else if(!playerHitCalc(player)){
+                txtChallenge.append("\nYour attack has missed.");
+            }
         }
         dotUpdate(player, dotCount);
         defenseUpdate(player, defensiveCount);
@@ -822,39 +818,58 @@ public class GameBoardGUI extends javax.swing.JFrame {
     
     //Archer attack phase calculations
     public void archerCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
+        if(player.getDefensive()){
+            txtChallenge.append("\nAgile Stance is active.");
+        }
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            txtChallenge.setText(txtChallenge.getText() + "\n" + enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            txtChallenge.append("\n" + enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
-            txtChallenge.setText(txtChallenge.getText() + "\nYour attack has missed the enemy.");
-        }  
+            if(enemyDodgeCalc(enemy)){
+                txtChallenge.append("\n" + enemy.getEnemyName() + " has dodged your attack.");
+            }
+            else if(!playerHitCalc(player)){
+                txtChallenge.append("\nYour attack has missed.");
+            }
+        } 
         dotUpdate(player, dotCount);
         defenseUpdate(player, defensiveCount);
     }
     
     //Wizard attack phase calculations
     public void wizardCalculation(Enemy enemy, Player player, int defensiveCount, int dotCount){
+        if(player.getDefensive()){
+            txtChallenge.append("\nBlood Shield is active.");
+        }
         if((!enemyDodgeCalc(enemy)) && (playerHitCalc(player))){
             playerDamageCalc(enemy, player);
-            txtChallenge.setText(txtChallenge.getText() + "\n" + enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
+            txtChallenge.append("\n" + enemy.getEnemyName()+" has been reduced to "+enemy.getEnemyHealth()+".");
         }
         else if(enemyDodgeCalc(enemy) || (!playerHitCalc(player))){
-            txtChallenge.setText(txtChallenge.getText() + "\nYour attack has missed the enemy.");
-        }  
+            if(enemyDodgeCalc(enemy)){
+                txtChallenge.append("\n" + enemy.getEnemyName() + " has dodged your attack.");
+            }
+            else if(!playerHitCalc(player)){
+                txtChallenge.append("\nYour attack has missed.");
+            }
+        }
         dotUpdate(player, dotCount);
         defenseUpdate(player, defensiveCount);
     }
-    
-
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    //CALCULATION METHODS// 
-    
+        
     //Update dot and dot counter   
     public void dotUpdate(Player player, int dotCount){
         if(player.getDot()){
+            if((player.findClass() == PlayerClass.ARCHER)){
+                txtChallenge.append("\nThe enemy is poisoned.\n");
+            }
+            else if((player.findClass() == PlayerClass.WIZARD)){
+                txtChallenge.append("\nThe enemy is being soul leeched.\n");
+            }
+            else if((player.findClass() == PlayerClass.WARRIOR)){
+                txtChallenge.append("\nThe enemy is bleeding.\n");
+            }
             dotCount --;
             if(dotCount == 0){
                 player.setDot(false);
@@ -891,20 +906,26 @@ public class GameBoardGUI extends javax.swing.JFrame {
         enemy.setChanceToHit(enemy.getChanceToHit() - (enemy.getChanceToHit() / 100 * 5));
         return poisonDamage;
     }
-    
-    /////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    //ENEMY ATTACK PHASE//
        
     //Enemy attack phase   
     public void enemyAttackPhase(Enemy enemy, Player player, int defensiveCount, int dotCount){
-        //System.out.println("The enemy attacks...");
+        txtChallenge.append("\nThe enemy attacks...");
 
         if((!playerDodgeCalc(player)) && (enemyHitCalc(enemy))){
             enemyDamageCalc(enemy, player);           
         }
+        else if((playerDodgeCalc(player)) || (!enemyHitCalc(enemy))){
+            if(enemy.getStun()){
+                txtChallenge.append("\nThe enemy is stunned and cannot attack.\n");
+            }
+            else if(playerDodgeCalc(player)){
+                txtChallenge.append("\nYou have dodged the enemy attack.\n");
+            }
+            else if(!enemyHitCalc(enemy)){
+                txtChallenge.append("\nThe attack misses.\n");
+            }
+        }
         if(player.getHealth() > 0){
-//            txtChallenge.setText(txtChallenge.getText() + "\n" + "Your health is now " + player.getHealth());  
             barHealth.setValue(player.getHealth());
             try {
             Thread.sleep(1000);
@@ -916,16 +937,13 @@ public class GameBoardGUI extends javax.swing.JFrame {
         else
             quit();            
     }
-    
-    /////////////////////////////////////////////////////////////////////////////////
-    
-    //DAMAGE CALCULATION METHODS//
         
     //Player damage calculation   
     public void playerDamageCalc(Enemy enemy, Player player){
         int totalDamage;
         if(playerCritCalc(player)){
             totalDamage = player.getDamage() + ((player.getDamage() / 100) * 25);
+            txtChallenge.append("\nCritical Hit!");
         }
         else    
             totalDamage = player.getDamage();
@@ -957,11 +975,11 @@ public class GameBoardGUI extends javax.swing.JFrame {
         int totalDamage;
         if(enemyCritCalc(enemy)){
             totalDamage = enemy.getDamageHigh() + ((enemy.getDamageHigh() / 100) * 25);
+            txtChallenge.append("\nCritical Hit!");
         }
         else    
             totalDamage = enemy.getDamageHigh();  
         
-
         HashMap<ItemSlot, Item> equipped = player.getEquipped();
         double dmgReduction = 0;
         if (equipped != null){
@@ -970,15 +988,10 @@ public class GameBoardGUI extends javax.swing.JFrame {
                     dmgReduction = item.getDmgReduction() / 100;
                     totalDamage -= totalDamage * dmgReduction;
             }
-        }
-        
+        }      
         playerHealthReduction(player, totalDamage);
     }
-    
-    ///////////////////////////////////////////////////////////////////////////////////
-    
-    //HEALTH REDUCTION METHODS//
-    
+  
     //Enemy health reduction method
     public Enemy enemyHealthReduction(Enemy enemy, int totalDamage){
         enemy.setEnemyHealth(enemy.getEnemyHealth() - totalDamage);
@@ -990,11 +1003,7 @@ public class GameBoardGUI extends javax.swing.JFrame {
         player.setHealth(player.getHealth() - totalDamage);
         return player;
     }
-    
-    /////////////////////////////////////////////////////////////////////////////////////////////
-    
-    // CALCULATIONS FOR PLAYER CHANCES //
-    
+        
     //Player dodge chance calculation 
     public boolean playerDodgeCalc(Player player){
         
@@ -1094,8 +1103,6 @@ public class GameBoardGUI extends javax.swing.JFrame {
         return false;         
     } 
     
-    //CALCULATIONS FOR ENEMY CHANCES//
-    
     //Enemy dodge chance calculation    
     public boolean enemyDodgeCalc(Enemy enemy){
         if(enemy.getStun() == false){
@@ -1135,14 +1142,10 @@ public class GameBoardGUI extends javax.swing.JFrame {
             return false;
         }
     }  
-    
-    /////////////////////////////////////////////////////////////////////////////////////
-    
-    // Game over method when player dies
+       
+    // Game over method when player dies, ends GUI
     public void quit(){
-
-        txtChallenge.setText("GAME OVER");
-
+        txtChallenge.append("\nGAME OVER");
         this.dispose();
     }
     
